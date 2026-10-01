@@ -1,0 +1,62 @@
+{
+  "author_note": "the protestware dependency itself",
+  "envelope_hash": "b5259010c62a969afa0e27d6c291e312ef670f6a8b3d0cc39bf0d3fc5a0be2e9",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {},
+      "removed": []
+    },
+    "files": {
+      "added": [],
+      "count_from": 12,
+      "count_to": 12,
+      "removed": []
+    },
+    "install_hooks": {
+      "from": {},
+      "to": {}
+    },
+    "license": {
+      "from": "GPL-3.0-or-later",
+      "to": "GPL-3.0-or-later"
+    },
+    "maintainers": {
+      "from": [
+        "riaevangelist"
+      ],
+      "to": [
+        "riaevangelist"
+      ]
+    },
+    "opaque_candidates": [],
+    "publisher": {
+      "from": "riaevangelist",
+      "to": "riaevangelist"
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/peacenotwar",
+    "https://registry.npmjs.org/peacenotwar/-/peacenotwar-9.1.2.tgz",
+    "https://registry.npmjs.org/peacenotwar/-/peacenotwar-9.1.3.tgz"
+  ],
+  "from_version": "9.1.2",
+  "package": "peacenotwar",
+  "pin": {
+    "from": {
+      "integrity": "sha512-tNdXbhU5sXkRqkjGdhUkZMDXKwcVGljg1E8no7aN883TZqhUj4B9S4xzJO/ynCfBzmWRnIStJ24AtnkFereCeA==",
+      "published_at": "2022-03-08T16:52:21.826Z",
+      "tarball_bytes": 17275,
+      "tarball_sha256": "b716052c88b72c83e4699a4cfc228862a434ef001f05da623857d8ff665c0230"
+    },
+    "to": {
+      "integrity": "sha512-KpmdhXpUDfn4amKcgalyF/jBEqxy4COUTyqVMpW76yHhZRbJYN9zjhwcYGTTMkU0CbLh1TWm999RVtRWqcBw9g==",
+      "published_at": "2022-03-08T16:57:29.531Z",
+      "tarball_bytes": 17324,
+      "tarball_sha256": "d95d7c8937ef926e93a381316ea06831338997f5200523097a5a5730d07f1946"
+    }
+  },
+  "registry": "npm",
+  "to_version": "9.1.3",
+  "version": "attaint/1"
+}

@@ -1,0 +1,129 @@
+{
+  "author_note": "",
+  "dedup_key": "7cb5a05118e7bfcbc582a0106ccd3920cd0fb11cf50701cd0c4cb6c33629ccfd",
+  "envelope_hash": "49e222e812104fc865421eb55f886bc378a60c87889b125dc73fc2a08e529042",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {
+        "duplexer": [
+          "~0.1.1",
+          "^0.1.1"
+        ],
+        "from": [
+          "~0",
+          "^0.1.7"
+        ],
+        "map-stream": [
+          "~0.1.0",
+          "0.0.7"
+        ],
+        "pause-stream": [
+          "0.0.11",
+          "^0.0.11"
+        ],
+        "split": [
+          "0.3",
+          "^1.0.1"
+        ],
+        "stream-combiner": [
+          "~0.0.4",
+          "^0.2.2"
+        ],
+        "through": [
+          "~2.3.1",
+          "^2.3.8"
+        ]
+      },
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 0,
+      "candidates": [],
+      "complete": true,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [
+        "examples/data",
+        "examples/map.js",
+        "examples/split.js"
+      ],
+      "changed_source_count": 4,
+      "changed_sources": [
+        "examples/map.js",
+        "examples/pretty.js",
+        "examples/split.js",
+        "package.json"
+      ],
+      "count_from": 21,
+      "count_to": 23,
+      "removed": [
+        ".npmignore"
+      ]
+    },
+    "install_hooks": {
+      "from": {
+        "prepublish": "npm ls && npm test"
+      },
+      "to": {
+        "prepublish": "npm ls && npm test"
+      }
+    },
+    "license": {
+      "from": "MIT",
+      "to": "MIT"
+    },
+    "maintainers": {
+      "from": [
+        "dominictarr"
+      ],
+      "to": [
+        "dominictarr",
+        "right9ctrl"
+      ]
+    },
+    "opaque_candidates": [],
+    "opaque_coverage": {
+      "candidate_count": 0,
+      "complete": true
+    },
+    "publisher": {
+      "from": "dominictarr",
+      "to": "right9ctrl"
+    },
+    "purpose": {
+      "description": "construct pipes of streams of events",
+      "keywords": []
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/event-stream",
+    "https://registry.npmjs.org/event-stream/-/event-stream-3.3.4.tgz",
+    "https://registry.npmjs.org/event-stream/-/event-stream-3.3.5.tgz"
+  ],
+  "from_version": "3.3.4",
+  "package": "event-stream",
+  "pin": {
+    "from": {
+      "integrity": "sha512-QHpkERcGsR0T7Qm3HNJSyXKEEj8AHNxkY3PK8TS2KJvQ7NiSHe3DDpwVKKtoYprL/AreyzFBeIkBIWChAqn60g==",
+      "published_at": "2016-07-17T07:24:09.767Z",
+      "registry_integrity": "sha512-QHpkERcGsR0T7Qm3HNJSyXKEEj8AHNxkY3PK8TS2KJvQ7NiSHe3DDpwVKKtoYprL/AreyzFBeIkBIWChAqn60g==",
+      "registry_shasum": "4ab4c9a0f5a54db9338b4c34d86bfce8f4b35571",
+      "tarball_bytes": 13536,
+      "tarball_sha256": "cd4198c30c9deb0d3c5044b230116305539a45b46174a5e8030a3f2d50deed80"
+    },
+    "to": {
+      "integrity": "sha512-vyibDcu5JL20Me1fP734QBH/kenBGLZap2n0+XXM7mvuUPzJ20Ydqj1aKcIeMdri1p+PU+4yAKugjN8KCVst+g==",
+      "published_at": "2018-09-05T05:27:47.219Z",
+      "registry_integrity": "sha512-vyibDcu5JL20Me1fP734QBH/kenBGLZap2n0+XXM7mvuUPzJ20Ydqj1aKcIeMdri1p+PU+4yAKugjN8KCVst+g==",
+      "registry_shasum": "e5dd8989543630d94c6cf4d657120341fa31636b",
+      "tarball_bytes": 13880,
+      "tarball_sha256": "21debd071d386e46a1e83682df60bc98119bf33c2d7051e1a1769bd86f529f84"
+    }
+  },
+  "registry": "npm",
+  "to_version": "3.3.5",
+  "version": "attaint/1"
+}

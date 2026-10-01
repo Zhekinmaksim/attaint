@@ -1,0 +1,30 @@
+{
+  "name": "validator-2",
+  "status": {
+    "code": 0,
+    "message": "success"
+  },
+  "gate": {
+    "att_id": 0,
+    "challenges": 0,
+    "envelope_hash": "49e222e812104fc865421eb55f886bc378a60c87889b125dc73fc2a08e529042",
+    "findings": [
+      "MAINTAINER_SHIFT@publisher"
+    ],
+    "from_version": "3.3.4",
+    "gate": "RISK",
+    "inconclusive_classes": [],
+    "level": 1,
+    "package": "event-stream",
+    "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+    "policy_id": 0,
+    "provenance": "registry-checked metadata; client-built file excerpts",
+    "registry_verification": "VERIFIED",
+    "requester": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+    "rounds": 6,
+    "to_version": "3.3.5",
+    "verdict": "MAINTAINER_SHIFT"
+  },
+  "eq_output_count": 0,
+  "nondetDisagreementCallNo": null
+}

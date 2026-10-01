@@ -1,0 +1,224 @@
+{
+  "author_note": "",
+  "envelope_hash": "c3ac9ac91911d72a61ffc4e583b0c07d54afedc0a8666b82d61d4ba323f04169",
+  "facts": {
+    "dependencies": {
+      "added": {
+        "require-directory": "^2.1.1"
+      },
+      "changed": {
+        "cliui": [
+          "^9.0.1",
+          "^7.0.2"
+        ],
+        "string-width": [
+          "^7.2.0",
+          "^4.2.0"
+        ],
+        "yargs-parser": [
+          "^22.0.0",
+          "^20.2.2"
+        ]
+      },
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 3,
+      "candidates": [
+        {
+          "excerpt": "        throw Error(`yargs supports a minimum Node.js version of ${minNodeVersion}. Read our version support policy: https://github.com/yargs/yargs#supported-nodejs-versions`);",
+          "line": 2900,
+          "line_bytes": 176,
+          "path": "build/index.cjs"
+        },
+        {
+          "excerpt": "import cliui from 'https://unpkg.com/cliui@7.0.1/index.mjs'; // eslint-disable-line",
+          "line": 3,
+          "line_bytes": 83,
+          "path": "lib/platform-shims/browser.mjs"
+        },
+        {
+          "excerpt": "import Parser from 'https://unpkg.com/yargs-parser@19.0.0/browser.js'; // eslint-disable-line",
+          "line": 4,
+          "line_bytes": 93,
+          "path": "lib/platform-shims/browser.mjs"
+        }
+      ],
+      "complete": true,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [
+        "CHANGELOG.md",
+        "build/index.cjs",
+        "helpers/index.js",
+        "index.cjs",
+        "yargs",
+        "yargs.cjs"
+      ],
+      "changed_source_count": 24,
+      "changed_sources": [
+        "browser.mjs",
+        "build/index.cjs",
+        "build/lib/command.js",
+        "build/lib/completion-templates.js",
+        "build/lib/completion.js",
+        "build/lib/middleware.js",
+        "build/lib/usage.js",
+        "build/lib/utils/apply-extends.js",
+        "build/lib/utils/levenshtein.js",
+        "build/lib/validation.js",
+        "build/lib/yargs-factory.js",
+        "build/lib/yerror.js",
+        "helpers/index.js",
+        "index.cjs",
+        "index.mjs",
+        "lib/platform-shims/browser.mjs",
+        "lib/platform-shims/esm.mjs",
+        "locales/en.json",
+        "locales/fi.json",
+        "locales/ko.json",
+        "locales/ru.json",
+        "locales/zh_TW.json",
+        "package.json",
+        "yargs.cjs"
+      ],
+      "count_from": 58,
+      "count_to": 58,
+      "removed": [
+        "browser.d.ts",
+        "build/lib/utils/maybe-async-result.js",
+        "locales/cs.json",
+        "locales/he.json",
+        "locales/uk_UA.json",
+        "locales/uz.json"
+      ]
+    },
+    "install_hooks": {
+      "from": {
+        "prepare": "npm run compile"
+      },
+      "to": {
+        "prepare": "npm run compile"
+      }
+    },
+    "license": {
+      "from": "MIT",
+      "to": "MIT"
+    },
+    "maintainers": {
+      "from": [
+        "bcoe",
+        "oss-bot"
+      ],
+      "to": [
+        "bcoe",
+        "oss-bot",
+        "shadowspawn"
+      ]
+    },
+    "opaque_candidates": [
+      {
+        "head": "{\n  \"Commands:\": \"\u041a\u043e\u043c\u0430\u043d\u0434\u044b:\",\n  \"Options:\": \"\u041e\u043f\u0446\u0438\u0438:\",\n  \"Examples:\": \"\u041f\u0440\u0438\u043c\u0435\u0440\u044b:\",\n  \"boolean\": \"\u0431\u0443\u043b\u0435\u0432\u044b\u0439 \u0442\u0438\u043f\",\n  \"count\": \"\u043f\u043e\u0434\u0441\u0447\u0435\u0442\",\n  \"string\": \"\u0441\u0442\u0440\u043e\u043a\u043e\u0432\u043e\u0439 \u0442\u0438\u043f\",\n  \"number\": \"\u0447\u0438\u0441\u043b\u043e\",\n  \"array\": \"\u043c\u0430\u0441\u0441\u0438\u0432\",\n  \"required\": \"\u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e\",\n  \"default\": \"\u043f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e\",\n  \"default:\": \"\u043f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e:\",\n  \"choices:\": \"\u0432\u043e\u0437\u043c\u043e\u0436\u043d\u043e\u0441\u0442\u0438:\",\n  \"aliases:\": \"\u0430\u043b\u0438\u0430\u0441\u044b:\",\n  \"generated-value\": \"\u0433\u0435\u043d\u0435\u0440\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u043e\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435\",\n  \"Not enough non-option arguments: got %s, need at least %s\": {\n    \"one\": \"\u041d\u0435\u0434\u043e\u0441\u0442\u0430\u0442\u043e\u0447\u043d\u043e \u043d\u0435\u043e\u043f\u0446\u0438\u043e\u043d\u043d\u044b\u0445 \u0430\u0440\u0433\u0443\u043c\u0435\u043d\u0442\u043e\u0432: \u0435\u0441\u0442\u044c %s, \u043d\u0443\u0436\u043d\u043e \u043a\u0430\u043a \u043c\u0438\u043d\u0438\u043c\u0443\u043c %s\",\n    \"other\": \"\u041d\u0435\u0434\u043e\u0441\u0442\u0430\u0442\u043e\u0447\u043d\u043e \u043d\u0435\u043e\u043f\u0446\u0438\u043e\u043d\u043d\u044b\u0445 \u0430\u0440\u0433\u0443\u043c\u0435\u043d\u0442\u043e\u0432: \u0435\u0441\u0442\u044c %s, \u043d\u0443\u0436\u043d\u043e \u043a\u0430\u043a \u043c\u0438\u043d\u0438\u043c\u0443\u043c %s\"\n  },\n  \"Too many non-option arguments: got %s, maximum of %s\": {\n    \"one\": \"\u0421\u043b\u0438\u0448\u043a\u043e\u043c \u043c\u043d\u043e\u0433\u043e \u043d\u0435\u043e\u043f\u0446\u0438\u043e\u043d\u043d\u044b\u0445 \u0430\u0440\u0433\u0443\u043c\u0435\u043d\u0442\u043e\u0432: \u0435\u0441\u0442\u044c %s, \u043c\u0430\u043a\u0441\u0438\u043c\u0443\u043c \u0434\u043e\u043f\u0443\u0441\u0442\u0438\u043c\u043e %s\",\n    \"other\": \"\u0421\u043b\u0438\u0448\u043a\u043e\u043c \u043c\u043d\u043e\u0433\u043e \u043d\u0435\u043e\u043f\u0446\u0438\u043e\u043d\u043d\u044b\u0445 \u0430\u0440\u0433\u0443\u043c\u0435\u043d\u0442\u043e\u0432: \u0435\u0441\u0442\u044c %s, \u043c\u0430\u043a\u0441\u0438\u043c\u0443\u043c \u0434\u043e\u043f\u0443\u0441\u0442\u0438\u043c\u043e %s\"\n  },\n ",
+        "path": "locales/ru.json",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 2674,
+          "hex_escape_runs": 0,
+          "lines": 47,
+          "longest_line": 139,
+          "nonprintable_milli": 568
+        },
+        "status": "changed"
+      },
+      {
+        "head": "{\n  \"Commands:\": \"\uba85\ub839:\",\n  \"Options:\": \"\uc635\uc158:\",\n  \"Examples:\": \"\uc608\uc2dc:\",\n  \"boolean\": \"\uc5ec\ubd80\",\n  \"count\": \"\uac1c\uc218\",\n  \"string\": \"\ubb38\uc790\uc5f4\",\n  \"number\": \"\uc22b\uc790\",\n  \"array\": \"\ubc30\uc5f4\",\n  \"required\": \"\ud544\uc218\",\n  \"default\": \"\uae30\ubcf8\",\n  \"default:\": \"\uae30\ubcf8:\",\n  \"choices:\": \"\uc120\ud0dd:\",\n  \"aliases:\": \"\ubcc4\uce6d:\",\n  \"generated-value\": \"\uc0dd\uc131\ub41c \uac12\",\n  \"Not enough non-option arguments: got %s, need at least %s\": {\n    \"one\": \"\uc635\uc158\uc774 \uc544\ub2cc \uc778\uc790\uac00 \ucda9\ubd84\uce58 \uc54a\uc2b5\ub2c8\ub2e4: %s\uac1c\ub97c \ubc1b\uc558\uc9c0\ub9cc, \uc801\uc5b4\ub3c4 %s\uac1c\ub294 \ud544\uc694\ud569\ub2c8\ub2e4\",\n    \"other\": \"\uc635\uc158\uc774 \uc544\ub2cc \uc778\uc790\uac00 \ucda9\ubd84\uce58 \uc54a\uc2b5\ub2c8\ub2e4: %s\uac1c\ub97c \ubc1b\uc558\uc9c0\ub9cc, \uc801\uc5b4\ub3c4 %s\uac1c\ub294 \ud544\uc694\ud569\ub2c8\ub2e4\"\n  },\n  \"Too many non-option arguments: got %s, maximum of %s\": {\n    \"one\": \"\uc635\uc158\uc774 \uc544\ub2cc \uc778\uc790\uac00 \ub108\ubb34 \ub9ce\uc2b5\ub2c8\ub2e4: %s\uac1c\ub97c \ubc1b\uc558\uc9c0\ub9cc, %s\uac1c \uc774\ud558\uc5ec\uc57c \ud569\ub2c8\ub2e4\",\n    \"other\": \"\uc635\uc158\uc774 \uc544\ub2cc \uc778\uc790\uac00 \ub108\ubb34 \ub9ce\uc2b5\ub2c8\ub2e4: %s\uac1c\ub97c \ubc1b\uc558\uc9c0\ub9cc, %s\uac1c \uc774\ud558\uc5ec\uc57c \ud569\ub2c8\ub2e4\"\n  },\n  \"Missing argument value: %s\": {\n    \"one\": \"\uc778\uc790\uac12\uc744 \ubc1b\uc9c0 \ubabb\ud588\uc2b5\ub2c8\ub2e4: %s\",\n    \"other\": \"\uc778\uc790\uac12\ub4e4\uc744 \ubc1b\uc9c0 \ubabb\ud588\uc2b5\ub2c8\ub2e4: %s\"\n  },\n  \"Missing required argument: %s\": {\n    \"one\": \"\ud544\uc218 \uc778\uc790\ub97c \ubc1b\uc9c0 \ubabb\ud588\uc2b5\ub2c8\ufffd",
+        "path": "locales/ko.json",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 2262,
+          "hex_escape_runs": 0,
+          "lines": 50,
+          "longest_line": 123,
+          "nonprintable_milli": 447
+        },
+        "status": "changed"
+      },
+      {
+        "head": "{\n  \"Commands:\": \"Komennot:\",\n  \"Options:\": \"Valinnat:\",\n  \"Examples:\": \"Esimerkkej\u00e4:\",\n  \"boolean\": \"totuusarvo\",\n  \"count\": \"lukum\u00e4\u00e4r\u00e4\",\n  \"string\": \"merkkijono\",\n  \"number\": \"numero\",\n  \"array\": \"taulukko\",\n  \"required\": \"pakollinen\",\n  \"default\": \"oletusarvo\",\n  \"default:\": \"oletusarvo:\",\n  \"choices:\": \"vaihtoehdot:\",\n  \"aliases:\": \"aliakset:\",\n  \"generated-value\": \"generoitu-arvo\",\n  \"Not enough non-option arguments: got %s, need at least %s\": {\n    \"one\": \"Liian v\u00e4h\u00e4n argumentteja, jotka eiv\u00e4t ole valintoja: annettu %s, vaaditaan v\u00e4hint\u00e4\u00e4n %s\",\n    \"other\": \"Liian v\u00e4h\u00e4n argumentteja, jotka eiv\u00e4t ole valintoja: annettu %s, vaaditaan v\u00e4hint\u00e4\u00e4n %s\"\n  },\n  \"Too many non-option arguments: got %s, maximum of %s\": {\n    \"one\": \"Liikaa argumentteja, jotka eiv\u00e4t ole valintoja: annettu %s, sallitaan enint\u00e4\u00e4n %s\",\n    \"other\": \"Liikaa argumentteja, jotka eiv\u00e4t ole valintoja: annettu %s, sallitaan enint\u00e4\u00e4n %s\"\n  },\n  \"Missing argument value: %s\": {\n    \"one\": \"Argumentin arvo puuttuu: %s\",\n    \"other\": \"Argumentin arvot puuttuvat: %s\"\n  },\n  \"Missing required argument: %s\": {\n    \"one\": \"Pakollinen argumentti puuttuu: %s\",\n    \"other\": \"Pakollisia argumentteja puutt",
+        "path": "locales/fi.json",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 2113,
+          "hex_escape_runs": 0,
+          "lines": 50,
+          "longest_line": 108,
+          "nonprintable_milli": 29
+        },
+        "status": "changed"
+      },
+      {
+        "head": "{\n  \"Commands:\": \"\u547d\u4ee4\uff1a\",\n  \"Options:\": \"\u9078\u9805\uff1a\",\n  \"Examples:\": \"\u4f8b\uff1a\",\n  \"boolean\": \"\u5e03\u6797\",\n  \"count\": \"\u6b21\u6578\",\n  \"string\": \"\u5b57\u4e32\",\n  \"number\": \"\u6578\u5b57\",\n  \"array\": \"\u9663\u5217\",\n  \"required\": \"\u5fc5\u9808\",\n  \"default\": \"\u9810\u8a2d\u503c\",\n  \"default:\": \"\u9810\u8a2d\u503c:\",\n  \"choices:\": \"\u53ef\u9078\u503c:\",\n  \"aliases:\": \"\u5225\u540d:\",\n  \"generated-value\": \"\u751f\u6210\u7684\u503c\",\n  \"Not enough non-option arguments: got %s, need at least %s\": {\n    \"one\": \"non-option \u5f15\u6578\u4e0d\u8db3\uff1a\u53ea\u50b3\u5165\u4e86 %s \u500b, \u81f3\u5c11\u8981 %s \u500b\",\n    \"other\": \"non-option \u5f15\u6578\u4e0d\u8db3\uff1a\u53ea\u50b3\u5165\u4e86 %s \u500b, \u81f3\u5c11\u8981 %s \u500b\"\n  },\n  \"Too many non-option arguments: got %s, maximum of %s\": {\n    \"one\": \"non-option \u5f15\u6578\u904e\u591a\uff1a\u50b3\u5165\u4e86 %s \u500b, \u4f46\u6700\u591a %s \u500b\",\n    \"other\": \"non-option \u5f15\u6578\u904e\u591a\uff1a\u50b3\u5165\u4e86 %s \u500b, \u4f46\u6700\u591a %s \u500b\"\n  },\n  \"Missing argument value: %s\": {\n    \"one\": \"\u6b64\u5f15\u6578\u7121\u6307\u5b9a\u503c\uff1a%s\",\n    \"other\": \"\u9019\u4e9b\u5f15\u6578\u7121\u6307\u5b9a\u503c\uff1a%s\"\n  },\n  \"Missing required argument: %s\": {\n    \"one\": \"\u7f3a\u5c11\u5fc5\u9808\u7684\u5f15\u6578\uff1a%s\",\n    \"other\": \"\u7f3a\u5c11\u9019\u4e9b\u5fc5\u9808\u7684\u5f15\u6578\uff1a%s\"\n  },\n  \"Unknown argument: %s\": {\n    \"one\": \"\u672a\u77e5\u7684\u5f15\u6578\uff1a%s\",\n    \"other\": \"\u672a\u77e5\u7684\u9019\u4e9b\u5f15\u6578\uff1a%s\"\n  },\n  \"Invalid values:\": \"\u7121\u6548\u7684\ufffd",
+        "path": "locales/zh_TW.json",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 1831,
+          "hex_escape_runs": 0,
+          "lines": 48,
+          "longest_line": 98,
+          "nonprintable_milli": 357
+        },
+        "status": "changed"
+      }
+    ],
+    "opaque_coverage": {
+      "candidate_count": 4,
+      "complete": true
+    },
+    "publisher": {
+      "from": "oss-bot",
+      "to": "shadowspawn"
+    },
+    "purpose": {
+      "description": "yargs the modern, pirate-themed, successor to optimist.",
+      "keywords": [
+        "argument",
+        "args",
+        "option",
+        "parser",
+        "parsing",
+        "cli",
+        "command"
+      ]
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/yargs",
+    "https://registry.npmjs.org/yargs/-/yargs-18.0.0.tgz",
+    "https://registry.npmjs.org/yargs/-/yargs-16.2.2.tgz"
+  ],
+  "from_version": "18.0.0",
+  "package": "yargs",
+  "pin": {
+    "from": {
+      "integrity": "sha512-4UEqdc2RYGHZc7Doyqkrqiln3p9X2DZVxaGbwhn2pi7MrRagKaOcIKe8L3OxYcbhXLgLFUS3zAYuQjKBQgmuNg==",
+      "published_at": "2025-05-27T14:27:19.495Z",
+      "registry_integrity": "sha512-4UEqdc2RYGHZc7Doyqkrqiln3p9X2DZVxaGbwhn2pi7MrRagKaOcIKe8L3OxYcbhXLgLFUS3zAYuQjKBQgmuNg==",
+      "registry_shasum": "6c84259806273a746b09f579087b68a3c2d25bd1",
+      "tarball_bytes": 47876,
+      "tarball_sha256": "99800bd5af16c7d01de7040265eb60b9cb3cc8c92aaec96701568700b5853350"
+    },
+    "to": {
+      "integrity": "sha512-Nt9ZJjXTv5R8MHbqby/wXQ6Gi0Bb3TcYZkR1bzuL4yB2OxWPkXknz513gEF0GoA6tn00UpbPvERW8rzCuWCA6w==",
+      "published_at": "2026-06-19T01:52:16.361Z",
+      "registry_integrity": "sha512-Nt9ZJjXTv5R8MHbqby/wXQ6Gi0Bb3TcYZkR1bzuL4yB2OxWPkXknz513gEF0GoA6tn00UpbPvERW8rzCuWCA6w==",
+      "registry_shasum": "c56731dca0d2788ae0866dd3c83907d6bab85f7d",
+      "tarball_bytes": 62905,
+      "tarball_sha256": "e53243c7e81b9202012a259d03ebac05df2428886c9c331f8539fd8059030a7f"
+    }
+  },
+  "registry": "npm",
+  "to_version": "16.2.2",
+  "version": "attaint/1"
+}

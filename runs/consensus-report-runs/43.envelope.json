@@ -1,0 +1,285 @@
+{
+  "author_note": "",
+  "envelope_hash": "5b10344d5636df1acab0d2cc58363a3b8796d8579b7c701dd7f19546de7f52e8",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {},
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 10,
+      "candidates": [
+        {
+          "excerpt": "is._popContainer(n,re,t.sourceSpan)){let i=`Unexpected closing tag \"${n}\". It may happen when the tag has already been closed by another tag. For more info see https://www.w3.org/TR/html5/syntax.html#closing-elements-that-have-implied-end-tags`;this.errors.push(x.create(n,t.sourceSpan,i))}}_popContainer(t,r,n){let i=!1;for(let a=this._containerStack.length-1;a>=0;a--){var s;let o=this._containerStack[a],l=o instanceof U?o.fullName:o.name;if(Pe(l)?l===t:(l===t||t===null)&&o in",
+          "line": 24,
+          "line_bytes": 10583,
+          "path": "plugins/html.js"
+        },
+        {
+          "excerpt": "is._popContainer(n,re,t.sourceSpan)){let i=`Unexpected closing tag \"${n}\". It may happen when the tag has already been closed by another tag. For more info see https://www.w3.org/TR/html5/syntax.html#closing-elements-that-have-implied-end-tags`;this.errors.push(x.create(n,t.sourceSpan,i))}}_popContainer(t,r,n){let i=!1;for(let a=this._containerStack.length-1;a>=0;a--){var s;let o=this._containerStack[a],l=o instanceof U?o.fullName:o.name;if(Pe(l)?l===t:(l===t||t===null)&&o in",
+          "line": 24,
+          "line_bytes": 10583,
+          "path": "plugins/html.mjs"
+        },
+        {
+          "excerpt": ",y}function S(y){this.start=y,this.end=C()}function w(y){r.slice(0,y.length)!==y&&a.file.fail(new Error(\"Incorrectly eaten value: please report this warning on https://git.io/vg5Ft\"),C())}function d(){var y=C();return b;function b(_,I){var T=_.position,R=T?T.start:y,O=[],z=T&&T.end.line,N=y.line;if(_.position=new S(R),T&&I&&T.indent){if(O=T.indent,z<N){for(;++z<N;)O.push((u[z]||0)+1);O.push(y.column)}I=O.concat(I)}return _.position.indent=I||[],_}}function v(y,b){var _=b?b.ch",
+          "line": 12,
+          "line_bytes": 1706,
+          "path": "plugins/markdown.js"
+        },
+        {
+          "excerpt": " Error(\"Expected character\");for(a=r.indexOf(t);a!==-1;)n++,a=r.indexOf(t,a+t.length);return n}});var Dc=q((wT,mc)=>{\"use strict\";mc.exports=g0;var hc=[\"www.\",\"http://\",\"https://\"];function g0(e,t){var r=-1,n,a,u;if(!this.options.gfm)return r;for(a=hc.length,n=-1;++n<a;)u=e.indexOf(hc[n],t),u!==-1&&(r===-1||u<r)&&(r=u);return r}});var Fc=q((CT,kc)=>{\"use strict\";var dc=pc(),x0=fr(),k0=bt(),ga=Ot(),F0=Pe(),b0=Dc();kc.exports=ka;ka.locator=b0;ka.notInLink=!0;var E0=33,w0=38,C0=",
+          "line": 27,
+          "line_bytes": 4694,
+          "path": "plugins/markdown.js"
+        },
+        {
+          "excerpt": "tion Pd(e){this.config.exit.autolinkProtocol.call(this,e)}function Od(e){this.config.exit.data.call(this,e);let t=this.stack[this.stack.length-1];t.type,t.url=\"http://\"+this.sliceSerialize(e)}function Nd(e){this.config.exit.autolinkEmail.call(this,e)}function Rd(e){this.exit(e)}function Md(e){Ci(e,[[/(https?:\\/\\/|www(?=\\.))([-.\\w]+)([^ \\t\\r\\n]*)/gi,zd],[/(?<=^|\\s|\\p{P}|\\p{S})([-.\\w+]+)@([-\\w]+(?:\\.[-\\w]+)+)/gu,Ud]],{ignore:[\"link\",\"linkReference\"]})}function zd(e,t,r,n,a){let",
+          "line": 38,
+          "line_bytes": 18692,
+          "path": "plugins/markdown.js"
+        },
+        {
+          "excerpt": ",y}function S(y){this.start=y,this.end=C()}function w(y){r.slice(0,y.length)!==y&&a.file.fail(new Error(\"Incorrectly eaten value: please report this warning on https://git.io/vg5Ft\"),C())}function d(){var y=C();return b;function b(_,I){var T=_.position,R=T?T.start:y,O=[],z=T&&T.end.line,N=y.line;if(_.position=new S(R),T&&I&&T.indent){if(O=T.indent,z<N){for(;++z<N;)O.push((u[z]||0)+1);O.push(y.column)}I=O.concat(I)}return _.position.indent=I||[],_}}function v(y,b){var _=b?b.ch",
+          "line": 12,
+          "line_bytes": 1706,
+          "path": "plugins/markdown.mjs"
+        },
+        {
+          "excerpt": " Error(\"Expected character\");for(a=r.indexOf(t);a!==-1;)n++,a=r.indexOf(t,a+t.length);return n}});var mc=q((ET,hc)=>{\"use strict\";hc.exports=g0;var pc=[\"www.\",\"http://\",\"https://\"];function g0(e,t){var r=-1,n,a,u;if(!this.options.gfm)return r;for(a=pc.length,n=-1;++n<a;)u=e.indexOf(pc[n],t),u!==-1&&(r===-1||u<r)&&(r=u);return r}});var kc=q((wT,xc)=>{\"use strict\";var Dc=fc(),x0=fr(),k0=bt(),ga=Ot(),F0=Pe(),b0=mc();xc.exports=ka;ka.locator=b0;ka.notInLink=!0;var E0=33,w0=38,C0=",
+          "line": 27,
+          "line_bytes": 4694,
+          "path": "plugins/markdown.mjs"
+        },
+        {
+          "excerpt": "tion Pd(e){this.config.exit.autolinkProtocol.call(this,e)}function Od(e){this.config.exit.data.call(this,e);let t=this.stack[this.stack.length-1];t.type,t.url=\"http://\"+this.sliceSerialize(e)}function Nd(e){this.config.exit.autolinkEmail.call(this,e)}function Rd(e){this.exit(e)}function Md(e){Ci(e,[[/(https?:\\/\\/|www(?=\\.))([-.\\w]+)([^ \\t\\r\\n]*)/gi,zd],[/(?<=^|\\s|\\p{P}|\\p{S})([-.\\w+]+)@([-\\w]+(?:\\.[-\\w]+)+)/gu,Ud]],{ignore:[\"link\",\"linkReference\"]})}function zd(e,t,r,n,a){let",
+          "line": 38,
+          "line_bytes": 18692,
+          "path": "plugins/markdown.mjs"
+        },
+        {
+          "excerpt": "https://evilmartians.com/chronicles/postcss-8-plugin-migration`));let u=s(...o);return u.postcssPlugin=e,u.postcssVersion=new Ms().version,u}let i;return Object.defineProperty(n,\"postcss\",{get(){return i||(i=n()),i}}),n.process=function(o,u,a){return E([n(a)]).process(o,u)},n};E.stringify=Np;E.parse=Ap;E.fromJSON=Ep;E.list=kp;E.comment=t=>new ga(t);E.atRule=t=>new ya(t);E.decl=t=>new wa(t);E.rule=t=>new _a(t);E.root=t=>new xa(t);E.document=t=>new va(t);E.CssSyntaxError=bp;E.D",
+          "line": 25,
+          "line_bytes": 4514,
+          "path": "plugins/postcss.js"
+        },
+        {
+          "excerpt": "https://evilmartians.com/chronicles/postcss-8-plugin-migration`));let u=s(...o);return u.postcssPlugin=e,u.postcssVersion=new Ms().version,u}let i;return Object.defineProperty(n,\"postcss\",{get(){return i||(i=n()),i}}),n.process=function(o,u,a){return E([n(a)]).process(o,u)},n};E.stringify=Np;E.parse=Ap;E.fromJSON=Ep;E.list=kp;E.comment=t=>new ya(t);E.atRule=t=>new da(t);E.decl=t=>new ga(t);E.rule=t=>new xa(t);E.root=t=>new va(t);E.document=t=>new wa(t);E.CssSyntaxError=bp;E.D",
+          "line": 25,
+          "line_bytes": 4514,
+          "path": "plugins/postcss.mjs"
+        }
+      ],
+      "complete": false,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [],
+      "changed_source_count": 20,
+      "changed_sources": [
+        "index.cjs",
+        "index.mjs",
+        "internal/experimental-cli.mjs",
+        "package.json",
+        "plugins/angular.js",
+        "plugins/angular.mjs",
+        "plugins/estree.js",
+        "plugins/estree.mjs",
+        "plugins/flow.js",
+        "plugins/flow.mjs",
+        "plugins/html.js",
+        "plugins/html.mjs",
+        "plugins/markdown.js",
+        "plugins/markdown.mjs",
+        "plugins/meriyah.js",
+        "plugins/meriyah.mjs",
+        "plugins/postcss.js",
+        "plugins/postcss.mjs",
+        "standalone.js",
+        "standalone.mjs"
+      ],
+      "count_from": 56,
+      "count_to": 56,
+      "listing_truncated": true,
+      "removed": []
+    },
+    "install_hooks": {
+      "from": {},
+      "to": {}
+    },
+    "license": {
+      "from": "MIT",
+      "to": "MIT"
+    },
+    "maintainers": {
+      "from": [
+        "azz",
+        "duailibe",
+        "fisker",
+        "ikatyang",
+        "jlongster",
+        "lydell",
+        "prettier-bot",
+        "sosukesuzuki",
+        "suchipi",
+        "thorn0",
+        "vjeux"
+      ],
+      "to": [
+        "azz",
+        "duailibe",
+        "fisker",
+        "ikatyang",
+        "jlongster",
+        "lydell",
+        "prettier-bot",
+        "sosukesuzuki",
+        "suchipi",
+        "thorn0",
+        "vjeux"
+      ]
+    },
+    "opaque_candidates": [
+      {
+        "excerpt_truncated": true,
+        "head": "(function(i){function e(){var f=i();return f.default||f}if(typeof exports==\"object\"&&typeof module==\"object\")module.exports=e();else if(typeof define==\"function\"&&define.amd)define(e);else{var t=typeof globalThis<\"u\"?globalThis:typeof global<\"u\"?global:typeof self<\"u\"?self:this||{};t.prettierPlugins=t.prettierPlugins||",
+        "path": "plugins/flow.js",
+        "signals": {
+          "base64_runs": 1,
+          "bytes": 1113486,
+          "hex_escape_runs": 0,
+          "lines": 7,
+          "longest_line": 997982,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "var DE=Object.create;var Mg=Object.defineProperty;var eE=Object.getOwnPropertyDescriptor;var wE=Object.getOwnPropertyNames;var aE=Object.getPrototypeOf,tE=Object.prototype.hasOwnProperty;var K=(A,g)=>()=>{try{return g||A((g={exports:{}}).exports,g),g.exports}catch(I){throw g=0,I}},AB=(A,g)=>{for(var I in g)Mg(A,I,{get:",
+        "path": "plugins/flow.mjs",
+        "signals": {
+          "base64_runs": 1,
+          "bytes": 1113086,
+          "hex_escape_runs": 0,
+          "lines": 8,
+          "longest_line": 997562,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "(function(f){function e(){var i=f();return i.default||i}if(typeof exports==\"object\"&&typeof module==\"object\")module.exports=e();else if(typeof define==\"function\"&&define.amd)define(e);else{var t=typeof globalThis<\"u\"?globalThis:typeof global<\"u\"?global:typeof self<\"u\"?self:this||{};t.prettierPlugins=t.prettierPlugins||",
+        "path": "plugins/meriyah.js",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 126647,
+          "hex_escape_runs": 0,
+          "lines": 6,
+          "longest_line": 109699,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "var J2=Object.defineProperty;var ht=(e,t)=>{for(var n in t)J2(e,n,{get:t[n],enumerable:!0})};var _2={};ht(_2,{parsers:()=>rt});var rt={};ht(rt,{meriyah:()=>ci});var j2=Object.hasOwn??Function.prototype.call.bind(Object.prototype.hasOwnProperty),ae=j2;var Z=(e,t)=>(n,u,...o)=>n|1&&u==null?void 0:(t.call(u)??u[e]).apply(",
+        "path": "plugins/meriyah.mjs",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 125954,
+          "hex_escape_runs": 0,
+          "lines": 7,
+          "longest_line": 108986,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "(function(n){function e(){var i=n();return i.default||i}if(typeof exports==\"object\"&&typeof module==\"object\")module.exports=e();else if(typeof define==\"function\"&&define.amd)define(e);else{var t=typeof globalThis<\"u\"?globalThis:typeof global<\"u\"?global:typeof self<\"u\"?self:this||{};t.prettierPlugins=t.prettierPlugins||",
+        "path": "plugins/markdown.js",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 292358,
+          "hex_escape_runs": 0,
+          "lines": 70,
+          "longest_line": 73991,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "var om=Object.create;var Hn=Object.defineProperty;var sm=Object.getOwnPropertyDescriptor;var lm=Object.getOwnPropertyNames;var cm=Object.getPrototypeOf,fm=Object.prototype.hasOwnProperty;var q=(e,t)=>()=>{try{return t||e((t={exports:{}}).exports,t),t.exports}catch(r){throw t=0,r}},Pr=(e,t)=>{for(var r in t)Hn(e,r,{get:",
+        "path": "plugins/markdown.mjs",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 291999,
+          "hex_escape_runs": 0,
+          "lines": 71,
+          "longest_line": 73991,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "(function(f){function e(){var i=f();return i.default||i}if(typeof exports==\"object\"&&typeof module==\"object\")module.exports=e();else if(typeof define==\"function\"&&define.amd)define(e);else{var t=typeof globalThis<\"u\"?globalThis:typeof global<\"u\"?global:typeof self<\"u\"?self:this||{};t.prettierPlugins=t.prettierPlugins||",
+        "path": "plugins/estree.js",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 212498,
+          "hex_escape_runs": 0,
+          "lines": 44,
+          "longest_line": 59023,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      }
+    ],
+    "opaque_coverage": {
+      "candidate_count": 19,
+      "complete": false
+    },
+    "publisher": {
+      "from": "GitHub Actions",
+      "to": "GitHub Actions"
+    },
+    "purpose": {
+      "description": "Prettier is an opinionated code formatter",
+      "keywords": []
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/prettier",
+    "https://registry.npmjs.org/prettier/-/prettier-3.9.4.tgz",
+    "https://registry.npmjs.org/prettier/-/prettier-3.9.5.tgz"
+  ],
+  "from_version": "3.9.4",
+  "package": "prettier",
+  "pin": {
+    "from": {
+      "integrity": "sha512-yWG/o/4oJfo036EKAfK6ACAoDOfHeRHx4tuxkfBZiauURiaSmYwlpOr5LQqKtIkRD2z1PLteme2WoxEnj4tHTg==",
+      "published_at": "2026-06-30T01:11:17.630Z",
+      "registry_integrity": "sha512-yWG/o/4oJfo036EKAfK6ACAoDOfHeRHx4tuxkfBZiauURiaSmYwlpOr5LQqKtIkRD2z1PLteme2WoxEnj4tHTg==",
+      "registry_shasum": "a9c477cf1614376bd1f6bbc593d8c0d414bcec87",
+      "tarball_bytes": 2800438,
+      "tarball_sha256": "236949d3528822d117b33a26109bd5d70a3d7828dccd5a0805f9684398888c8b"
+    },
+    "to": {
+      "integrity": "sha512-/FVl766LpUfB5vXgCYOYa0MeV/441Ia99AeICQIQFTY/Nw0roZwULcXpku5i1/m5kt/baz+s4Zogspd839HSMg==",
+      "published_at": "2026-07-09T16:17:00.997Z",
+      "registry_integrity": "sha512-/FVl766LpUfB5vXgCYOYa0MeV/441Ia99AeICQIQFTY/Nw0roZwULcXpku5i1/m5kt/baz+s4Zogspd839HSMg==",
+      "registry_shasum": "4fec97736e33b9d0b620b48914fe93b530e835ad",
+      "tarball_bytes": 2799565,
+      "tarball_sha256": "e9525d1e389f8ab0543fef69d3af87a999db99dcb02a73dc9aeb93e3c48aebbe"
+    }
+  },
+  "registry": "npm",
+  "to_version": "3.9.5",
+  "version": "attaint/1"
+}

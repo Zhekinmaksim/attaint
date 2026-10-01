@@ -1,0 +1,15 @@
+{
+  "kind": "read-only GenVM simulation; not a receipt",
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+  "production_source_sha256": "80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa",
+  "diagnostic_source_sha256": "9fbe2dd71fdf1a663b5d4646993c7462e4021edfe4a791dc24c7e44f6b02a9b7",
+  "policy_args": [
+    "mit,apache-2.0,isc,bsd-2-clause,bsd-3-clause",
+    "DEP_ADDED,EGRESS,INSTALL_HOOK,LICENSE_SHIFT,MAINTAINER_SHIFT,OPAQUE",
+    6,
+    1,
+    1000000000000000
+  ],
+  "envelope_hash": "49e222e812104fc865421eb55f886bc378a60c87889b125dc73fc2a08e529042"
+}

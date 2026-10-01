@@ -1,0 +1,305 @@
+{
+  "author_note": "",
+  "envelope_hash": "28ffb2bece9ce452d247a2e830b9bd7c4d310f9de2814f130c932ccd2c0f2487",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {
+        "glob": [
+          "^13.0.0",
+          "^13.0.3"
+        ]
+      },
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 2,
+      "candidates": [
+        {
+          "excerpt": "AG,EAAE,cAAc,CAAC,IAAI,CAAC,CAAC,CAAA;IAClD,IAAA,kBAAU,EAAC,IAAI,EAAE,OAAO,CAAC,CAAA;IACzB,OAAO,MAAM,CAAC,OAAO,CAAC,CAAA;AACxB,CAAC,CAAA\",\"sourcesContent\":[\"// https://youtu.be/uhRWMGBjlO8?t=537\\n//\\n// 1. readdir\\n// 2. for each entry\\n//   a. if a non-empty directory, recurse\\n//   b. if an empty directory, move to random hidden file name in $TEMP\\n//   c. unlink/rmdir $TEMP\\n//\\n// This works around the fact that unlink/rmdir is non-atomic and takes\\n// a non-deterministic",
+          "line": 1,
+          "line_bytes": 10930,
+          "path": "dist/commonjs/rimraf-move-remove.js.map"
+        },
+        {
+          "excerpt": "AAC,GAAG,EAAE,cAAc,CAAC,IAAI,CAAC,CAAC,CAAA;IAClD,UAAU,CAAC,IAAI,EAAE,OAAO,CAAC,CAAA;IACzB,OAAO,MAAM,CAAC,OAAO,CAAC,CAAA;AACxB,CAAC,CAAA\",\"sourcesContent\":[\"// https://youtu.be/uhRWMGBjlO8?t=537\\n//\\n// 1. readdir\\n// 2. for each entry\\n//   a. if a non-empty directory, recurse\\n//   b. if an empty directory, move to random hidden file name in $TEMP\\n//   c. unlink/rmdir $TEMP\\n//\\n// This works around the fact that unlink/rmdir is non-atomic and takes\\n// a non-deterministic",
+          "line": 1,
+          "line_bytes": 11055,
+          "path": "dist/esm/rimraf-move-remove.js.map"
+        }
+      ],
+      "complete": false,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [],
+      "changed_source_count": 44,
+      "changed_sources": [
+        "dist/commonjs/fs.d.ts",
+        "dist/commonjs/fs.d.ts.map",
+        "dist/commonjs/index.d.ts.map",
+        "dist/commonjs/index.js",
+        "dist/commonjs/index.js.map",
+        "dist/commonjs/opt-arg.d.ts.map",
+        "dist/commonjs/opt-arg.js",
+        "dist/commonjs/opt-arg.js.map",
+        "dist/commonjs/path-arg.d.ts.map",
+        "dist/commonjs/path-arg.js",
+        "dist/commonjs/path-arg.js.map",
+        "dist/commonjs/readdir-or-error.d.ts",
+        "dist/commonjs/readdir-or-error.d.ts.map",
+        "dist/commonjs/rimraf-move-remove.d.ts.map",
+        "dist/commonjs/rimraf-move-remove.js.map",
+        "dist/commonjs/rimraf-posix.d.ts.map",
+        "dist/commonjs/rimraf-posix.js",
+        "dist/commonjs/rimraf-posix.js.map",
+        "dist/commonjs/rimraf-windows.d.ts.map",
+        "dist/commonjs/rimraf-windows.js.map"
+      ],
+      "count_from": 137,
+      "count_to": 137,
+      "listing_truncated": true,
+      "removed": []
+    },
+    "install_hooks": {
+      "from": {
+        "prepare": "tshy"
+      },
+      "to": {
+        "prepare": "tshy"
+      }
+    },
+    "license": {
+      "from": "BlueOak-1.0.0",
+      "to": "BlueOak-1.0.0"
+    },
+    "maintainers": {
+      "from": [
+        "isaacs"
+      ],
+      "to": [
+        "isaacs"
+      ]
+    },
+    "opaque_candidates": [
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"bin.mjs\",\"sourceRoot\":\"\",\"sources\":[\"../../src/bin.mts\"],\"names\":[],\"mappings\":\";AAEA,OAAO,EAAE,MAAM,EAAE,MAAM,YAAY,CAAA;AACnC,OAAO,EAAE,eAAe,EAAE,MAAM,wBAAwB,CAAA;AAExD,MAAM,EAAE,OAAO,EAAE,GAAG,eAAe,CACjC,MAAM,CAAC,IAAI,CAAC,GAAG,EACf,iBAAiB,CAGlB,CAAA;AAED,MAAM,eAAe,GAAG,GAAG,EAAE,CAC3B,OAAO,CAAC",
+        "path": "dist/esm/bin.mjs.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 15216,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 15216,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"rimraf-windows.js\",\"sourceRoot\":\"\",\"sources\":[\"../../src/rimraf-windows.ts\"],\"names\":[],\"mappings\":\"AAAA,+DAA+D;AAC/D,EAAE;AACF,sEAAsE;AACtE,wEAAwE;AACxE,gCAAgC;AAChC,0EAA0E;AAC1E,sBAAsB;AACtB,EAAE;AACF,yEAAyE;AAGzE,OAAO,EAAE,KAAK,EAAE,OAAO,EAAE,MAAM,MAAM,CAAA;AAErC,OAAO,EAAE,QAAQ,EAAE,YAAY,EAAE,MA",
+        "path": "dist/esm/rimraf-windows.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 11807,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 11807,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"rimraf-windows.js\",\"sourceRoot\":\"\",\"sources\":[\"../../src/rimraf-windows.ts\"],\"names\":[],\"mappings\":\";AAAA,+DAA+D;AAC/D,EAAE;AACF,sEAAsE;AACtE,wEAAwE;AACxE,gCAAgC;AAChC,0EAA0E;AAC1E,sBAAsB;AACtB,EAAE;AACF,yEAAyE;;;AAGzE,+BAAqC;AAErC,iDAAuD;AACvD,mCAAoE;AACpE,yDAAmE;AACnE,+DAA0E;AAC1E,mDAA0D;AAC1D,mE",
+        "path": "dist/commonjs/rimraf-windows.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 11669,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 11669,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"rimraf-move-remove.js\",\"sourceRoot\":\"\",\"sources\":[\"../../src/rimraf-move-remove.ts\"],\"names\":[],\"mappings\":\"AAAA,qCAAqC;AACrC,EAAE;AACF,aAAa;AACb,oBAAoB;AACpB,yCAAyC;AACzC,uEAAuE;AACvE,0BAA0B;AAC1B,EAAE;AACF,uEAAuE;AACvE,kDAAkD;AAClD,EAAE;AACF,0EAA0E;AAE1E,OAAO,EAAE,QAAQ,EAAE,KAAK,EAAE,OAAO,EAAE,MA",
+        "path": "dist/esm/rimraf-move-remove.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 11055,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 11055,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"rimraf-move-remove.js\",\"sourceRoot\":\"\",\"sources\":[\"../../src/rimraf-move-remove.ts\"],\"names\":[],\"mappings\":\";AAAA,qCAAqC;AACrC,EAAE;AACF,aAAa;AACb,oBAAoB;AACpB,yCAAyC;AACzC,uEAAuE;AACvE,0BAA0B;AAC1B,EAAE;AACF,uEAAuE;AACvE,kDAAkD;AAClD,EAAE;AACF,0EAA0E;;;AAE1E,+BAA+C;AAC/C,qDAA6D;AAC7D,yDAAmE;AACnE,",
+        "path": "dist/commonjs/rimraf-move-remove.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 10930,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 10930,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"rimraf-posix.js\",\"sourceRoot\":\"\",\"sources\":[\"../../src/rimraf-posix.ts\"],\"names\":[],\"mappings\":\"AAAA,kEAAkE;AAClE,oDAAoD;AACpD,iEAAiE;AACjE,2DAA2D;AAC3D,4CAA4C;AAE5C,OAAO,EAAE,SAAS,EAAE,QAAQ,EAAE,SAAS,EAAE,UAAU,EAAE,MAAM,SAAS,CAAA;AACpE,OAAO,EAAE,KAAK,EAAE,OAAO,EAAE,MAAM,MAAM,CAAA;AACrC,OAAO,EAAE,c",
+        "path": "dist/esm/rimraf-posix.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 7686,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 7686,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"rimraf-posix.js\",\"sourceRoot\":\"\",\"sources\":[\"../../src/rimraf-posix.ts\"],\"names\":[],\"mappings\":\";AAAA,kEAAkE;AAClE,oDAAoD;AACpD,iEAAiE;AACjE,2DAA2D;AAC3D,4CAA4C;;;AAE5C,mCAAoE;AACpE,+BAAqC;AACrC,+DAA0E;AAG1E,yDAAmE;AACnE,yCAAsC;AACtC,MAAM,EAAE,KAAK,EAAE,KAAK,EAAE,MAAM,EAAE,GAAG,gBAAQ,CAAA;AAElC,MAA",
+        "path": "dist/commonjs/rimraf-posix.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 7611,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 7611,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"index.js\",\"sourceRoot\":\"\",\"sources\":[\"../../src/index.ts\"],\"names\":[],\"mappings\":\"AAAA,OAAO,EAAE,IAAI,EAAE,QAAQ,EAAE,MAAM,MAAM,CAAA;AACrC,OAAO,EACL,MAAM,EACN,UAAU,GAGX,MAAM,cAAc,CAAA;AACrB,OAAO,OAAO,MAAM,eAAe,CAAA;AACnC,OAAO,EAAE,YAAY,EAAE,gBAAgB,EAAE,MAAM,oBAAoB,CAAA;AACnE,OAAO,EACL,gBAAgB,EAChB,o",
+        "path": "dist/esm/index.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 6576,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 6576,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"index.js\",\"sourceRoot\":\"\",\"sources\":[\"../../src/index.ts\"],\"names\":[],\"mappings\":\";;;;;;AAAA,+BAAqC;AACrC,6CAKqB;AACrB,gEAAmC;AACnC,yDAAmE;AACnE,mEAGgC;AAChC,yDAAmE;AACnE,uDAAgE;AAChE,2DAAsE;AACtE,mDAA0D;AAE1D,2CAMqB;AALnB,iHAAA,mBAAmB,OAAA;AACnB,6GAAA,eAAe,OAAA;AAMjB,MAAM,IAAI,GACR,CAAC,EAA0D,EAAE",
+        "path": "dist/commonjs/index.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 6309,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 6309,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"opt-arg.js\",\"sourceRoot\":\"\",\"sources\":[\"../../src/opt-arg.ts\"],\"names\":[],\"mappings\":\";;;AAGA,MAAM,WAAW,GAAG,CAAC,GAAQ,EAAE,CAAS,EAAE,EAAE,CAC1C,OAAO,GAAG,KAAK,WAAW,IAAI,OAAO,GAAG,KAAK,CAAC,CAAA;AAEzC,MAAM,eAAe,GAAG,CAAC,CAAM,EAAsB,EAAE,CAC5D,CAAC,CAAC,CAAC;IACH,OAAO,CAAC,KAAK,QAAQ;IACrB,WAAW,CAAC,",
+        "path": "dist/commonjs/opt-arg.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 4135,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 4135,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"opt-arg.js\",\"sourceRoot\":\"\",\"sources\":[\"../../src/opt-arg.ts\"],\"names\":[],\"mappings\":\"AAGA,MAAM,WAAW,GAAG,CAAC,GAAQ,EAAE,CAAS,EAAE,EAAE,CAC1C,OAAO,GAAG,KAAK,WAAW,IAAI,OAAO,GAAG,KAAK,CAAC,CAAA;AAEhD,MAAM,CAAC,MAAM,eAAe,GAAG,CAAC,CAAM,EAAsB,EAAE,CAC5D,CAAC,CAAC,CAAC;IACH,OAAO,CAAC,KAAK,QAAQ;IACrB,WAA",
+        "path": "dist/esm/opt-arg.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 4071,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 4071,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"path-arg.js\",\"sourceRoot\":\"\",\"sources\":[\"../../src/path-arg.ts\"],\"names\":[],\"mappings\":\"AAAA,OAAO,EAAE,KAAK,EAAE,OAAO,EAAE,MAAM,MAAM,CAAA;AACrC,OAAO,EAAE,OAAO,EAAE,MAAM,MAAM,CAAA;AAG9B,MAAM,OAAO,GAAG,CAAC,IAAY,EAAE,MAA0B,EAAE,EAAE,EAAE;IAC7D,MAAM,IAAI,GAAG,OAAO,IAAI,CAAA;IACxB,IAAI,IAAI,KAAK,QAAQ,E",
+        "path": "dist/esm/path-arg.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 3312,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 3312,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      }
+    ],
+    "opaque_coverage": {
+      "candidate_count": 17,
+      "complete": false
+    },
+    "publisher": {
+      "from": "isaacs",
+      "to": "isaacs"
+    },
+    "purpose": {
+      "description": "A deep deletion module for node (like `rm -rf`)",
+      "keywords": [
+        "rm",
+        "rm -rf",
+        "rm -fr",
+        "remove",
+        "directory",
+        "cli",
+        "rmdir",
+        "recursive"
+      ]
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/rimraf",
+    "https://registry.npmjs.org/rimraf/-/rimraf-6.1.2.tgz",
+    "https://registry.npmjs.org/rimraf/-/rimraf-6.1.3.tgz"
+  ],
+  "from_version": "6.1.2",
+  "package": "rimraf",
+  "pin": {
+    "from": {
+      "integrity": "sha512-cFCkPslJv7BAXJsYlK1dZsbP8/ZNLkCAQ0bi1hf5EKX2QHegmDFEFA6QhuYJlk7UDdc+02JjO80YSOrWPpw06g==",
+      "published_at": "2025-11-19T16:07:44.168Z",
+      "registry_integrity": "sha512-cFCkPslJv7BAXJsYlK1dZsbP8/ZNLkCAQ0bi1hf5EKX2QHegmDFEFA6QhuYJlk7UDdc+02JjO80YSOrWPpw06g==",
+      "registry_shasum": "9a0f3cea2ab853e81291127422116ecf2a86ae89",
+      "tarball_bytes": 39410,
+      "tarball_sha256": "d401b9ae06edf3220b4f549726efeb8cbd167c1add3deb283314c0389ee54b7f"
+    },
+    "to": {
+      "integrity": "sha512-LKg+Cr2ZF61fkcaK1UdkH2yEBBKnYjTyWzTJT6KNPcSPaiT7HSdhtMXQuN5wkTX0Xu72KQ1l8S42rlmexS2hSA==",
+      "published_at": "2026-02-16T00:59:39.538Z",
+      "registry_integrity": "sha512-LKg+Cr2ZF61fkcaK1UdkH2yEBBKnYjTyWzTJT6KNPcSPaiT7HSdhtMXQuN5wkTX0Xu72KQ1l8S42rlmexS2hSA==",
+      "registry_shasum": "afbee236b3bd2be331d4e7ce4493bac1718981af",
+      "tarball_bytes": 39858,
+      "tarball_sha256": "3e0b33bb2cac954eddbadc3816f72ca7168bb69660fb298f4e5f1c25bf6ea368"
+    }
+  },
+  "registry": "npm",
+  "to_version": "6.1.3",
+  "version": "attaint/1"
+}

@@ -1,0 +1,118 @@
+{
+  "author_note": "",
+  "envelope_hash": "bbe2675f758d2362f9c0ee67500e8ae5c61c1bd005bef9469a3d18135b011362",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {},
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 2,
+      "candidates": [
+        {
+          "excerpt": "  const url = `https://registry.npmjs.org/${pkg}/-/${pkg.replace(\"@esbuild/\", \"\")}-${packageJSON.version}.tgz`;",
+          "line": 245,
+          "line_bytes": 111,
+          "path": "install.js"
+        },
+        {
+          "excerpt": "    const bytes = extractFileFromTarGzip(await fetch(url), subpath);",
+          "line": 248,
+          "line_bytes": 68,
+          "path": "install.js"
+        }
+      ],
+      "complete": true,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [],
+      "changed_source_count": 3,
+      "changed_sources": [
+        "install.js",
+        "lib/main.js",
+        "package.json"
+      ],
+      "count_from": 7,
+      "count_to": 7,
+      "removed": []
+    },
+    "install_hooks": {
+      "from": {
+        "postinstall": "node install.js"
+      },
+      "to": {
+        "postinstall": "node install.js"
+      }
+    },
+    "license": {
+      "from": "MIT",
+      "to": "MIT"
+    },
+    "maintainers": {
+      "from": [
+        "esbuild"
+      ],
+      "to": [
+        "esbuild"
+      ]
+    },
+    "opaque_candidates": [
+      {
+        "head": "\"use strict\";\nvar __create = Object.create;\nvar __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __getProtoOf = Object.getPrototypeOf;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(\n  // If the importer is in node compatibility mode or this is not an ESM\n  // file that has been converted to a CommonJS file using a Babel-\n  // compatible transform (i.e. \"__esModule\" has not been set), then set\n  // \"default\" to the CommonJS \"module.exports\" for node compatibility.\n  isNodeMode || !mod ",
+        "path": "lib/main.js",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 97214,
+          "hex_escape_runs": 0,
+          "lines": 2533,
+          "longest_line": 515,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      }
+    ],
+    "opaque_coverage": {
+      "candidate_count": 1,
+      "complete": true
+    },
+    "publisher": {
+      "from": "GitHub Actions",
+      "to": "GitHub Actions"
+    },
+    "purpose": {
+      "description": "An extremely fast JavaScript and CSS bundler and minifier.",
+      "keywords": []
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/esbuild",
+    "https://registry.npmjs.org/esbuild/-/esbuild-0.27.7.tgz",
+    "https://registry.npmjs.org/esbuild/-/esbuild-0.28.0.tgz"
+  ],
+  "from_version": "0.27.7",
+  "package": "esbuild",
+  "pin": {
+    "from": {
+      "integrity": "sha512-IxpibTjyVnmrIQo5aqNpCgoACA/dTKLTlhMHihVHhdkxKyPO1uBBthumT0rdHmcsk9uMonIWS0m4FljWzILh3w==",
+      "published_at": "2026-04-02T16:43:44.831Z",
+      "registry_integrity": "sha512-IxpibTjyVnmrIQo5aqNpCgoACA/dTKLTlhMHihVHhdkxKyPO1uBBthumT0rdHmcsk9uMonIWS0m4FljWzILh3w==",
+      "registry_shasum": "bcadce22b2f3fd76f257e3a64f83a64986fea11f",
+      "tarball_bytes": 32601,
+      "tarball_sha256": "0f2b9926e8a4047f81519cb07e14aa95cfac36df7bf8c8e9594910f4bd92e289"
+    },
+    "to": {
+      "integrity": "sha512-sNR9MHpXSUV/XB4zmsFKN+QgVG82Cc7+/aaxJ8Adi8hyOac+EXptIp45QBPaVyX3N70664wRbTcLTOemCAnyqw==",
+      "published_at": "2026-04-02T20:38:46.463Z",
+      "registry_integrity": "sha512-sNR9MHpXSUV/XB4zmsFKN+QgVG82Cc7+/aaxJ8Adi8hyOac+EXptIp45QBPaVyX3N70664wRbTcLTOemCAnyqw==",
+      "registry_shasum": "5dee347ffb3e3874212a35a69836b077b1ce6d96",
+      "tarball_bytes": 34124,
+      "tarball_sha256": "a26129dd91dd4cf0286ca5e35f98c1901bdd67175c0cdc5ca665cfba382d2b7e"
+    }
+  },
+  "registry": "npm",
+  "to_version": "0.28.0",
+  "version": "attaint/1"
+}

@@ -1,0 +1,189 @@
+{
+  "author_note": "",
+  "envelope_hash": "9da7aee965ba2628a1a7064111b87c6d81c15f77da00282cb642d75adc7f5e2c",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {
+        "minimatch": [
+          "^10.2.1",
+          "^10.2.2"
+        ],
+        "minipass": [
+          "^7.1.2",
+          "^7.1.3"
+        ],
+        "path-scurry": [
+          "^2.0.0",
+          "^2.0.2"
+        ]
+      },
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 4,
+      "candidates": [
+        {
+          "excerpt": "d. If using lru-cache in node 14, load an AbortController polyfill from the `node-abort-controller` package. A minimal polyfill is provided for use by LRUCache.fetch(), but it should not be relied upon in other contexts (eg, passing it to other APIs that use AbortController/AbortSignal might have undesirable effects). You may disable this with LRU_CACHE_IGNORE_AC_WARNING=1 in the env.\",\"NO_ABORT_CONTROLLER\",\"ENOTSUP\",t))}}var sr=n=>!as.has(n),V=n=>n&&n===Math.floor(n)&&n>0&&i",
+          "line": 3,
+          "line_bytes": 67694,
+          "path": "dist/commonjs/index.min.js"
+        },
+        {
+          "excerpt": " a{b}c\\nexport const braceExpand = (\\n  pattern: string,\\n  options: MinimatchOptions = {},\\n) => {\\n  assertValidPattern(pattern)\\n\\n  // Thanks to Yeting Li <https://github.com/yetingli> for\\n  // improving this regexp to avoid a ReDOS vulnerability.\\n  if (options.nobrace || !/\\\\{(?:(?!\\\\{).)*\\\\}/.test(pattern)) {\\n    // shortcut. no need to expand.\\n    return [pattern]\\n  }\\n\\n  return expand(pattern, { max: options.braceExpandMax })\\n}\\nminimatch.braceExpand = braceExp",
+          "line": 4,
+          "line_bytes": 363267,
+          "path": "dist/commonjs/index.min.js.map"
+        },
+        {
+          "excerpt": "d. If using lru-cache in node 14, load an AbortController polyfill from the `node-abort-controller` package. A minimal polyfill is provided for use by LRUCache.fetch(), but it should not be relied upon in other contexts (eg, passing it to other APIs that use AbortController/AbortSignal might have undesirable effects). You may disable this with LRU_CACHE_IGNORE_AC_WARNING=1 in the env.\",\"NO_ABORT_CONTROLLER\",\"ENOTSUP\",t))}}var ii=n=>!Oe.has(n);var q=n=>n&&n===Math.floor(n)&&n>",
+          "line": 3,
+          "line_bytes": 63598,
+          "path": "dist/esm/index.min.js"
+        },
+        {
+          "excerpt": " a{b}c\\nexport const braceExpand = (\\n  pattern: string,\\n  options: MinimatchOptions = {},\\n) => {\\n  assertValidPattern(pattern)\\n\\n  // Thanks to Yeting Li <https://github.com/yetingli> for\\n  // improving this regexp to avoid a ReDOS vulnerability.\\n  if (options.nobrace || !/\\\\{(?:(?!\\\\{).)*\\\\}/.test(pattern)) {\\n    // shortcut. no need to expand.\\n    return [pattern]\\n  }\\n\\n  return expand(pattern, { max: options.braceExpandMax })\\n}\\nminimatch.braceExpand = braceExp",
+          "line": 4,
+          "line_bytes": 363267,
+          "path": "dist/esm/index.min.js.map"
+        }
+      ],
+      "complete": false,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [],
+      "changed_source_count": 5,
+      "changed_sources": [
+        "dist/commonjs/index.min.js",
+        "dist/commonjs/index.min.js.map",
+        "dist/esm/index.min.js",
+        "dist/esm/index.min.js.map",
+        "package.json"
+      ],
+      "count_from": 65,
+      "count_to": 65,
+      "listing_truncated": true,
+      "removed": []
+    },
+    "install_hooks": {
+      "from": {
+        "prepare": "tshy && bash scripts/build.sh"
+      },
+      "to": {
+        "prepare": "tshy && bash scripts/build.sh"
+      }
+    },
+    "license": {
+      "from": "BlueOak-1.0.0",
+      "to": "BlueOak-1.0.0"
+    },
+    "maintainers": {
+      "from": [
+        "isaacs"
+      ],
+      "to": [
+        "isaacs"
+      ]
+    },
+    "opaque_candidates": [
+      {
+        "excerpt_truncated": true,
+        "head": "{\n  \"version\": 3,\n  \"sources\": [\"../../node_modules/balanced-match/src/index.ts\", \"../../node_modules/brace-expansion/src/index.ts\", \"../../node_modules/minimatch/src/assert-valid-pattern.ts\", \"../../node_modules/minimatch/src/brace-expressions.ts\", \"../../node_modules/minimatch/src/unescape.ts\", \"../../node_modules/mi",
+        "path": "dist/commonjs/index.min.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 493925,
+          "hex_escape_runs": 0,
+          "lines": 8,
+          "longest_line": 363267,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\n  \"version\": 3,\n  \"sources\": [\"../../node_modules/balanced-match/src/index.ts\", \"../../node_modules/brace-expansion/src/index.ts\", \"../../node_modules/minimatch/src/assert-valid-pattern.ts\", \"../../node_modules/minimatch/src/brace-expressions.ts\", \"../../node_modules/minimatch/src/unescape.ts\", \"../../node_modules/mi",
+        "path": "dist/esm/index.min.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 491379,
+          "hex_escape_runs": 0,
+          "lines": 8,
+          "longest_line": 363267,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "\"use strict\";var R=(n,t)=>()=>(t||n((t={exports:{}}).exports,t),t.exports);var Ge=R(Y=>{\"use strict\";Object.defineProperty(Y,\"__esModule\",{value:!0});Y.range=Y.balanced=void 0;var Gs=(n,t,e)=>{let s=n instanceof RegExp?Ie(n,e):n,i=t instanceof RegExp?Ie(t,e):t,r=s!==null&&i!=null&&(0,Y.range)(s,i,e);return r&&{start:r[",
+        "path": "dist/commonjs/index.min.js",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 88495,
+          "hex_escape_runs": 0,
+          "lines": 5,
+          "longest_line": 67694,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "var Gt=(n,t,e)=>{let s=n instanceof RegExp?ce(n,e):n,i=t instanceof RegExp?ce(t,e):t,r=s!==null&&i!=null&&ss(s,i,e);return r&&{start:r[0],end:r[1],pre:e.slice(0,r[0]),body:e.slice(r[0]+s.length,r[1]),post:e.slice(r[1]+i.length)}},ce=(n,t)=>{let e=t.match(n);return e?e[0]:null},ss=(n,t,e)=>{let s,i,r,o,h,a=e.indexOf(n),",
+        "path": "dist/esm/index.min.js",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 82749,
+          "hex_escape_runs": 0,
+          "lines": 5,
+          "longest_line": 63598,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      }
+    ],
+    "opaque_coverage": {
+      "candidate_count": 4,
+      "complete": true
+    },
+    "publisher": {
+      "from": "isaacs",
+      "to": "isaacs"
+    },
+    "purpose": {
+      "description": "the most correct and second fastest glob implementation in JavaScript",
+      "keywords": []
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/glob",
+    "https://registry.npmjs.org/glob/-/glob-13.0.5.tgz",
+    "https://registry.npmjs.org/glob/-/glob-13.0.6.tgz"
+  ],
+  "from_version": "13.0.5",
+  "package": "glob",
+  "pin": {
+    "from": {
+      "integrity": "sha512-BzXxZg24Ibra1pbQ/zE7Kys4Ua1ks7Bn6pKLkVPZ9FZe4JQS6/Q7ef3LG1H+k7lUf5l4T3PLSyYyYJVYUvfgTw==",
+      "published_at": "2026-02-17T16:25:26.053Z",
+      "registry_integrity": "sha512-BzXxZg24Ibra1pbQ/zE7Kys4Ua1ks7Bn6pKLkVPZ9FZe4JQS6/Q7ef3LG1H+k7lUf5l4T3PLSyYyYJVYUvfgTw==",
+      "registry_shasum": "a48f760c6312b1a19d2950fcb577384221c4ec00",
+      "tarball_bytes": 363753,
+      "tarball_sha256": "afdbb686c86592fd659d73277c6bb7ccc01f368a3e5e9367e54356a3deef0610"
+    },
+    "to": {
+      "integrity": "sha512-Wjlyrolmm8uDpm/ogGyXZXb1Z+Ca2B8NbJwqBVg0axK9GbBeoS7yGV6vjXnYdGm6X53iehEuxxbyiKp8QmN4Vw==",
+      "published_at": "2026-02-19T17:26:33.269Z",
+      "registry_integrity": "sha512-Wjlyrolmm8uDpm/ogGyXZXb1Z+Ca2B8NbJwqBVg0axK9GbBeoS7yGV6vjXnYdGm6X53iehEuxxbyiKp8QmN4Vw==",
+      "registry_shasum": "078666566a425147ccacfbd2e332deb66a2be71d",
+      "tarball_bytes": 364690,
+      "tarball_sha256": "020f184fa9c4e2905cf33c3d1dbba4b25a58e05f6f785f81cc931394e07b8970"
+    }
+  },
+  "registry": "npm",
+  "to_version": "13.0.6",
+  "version": "attaint/1"
+}

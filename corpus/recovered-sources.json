@@ -1,0 +1,14 @@
+{
+  "event-stream@3.3.6": {
+    "copies": 0,
+    "recovered": false
+  },
+  "flatmap-stream@0.1.1": {
+    "copies": 0,
+    "recovered": false
+  },
+  "node-ipc@9.2.2": {
+    "copies": 0,
+    "recovered": false
+  }
+}

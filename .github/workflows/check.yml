@@ -1,0 +1,65 @@
+name: Attaint checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      attestation:
+        description: Finalized attestation ID for the event-stream example
+        required: false
+        type: string
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: python3 test/run_tests.py
+      - run: ATTAINT_CONTRACT_PATH="$PWD/contracts/attaint.bradbury.py" python3 test/run_tests.py
+      - run: python3 -m unittest discover -s test -p 'test_*.py'
+      - run: npm run build
+  live-gate:
+    if: github.event_name == 'workflow_dispatch' && inputs.attestation != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm install --global genlayer@0.39.1
+      - name: Read the pinned finalized gate
+        env:
+          ATTESTATION: ${{ inputs.attestation }}
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess
+          manifest = json.load(open('runs/deployment.json'))
+          command = ['python3', 'cli/attaint_gate.py',
+                     '--contract', manifest['contract'],
+                     '--policy', str(manifest['policy_id']),
+                     '--policy-hash', manifest['policy_hash'],
+                     '--code-hash', manifest['code_sha256'],
+                     '--attestation', os.environ['ATTESTATION'],
+                     '--envelope', 'corpus/event-stream-3.3.4-3.3.5.json',
+                     '--out', 'live-gate.json']
+          raise SystemExit(subprocess.call(command))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: live-gate
+          path: live-gate.json

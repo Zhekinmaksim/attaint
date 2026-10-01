@@ -1,0 +1,266 @@
+{
+  "author_note": "",
+  "envelope_hash": "71846a5dfecc935efe70aabb96b3085c2d934191e2b605960415359fd92608bf",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {
+        "cliui": [
+          "^7.0.2",
+          "^8.0.1"
+        ],
+        "string-width": [
+          "^4.2.0",
+          "^4.2.3"
+        ],
+        "yargs-parser": [
+          "^20.2.2",
+          "^21.1.1"
+        ]
+      },
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 2,
+      "candidates": [
+        {
+          "excerpt": "ith `yargs.version(false)` if using \"version\" as an option',\"- Use the built-in `yargs.version` method instead (if applicable)\",\"- Use a different option key\",\"https://yargs.js.org/docs/#api-reference-version\"].join(\"\\n\"),void 0,\"versionWarning\"),v(this,et,\"f\").key[t]=!0,e.alias&&this.alias(t,e.alias);const s=e.deprecate||e.deprecated;s&&this.deprecateOption(t,s);const i=e.demand||e.required||e.require;i&&this.demand(t,i),e.demandOption&&this.demandOption(t,\"string\"==typeof e",
+          "line": 1,
+          "line_bytes": 61905,
+          "path": "build/index.cjs"
+        },
+        {
+          "excerpt": "                    'https://yargs.js.org/docs/#api-reference-version',",
+          "line": 595,
+          "line_bytes": 71,
+          "path": "build/lib/yargs-factory.js"
+        }
+      ],
+      "complete": false,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [
+        "build/lib/utils/maybe-async-result.js",
+        "locales/cs.json",
+        "locales/uk_UA.json",
+        "locales/uz.json",
+        "yargs.mjs"
+      ],
+      "changed_source_count": 26,
+      "changed_sources": [
+        "browser.mjs",
+        "build/index.cjs",
+        "build/lib/command.js",
+        "build/lib/completion-templates.js",
+        "build/lib/completion.js",
+        "build/lib/middleware.js",
+        "build/lib/usage.js",
+        "build/lib/utils/levenshtein.js",
+        "build/lib/utils/maybe-async-result.js",
+        "build/lib/validation.js",
+        "build/lib/yargs-factory.js",
+        "build/lib/yerror.js",
+        "index.cjs",
+        "index.mjs",
+        "lib/platform-shims/browser.mjs",
+        "lib/platform-shims/esm.mjs",
+        "locales/cs.json",
+        "locales/en.json",
+        "locales/fi.json",
+        "locales/ko.json"
+      ],
+      "count_from": 58,
+      "count_to": 63,
+      "listing_truncated": true,
+      "removed": []
+    },
+    "install_hooks": {
+      "from": {
+        "prepare": "npm run compile"
+      },
+      "to": {
+        "prepare": "npm run compile"
+      }
+    },
+    "license": {
+      "from": "MIT",
+      "to": "MIT"
+    },
+    "maintainers": {
+      "from": [
+        "bcoe",
+        "oss-bot",
+        "shadowspawn"
+      ],
+      "to": [
+        "bcoe",
+        "oss-bot",
+        "shadowspawn"
+      ]
+    },
+    "opaque_candidates": [
+      {
+        "excerpt_truncated": true,
+        "head": "\"use strict\";var t=require(\"assert\");class e extends Error{constructor(t){super(t||\"yargs error\"),this.name=\"YError\",Error.captureStackTrace&&Error.captureStackTrace(this,e)}}let s,i=[];function n(t,o,a,h){s=h;let l={};if(Object.prototype.hasOwnProperty.call(t,\"extends\")){if(\"string\"!=typeof t.extends)return l;const r=",
+        "path": "build/index.cjs",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 61906,
+          "hex_escape_runs": 0,
+          "lines": 2,
+          "longest_line": 61905,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {\n    if (kind === \"m\") throw new TypeError(\"Private method is not writable\");\n    if (kind === \"a\" && !f) throw new TypeError(\"Private accessor was defined without a setter\");\n    if (typeof state === \"func",
+        "path": "build/lib/yargs-factory.js",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 77635,
+          "hex_escape_runs": 0,
+          "lines": 1513,
+          "longest_line": 1540,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\n  \"Commands:\": \"\u041a\u043e\u043c\u0430\u043d\u0434\u044b:\",\n  \"Options:\": \"\u041e\u043f\u0446\u0438\u0438:\",\n  \"Examples:\": \"\u041f\u0440\u0438\u043c\u0435\u0440\u044b:\",\n  \"boolean\": \"\u0431\u0443\u043b\u0435\u0432\u044b\u0439 \u0442\u0438\u043f\",\n  \"count\": \"\u043f\u043e\u0434\u0441\u0447\u0435\u0442\",\n  \"string\": \"\u0441\u0442\u0440\u043e\u043a\u043e\u0432\u043e\u0439 \u0442\u0438\u043f\",\n  \"number\": \"\u0447\u0438\u0441\u043b\u043e\",\n  \"array\": \"\u043c\u0430\u0441\u0441\u0438\u0432\",\n  \"required\": \"\u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e\",\n  \"default\": \"\u043f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e\",\n  \"default:\": \"\u043f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e:\",\n  \"choices:\": \"\u0432\u043e\u0437\u043c\u043e\u0436\u043d\u043e\u0441\u0442\u0438:\",\n ",
+        "path": "locales/ru.json",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 2972,
+          "hex_escape_runs": 0,
+          "lines": 52,
+          "longest_line": 139,
+          "nonprintable_milli": 561
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\n  \"Commands:\": \"\u041a\u043e\u043c\u0430\u043d\u0434\u0438:\",\n  \"Options:\": \"\u041e\u043f\u0446\u0456\u0457:\",\n  \"Examples:\": \"\u041f\u0440\u0438\u043a\u043b\u0430\u0434\u0438:\",\n  \"boolean\": \"boolean\",\n  \"count\": \"\u043a\u0456\u043b\u044c\u043a\u0456\u0441\u0442\u044c\",\n  \"string\": \"\u0441\u0442\u0440\u043e\u043a\u0430\",\n  \"number\": \"\u0447\u0438\u0441\u043b\u043e\",\n  \"array\": \"\u043c\u0430\u0441\u0438\u0432\u0430\",\n  \"required\": \"\u043e\u0431\u043e\u0432'\u044f\u0437\u043a\u043e\u0432\u043e\",\n  \"default\": \"\u0437\u0430 \u0437\u0430\u043c\u043e\u0432\u0447\u0443\u0432\u0430\u043d\u043d\u044f\u043c\",\n  \"default:\": \"\u0437\u0430 \u0437\u0430\u043c\u043e\u0432\u0447\u0443\u0432\u0430\u043d\u043d\u044f\u043c:\",\n  \"choices:\": \"\u0434\u043e\u0441\u0442\u0443\u043f\u043d\u0456 \u0432\u0430\u0440\u0456\u0430\u043d",
+        "path": "locales/uk_UA.json",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 2748,
+          "hex_escape_runs": 0,
+          "lines": 52,
+          "longest_line": 124,
+          "nonprintable_milli": 515
+        },
+        "status": "added"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\n  \"Commands:\": \"\uba85\ub839:\",\n  \"Options:\": \"\uc635\uc158:\",\n  \"Examples:\": \"\uc608\uc2dc:\",\n  \"boolean\": \"\ubd88\ub9ac\uc5b8\",\n  \"count\": \"\uac1c\uc218\",\n  \"string\": \"\ubb38\uc790\uc5f4\",\n  \"number\": \"\uc22b\uc790\",\n  \"array\": \"\ubc30\uc5f4\",\n  \"required\": \"\ud544\uc218\",\n  \"default\": \"\uae30\ubcf8\uac12\",\n  \"default:\": \"\uae30\ubcf8\uac12:\",\n  \"choices:\": \"\uc120\ud0dd\uc9c0:\",\n  \"aliases:\": \"\ubcc4\uce6d:\",\n  \"generated-value\": \"\uc0dd\uc131\ub41c \uac12\",\n  \"Not enough non-option ar",
+        "path": "locales/ko.json",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 2257,
+          "hex_escape_runs": 0,
+          "lines": 50,
+          "longest_line": 117,
+          "nonprintable_milli": 439
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\n  \"Commands:\": \"Komennot:\",\n  \"Options:\": \"Valinnat:\",\n  \"Examples:\": \"Esimerkkej\u00e4:\",\n  \"boolean\": \"totuusarvo\",\n  \"count\": \"lukum\u00e4\u00e4r\u00e4\",\n  \"string\": \"merkkijono\",\n  \"number\": \"numero\",\n  \"array\": \"taulukko\",\n  \"required\": \"pakollinen\",\n  \"default\": \"oletusarvo\",\n  \"default:\": \"oletusarvo:\",\n  \"choices:\": \"vaihtoehdot",
+        "path": "locales/fi.json",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 2113,
+          "hex_escape_runs": 0,
+          "lines": 50,
+          "longest_line": 108,
+          "nonprintable_milli": 29
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\n    \"Commands:\": \"\u547d\u4ee4\uff1a\",\n    \"Options:\": \"\u9078\u9805\uff1a\",\n    \"Examples:\": \"\u7bc4\u4f8b\uff1a\",\n    \"boolean\": \"\u5e03\u6797\",\n    \"count\": \"\u6b21\u6578\",\n    \"string\": \"\u5b57\u4e32\",\n    \"number\": \"\u6578\u5b57\",\n    \"array\": \"\u9663\u5217\",\n    \"required\": \"\u5fc5\u586b\",\n    \"default\": \"\u9810\u8a2d\u503c\",\n    \"default:\": \"\u9810\u8a2d\u503c\uff1a\",\n    \"choices:\": \"\u53ef\u9078\u503c\uff1a\",\n    \"aliases:\": \"\u5225\u540d\uff1a\",\n    \"generated-value\": \"\u751f\u6210\u7684\u503c\",\n  ",
+        "path": "locales/zh_TW.json",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 2055,
+          "hex_escape_runs": 0,
+          "lines": 52,
+          "longest_line": 100,
+          "nonprintable_milli": 339
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\n  \"Commands:\": \"P\u0159\u00edkazy:\",\n  \"Options:\": \"Mo\u017enosti:\",\n  \"Examples:\": \"P\u0159\u00edklady:\",\n  \"boolean\": \"logick\u00e1 hodnota\",\n  \"count\": \"po\u010det\",\n  \"string\": \"\u0159et\u011bzec\",\n  \"number\": \"\u010d\u00edslo\",\n  \"array\": \"pole\",\n  \"required\": \"povinn\u00e9\",\n  \"default\": \"v\u00fdchoz\u00ed\",\n  \"default:\": \"v\u00fdchoz\u00ed:\",\n  \"choices:\": \"volby:\",\n  \"aliases:\": \"aliasy:",
+        "path": "locales/cs.json",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 2024,
+          "hex_escape_runs": 0,
+          "lines": 52,
+          "longest_line": 94,
+          "nonprintable_milli": 81
+        },
+        "status": "added"
+      }
+    ],
+    "opaque_coverage": {
+      "candidate_count": 8,
+      "complete": true
+    },
+    "publisher": {
+      "from": "shadowspawn",
+      "to": "shadowspawn"
+    },
+    "purpose": {
+      "description": "yargs the modern, pirate-themed, successor to optimist.",
+      "keywords": [
+        "argument",
+        "args",
+        "option",
+        "parser",
+        "parsing",
+        "cli",
+        "command"
+      ]
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/yargs",
+    "https://registry.npmjs.org/yargs/-/yargs-16.2.2.tgz",
+    "https://registry.npmjs.org/yargs/-/yargs-17.7.3.tgz"
+  ],
+  "from_version": "16.2.2",
+  "package": "yargs",
+  "pin": {
+    "from": {
+      "integrity": "sha512-Nt9ZJjXTv5R8MHbqby/wXQ6Gi0Bb3TcYZkR1bzuL4yB2OxWPkXknz513gEF0GoA6tn00UpbPvERW8rzCuWCA6w==",
+      "published_at": "2026-06-19T01:52:16.361Z",
+      "registry_integrity": "sha512-Nt9ZJjXTv5R8MHbqby/wXQ6Gi0Bb3TcYZkR1bzuL4yB2OxWPkXknz513gEF0GoA6tn00UpbPvERW8rzCuWCA6w==",
+      "registry_shasum": "c56731dca0d2788ae0866dd3c83907d6bab85f7d",
+      "tarball_bytes": 62905,
+      "tarball_sha256": "e53243c7e81b9202012a259d03ebac05df2428886c9c331f8539fd8059030a7f"
+    },
+    "to": {
+      "integrity": "sha512-GZtjxm/J/4TSxuL3FNYjCmLktBTnIw/rVmKSIyKeYAZpmJB2ig9VauCC5xsa82GNKVKDAqpOn3KVzNt0zmrU0g==",
+      "published_at": "2026-06-19T02:08:41.275Z",
+      "registry_integrity": "sha512-GZtjxm/J/4TSxuL3FNYjCmLktBTnIw/rVmKSIyKeYAZpmJB2ig9VauCC5xsa82GNKVKDAqpOn3KVzNt0zmrU0g==",
+      "registry_shasum": "779dffe6bcafec596a7172e983289a588647faaa",
+      "tarball_bytes": 73972,
+      "tarball_sha256": "76ac30834674f0d8da9c7bfedb175f6ada260420e6475edfdcc551c601f8717e"
+    }
+  },
+  "registry": "npm",
+  "to_version": "17.7.3",
+  "version": "attaint/1"
+}

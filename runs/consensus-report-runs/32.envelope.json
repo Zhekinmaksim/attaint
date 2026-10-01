@@ -1,0 +1,222 @@
+{
+  "author_note": "",
+  "envelope_hash": "0128f0256716c3e2d451506896fb6dcfa367f1caf6e3f14ff0722f8f3c37c07d",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {},
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "excerpt": "            throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');",
+          "line": 6,
+          "line_bytes": 136,
+          "path": "dist/rng.js"
+        }
+      ],
+      "complete": true,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [
+        "dist-node/bin/uuid",
+        "dist-node/index.js",
+        "dist-node/max.js",
+        "dist-node/md5.js",
+        "dist-node/native.js",
+        "dist-node/nil.js",
+        "dist-node/parse.js",
+        "dist-node/regex.js",
+        "dist-node/rng.js",
+        "dist-node/sha1.js",
+        "dist-node/stringify.js",
+        "dist-node/types.js",
+        "dist-node/uuid-bin.js",
+        "dist-node/v1.js",
+        "dist-node/v1ToV6.js",
+        "dist-node/v3.js",
+        "dist-node/v35.js",
+        "dist-node/v4.js",
+        "dist-node/v5.js",
+        "dist-node/v6.js"
+      ],
+      "changed_source_count": 70,
+      "changed_sources": [
+        "dist-node/index.js",
+        "dist-node/max.js",
+        "dist-node/md5.js",
+        "dist-node/native.js",
+        "dist-node/nil.js",
+        "dist-node/parse.js",
+        "dist-node/regex.js",
+        "dist-node/rng.js",
+        "dist-node/sha1.js",
+        "dist-node/stringify.js",
+        "dist-node/types.js",
+        "dist-node/uuid-bin.js",
+        "dist-node/v1.js",
+        "dist-node/v1ToV6.js",
+        "dist-node/v3.js",
+        "dist-node/v35.js",
+        "dist-node/v4.js",
+        "dist-node/v5.js",
+        "dist-node/v6.js",
+        "dist-node/v6ToV1.js"
+      ],
+      "count_from": 190,
+      "count_to": 73,
+      "listing_truncated": true,
+      "removed": [
+        "dist/cjs-browser/index.d.ts",
+        "dist/cjs-browser/index.js",
+        "dist/cjs-browser/max.d.ts",
+        "dist/cjs-browser/max.js",
+        "dist/cjs-browser/md5.d.ts",
+        "dist/cjs-browser/md5.js",
+        "dist/cjs-browser/native.d.ts",
+        "dist/cjs-browser/native.js",
+        "dist/cjs-browser/nil.d.ts",
+        "dist/cjs-browser/nil.js",
+        "dist/cjs-browser/package.json",
+        "dist/cjs-browser/parse.d.ts",
+        "dist/cjs-browser/parse.js",
+        "dist/cjs-browser/regex.d.ts",
+        "dist/cjs-browser/regex.js",
+        "dist/cjs-browser/rng.d.ts",
+        "dist/cjs-browser/rng.js",
+        "dist/cjs-browser/sha1.d.ts",
+        "dist/cjs-browser/sha1.js",
+        "dist/cjs-browser/stringify.d.ts"
+      ]
+    },
+    "install_hooks": {
+      "from": {
+        "prepare": "husky"
+      },
+      "to": {
+        "prepare": "husky"
+      }
+    },
+    "license": {
+      "from": "MIT",
+      "to": "MIT"
+    },
+    "maintainers": {
+      "from": [
+        "broofa",
+        "ctavan"
+      ],
+      "to": [
+        "broofa",
+        "ctavan"
+      ]
+    },
+    "opaque_candidates": [
+      {
+        "excerpt_truncated": true,
+        "head": "import parse from './parse.js';\nimport { unsafeStringify } from './stringify.js';\nexport default function v1ToV6(uuid) {\n    const v1Bytes = typeof uuid === 'string' ? parse(uuid) : uuid;\n    const v6Bytes = _v1ToV6(v1Bytes);\n    return typeof uuid === 'string' ? unsafeStringify(v6Bytes) : v6Bytes;\n}\nfunction _v1ToV6(v",
+        "path": "dist-node/v1ToV6.js",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 842,
+          "hex_escape_runs": 0,
+          "lines": 11,
+          "longest_line": 509,
+          "nonprintable_milli": 0
+        },
+        "status": "added"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "import parse from './parse.js';\nimport { unsafeStringify } from './stringify.js';\nexport default function v6ToV1(uuid) {\n    const v6Bytes = typeof uuid === 'string' ? parse(uuid) : uuid;\n    const v1Bytes = _v6ToV1(v6Bytes);\n    return typeof uuid === 'string' ? unsafeStringify(v1Bytes) : v1Bytes;\n}\nfunction _v6ToV1(v",
+        "path": "dist-node/v6ToV1.js",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 842,
+          "hex_escape_runs": 0,
+          "lines": 11,
+          "longest_line": 509,
+          "nonprintable_milli": 0
+        },
+        "status": "added"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "import parse from './parse.js';\nimport { unsafeStringify } from './stringify.js';\nexport default function v1ToV6(uuid) {\n    const v1Bytes = typeof uuid === 'string' ? parse(uuid) : uuid;\n    const v6Bytes = _v1ToV6(v1Bytes);\n    return typeof uuid === 'string' ? unsafeStringify(v6Bytes) : v6Bytes;\n}\nfunction _v1ToV6(v",
+        "path": "dist/v1ToV6.js",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 842,
+          "hex_escape_runs": 0,
+          "lines": 11,
+          "longest_line": 509,
+          "nonprintable_milli": 0
+        },
+        "status": "added"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "import parse from './parse.js';\nimport { unsafeStringify } from './stringify.js';\nexport default function v6ToV1(uuid) {\n    const v6Bytes = typeof uuid === 'string' ? parse(uuid) : uuid;\n    const v1Bytes = _v6ToV1(v6Bytes);\n    return typeof uuid === 'string' ? unsafeStringify(v1Bytes) : v1Bytes;\n}\nfunction _v6ToV1(v",
+        "path": "dist/v6ToV1.js",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 842,
+          "hex_escape_runs": 0,
+          "lines": 11,
+          "longest_line": 509,
+          "nonprintable_milli": 0
+        },
+        "status": "added"
+      }
+    ],
+    "opaque_coverage": {
+      "candidate_count": 4,
+      "complete": true
+    },
+    "publisher": {
+      "from": "GitHub Actions",
+      "to": "GitHub Actions"
+    },
+    "purpose": {
+      "description": "RFC9562 UUIDs",
+      "keywords": [
+        "uuid",
+        "guid",
+        "rfc4122",
+        "rfc9562"
+      ]
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/uuid",
+    "https://registry.npmjs.org/uuid/-/uuid-11.1.1.tgz",
+    "https://registry.npmjs.org/uuid/-/uuid-13.0.2.tgz"
+  ],
+  "from_version": "11.1.1",
+  "package": "uuid",
+  "pin": {
+    "from": {
+      "integrity": "sha512-vIYxrBCC/N/K+Js3qSN88go7kIfNPssr/hHCesKCQNAjmgvYS2oqr69kIufEG+O4+PfezOH4EbIeHCfFov8ZgQ==",
+      "published_at": "2026-04-29T15:17:24.795Z",
+      "registry_integrity": "sha512-vIYxrBCC/N/K+Js3qSN88go7kIfNPssr/hHCesKCQNAjmgvYS2oqr69kIufEG+O4+PfezOH4EbIeHCfFov8ZgQ==",
+      "registry_shasum": "f6d81d2e1c65d00762e5e29b16c5d2d995e208ad",
+      "tarball_bytes": 19965,
+      "tarball_sha256": "82739fc18cf288807d2314f6f52fe8887c6359751569a8252572f16abb151141"
+    },
+    "to": {
+      "integrity": "sha512-vzi9uRZ926x4XV73S/4qQaTwPXM2JBj6/6lI/byHH1jOpCzb0zDbfytgA9LcN/hzb2l7WQSQnxITOVx5un/wGw==",
+      "published_at": "2026-05-04T13:37:27.339Z",
+      "registry_integrity": "sha512-vzi9uRZ926x4XV73S/4qQaTwPXM2JBj6/6lI/byHH1jOpCzb0zDbfytgA9LcN/hzb2l7WQSQnxITOVx5un/wGw==",
+      "registry_shasum": "41bc9c07b12f665089c205f6507976adbdf84ff8",
+      "tarball_bytes": 15677,
+      "tarball_sha256": "510222672a897f9668bd96ddfc7a2d29f3d9845206222f40a6577802e526960f"
+    }
+  },
+  "registry": "npm",
+  "to_version": "13.0.2",
+  "version": "attaint/1"
+}

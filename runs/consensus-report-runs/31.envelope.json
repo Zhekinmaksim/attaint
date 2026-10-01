@@ -1,0 +1,119 @@
+{
+  "author_note": "",
+  "envelope_hash": "2da9dcb02975b9705400038c7a718a88256035f68d4327656dcdc309be21791c",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {},
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 0,
+      "candidates": [],
+      "complete": true,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [],
+      "changed_source_count": 20,
+      "changed_sources": [
+        "dist-node/rng.js",
+        "dist-node/v35.js",
+        "dist-node/v4.js",
+        "dist/index.d.ts",
+        "dist/md5.js",
+        "dist/parse.d.ts",
+        "dist/rng.js",
+        "dist/sha1.js",
+        "dist/types.d.ts",
+        "dist/v1.d.ts",
+        "dist/v1ToV6.d.ts",
+        "dist/v3.d.ts",
+        "dist/v35.d.ts",
+        "dist/v35.js",
+        "dist/v4.d.ts",
+        "dist/v4.js",
+        "dist/v5.d.ts",
+        "dist/v6.d.ts",
+        "dist/v7.d.ts",
+        "package.json"
+      ],
+      "count_from": 73,
+      "count_to": 70,
+      "removed": [
+        "dist-node/native.js",
+        "dist/native.d.ts",
+        "dist/native.js"
+      ]
+    },
+    "install_hooks": {
+      "from": {
+        "prepare": "husky"
+      },
+      "to": {
+        "prepare": "lefthook install"
+      }
+    },
+    "license": {
+      "from": "MIT",
+      "to": "MIT"
+    },
+    "maintainers": {
+      "from": [
+        "broofa",
+        "ctavan"
+      ],
+      "to": [
+        "broofa",
+        "ctavan"
+      ]
+    },
+    "opaque_candidates": [],
+    "opaque_coverage": {
+      "candidate_count": 0,
+      "complete": true
+    },
+    "publisher": {
+      "from": "GitHub Actions",
+      "to": "GitHub Actions"
+    },
+    "purpose": {
+      "description": "RFC9562 UUIDs",
+      "keywords": [
+        "uuid",
+        "guid",
+        "rfc4122",
+        "rfc9562"
+      ]
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/uuid",
+    "https://registry.npmjs.org/uuid/-/uuid-13.0.2.tgz",
+    "https://registry.npmjs.org/uuid/-/uuid-14.0.1.tgz"
+  ],
+  "from_version": "13.0.2",
+  "package": "uuid",
+  "pin": {
+    "from": {
+      "integrity": "sha512-vzi9uRZ926x4XV73S/4qQaTwPXM2JBj6/6lI/byHH1jOpCzb0zDbfytgA9LcN/hzb2l7WQSQnxITOVx5un/wGw==",
+      "published_at": "2026-05-04T13:37:27.339Z",
+      "registry_integrity": "sha512-vzi9uRZ926x4XV73S/4qQaTwPXM2JBj6/6lI/byHH1jOpCzb0zDbfytgA9LcN/hzb2l7WQSQnxITOVx5un/wGw==",
+      "registry_shasum": "41bc9c07b12f665089c205f6507976adbdf84ff8",
+      "tarball_bytes": 15677,
+      "tarball_sha256": "510222672a897f9668bd96ddfc7a2d29f3d9845206222f40a6577802e526960f"
+    },
+    "to": {
+      "integrity": "sha512-6ZxzVpzDXDa3bJWaHilVayA+BH/1zmxCJoVgvmqJnid/gPoKHxUrS/aC/T6LGQtNHT+XHG9fXPJB4d+IrU30Ew==",
+      "published_at": "2026-06-20T11:56:02.499Z",
+      "registry_integrity": "sha512-6ZxzVpzDXDa3bJWaHilVayA+BH/1zmxCJoVgvmqJnid/gPoKHxUrS/aC/T6LGQtNHT+XHG9fXPJB4d+IrU30Ew==",
+      "registry_shasum": "8a5975b3e038902bfd169a10b5202f5ec0cf3faf",
+      "tarball_bytes": 14938,
+      "tarball_sha256": "e062c57ed120ea135478f305da04802bf69eab23fbc0ca2bae6989b6855390c4"
+    }
+  },
+  "registry": "npm",
+  "to_version": "14.0.1",
+  "version": "attaint/1"
+}

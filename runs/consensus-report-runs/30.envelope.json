@@ -1,0 +1,100 @@
+{
+  "author_note": "",
+  "envelope_hash": "981644261ed155d155774f6ffe43270d5428be772fd70a7a19f5e30d9720ef72",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {},
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 0,
+      "candidates": [],
+      "complete": true,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [],
+      "changed_source_count": 5,
+      "changed_sources": [
+        "dist-node/v1.js",
+        "dist-node/v7.js",
+        "dist/v1.js",
+        "dist/v7.js",
+        "package.json"
+      ],
+      "count_from": 70,
+      "count_to": 70,
+      "removed": []
+    },
+    "install_hooks": {
+      "from": {
+        "prepare": "lefthook install"
+      },
+      "to": {
+        "prepare": "lefthook install"
+      }
+    },
+    "license": {
+      "from": "MIT",
+      "to": "MIT"
+    },
+    "maintainers": {
+      "from": [
+        "broofa",
+        "ctavan"
+      ],
+      "to": [
+        "broofa",
+        "ctavan"
+      ]
+    },
+    "opaque_candidates": [],
+    "opaque_coverage": {
+      "candidate_count": 0,
+      "complete": true
+    },
+    "publisher": {
+      "from": "GitHub Actions",
+      "to": "GitHub Actions"
+    },
+    "purpose": {
+      "description": "RFC9562 UUIDs",
+      "keywords": [
+        "uuid",
+        "guid",
+        "rfc4122",
+        "rfc9562"
+      ]
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/uuid",
+    "https://registry.npmjs.org/uuid/-/uuid-14.0.1.tgz",
+    "https://registry.npmjs.org/uuid/-/uuid-14.0.2.tgz"
+  ],
+  "from_version": "14.0.1",
+  "package": "uuid",
+  "pin": {
+    "from": {
+      "integrity": "sha512-6ZxzVpzDXDa3bJWaHilVayA+BH/1zmxCJoVgvmqJnid/gPoKHxUrS/aC/T6LGQtNHT+XHG9fXPJB4d+IrU30Ew==",
+      "published_at": "2026-06-20T11:56:02.499Z",
+      "registry_integrity": "sha512-6ZxzVpzDXDa3bJWaHilVayA+BH/1zmxCJoVgvmqJnid/gPoKHxUrS/aC/T6LGQtNHT+XHG9fXPJB4d+IrU30Ew==",
+      "registry_shasum": "8a5975b3e038902bfd169a10b5202f5ec0cf3faf",
+      "tarball_bytes": 14938,
+      "tarball_sha256": "e062c57ed120ea135478f305da04802bf69eab23fbc0ca2bae6989b6855390c4"
+    },
+    "to": {
+      "integrity": "sha512-xZe/16rV4aa+HGSOCiY2YeLT1OybRLrrkL/Rqaq7p7GMVXjFh+6wN4oMYgjFmnSnhY8t6Xpdl2l9qmnHYuMHwQ==",
+      "published_at": "2026-08-18T18:21:56.060Z",
+      "registry_integrity": "sha512-xZe/16rV4aa+HGSOCiY2YeLT1OybRLrrkL/Rqaq7p7GMVXjFh+6wN4oMYgjFmnSnhY8t6Xpdl2l9qmnHYuMHwQ==",
+      "registry_shasum": "d5ae03e4db0881c87271f8b0b9bd7312d02c799a",
+      "tarball_bytes": 14956,
+      "tarball_sha256": "30e122d0715991b19b98043ea8eb275e9083315c8b9cb9e9ba66c249ef936c6b"
+    }
+  },
+  "registry": "npm",
+  "to_version": "14.0.2",
+  "version": "attaint/1"
+}

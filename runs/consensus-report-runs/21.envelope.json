@@ -1,0 +1,198 @@
+{
+  "author_note": "",
+  "envelope_hash": "0d152e1f80ab2ff55de5e6d8f242bf10a6418acdcee156c236b60accd2abc0e5",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {
+        "cliui": [
+          "^8.0.1",
+          "^9.0.1"
+        ],
+        "string-width": [
+          "^4.2.3",
+          "^8.2.1"
+        ],
+        "yargs-parser": [
+          "^21.1.1",
+          "^22.0.0"
+        ]
+      },
+      "removed": [
+        "require-directory"
+      ]
+    },
+    "egress": {
+      "candidate_count": 3,
+      "candidates": [
+        {
+          "excerpt": "    # see https://stackoverflow.com/a/40944195/7080036 for the spaces-handling awk",
+          "line": 16,
+          "line_bytes": 82,
+          "path": "build/lib/completion-templates.js"
+        },
+        {
+          "excerpt": "import cliui from 'https://unpkg.com/cliui@8.0.1/index.mjs'; // eslint-disable-line",
+          "line": 4,
+          "line_bytes": 83,
+          "path": "lib/platform-shims/browser.mjs"
+        },
+        {
+          "excerpt": "import Parser from 'https://unpkg.com/yargs-parser@21.1.1/browser.js'; // eslint-disable-line",
+          "line": 5,
+          "line_bytes": 93,
+          "path": "lib/platform-shims/browser.mjs"
+        }
+      ],
+      "complete": true,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [
+        "browser.d.ts",
+        "locales/he.json",
+        "locales/ka.json"
+      ],
+      "changed_source_count": 12,
+      "changed_sources": [
+        "browser.d.ts",
+        "build/lib/command.js",
+        "build/lib/completion-templates.js",
+        "build/lib/utils/apply-extends.js",
+        "build/lib/yargs-factory.js",
+        "index.mjs",
+        "lib/platform-shims/browser.mjs",
+        "lib/platform-shims/esm.mjs",
+        "locales/de.json",
+        "locales/he.json",
+        "locales/ka.json",
+        "package.json"
+      ],
+      "count_from": 63,
+      "count_to": 59,
+      "removed": [
+        "CHANGELOG.md",
+        "build/index.cjs",
+        "helpers/index.js",
+        "index.cjs",
+        "yargs",
+        "yargs.cjs",
+        "yargs.mjs"
+      ]
+    },
+    "install_hooks": {
+      "from": {
+        "prepare": "npm run compile"
+      },
+      "to": {
+        "prepare": "npm run compile"
+      }
+    },
+    "license": {
+      "from": "MIT",
+      "to": "MIT"
+    },
+    "maintainers": {
+      "from": [
+        "bcoe",
+        "oss-bot",
+        "shadowspawn"
+      ],
+      "to": [
+        "bcoe",
+        "oss-bot",
+        "shadowspawn"
+      ]
+    },
+    "opaque_candidates": [
+      {
+        "head": "var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {\n    if (kind === \"m\") throw new TypeError(\"Private method is not writable\");\n    if (kind === \"a\" && !f) throw new TypeError(\"Private accessor was defined without a setter\");\n    if (typeof state === \"function\" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError(\"Cannot write private member to an object whose class did not declare it\");\n    return (kind === \"a\" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;\n};\nvar __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {\n    if (kind === \"a\" && !f) throw new TypeError(\"Private accessor was defined without a getter\");\n    if (typeof state === \"function\" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError(\"Cannot read private member from an object whose class did not declare it\");\n    return kind === \"m\" ? f : kind === \"a\" ? f.call(receiver) : f ? f.value : state.get(receiver);\n};\nvar _YargsInstance_command, _YargsInstance_cwd, _YargsInstance_context, _YargsInstance_completion, _YargsInstance_complet",
+        "path": "build/lib/yargs-factory.js",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 78299,
+          "hex_escape_runs": 0,
+          "lines": 1518,
+          "longest_line": 1540,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "head": "{\n  \"Commands:\": \"\u10d1\u10e0\u10eb\u10d0\u10dc\u10d4\u10d1\u10d4\u10d1\u10d8:\",\n  \"Options:\": \"\u10db\u10dd\u10e0\u10d2\u10d4\u10d1\u10d0:\",\n  \"Examples:\": \"\u10db\u10d0\u10d2\u10d0\u10da\u10d8\u10d7\u10d4\u10d1\u10d8:\",\n  \"boolean\": \"\u10da\u10dd\u10d2\u10d8\u10d9\u10e3\u10e0\u10d8\",\n  \"count\": \"\u10d3\u10d0\u10d7\u10d5\u10da\u10d0\",\n  \"string\": \"\u10e1\u10e2\u10e0\u10d8\u10e5\u10dd\u10dc\u10d8\",\n  \"number\": \"\u10e0\u10d8\u10ea\u10ee\u10d5\u10d8\",\n  \"array\": \"\u10db\u10d0\u10e1\u10d8\u10d5\u10d8\",\n  \"required\": \"\u10d0\u10e3\u10ea\u10d8\u10da\u10d4\u10d1\u10d4\u10da\u10d8\u10d0\",\n  \"default\": \"\u10dc\u10d0\u10d2\u10e3\u10da\u10d8\u10e1\u10ee\u10db\u10d4\u10d5\u10d8\",\n  \"default:\": \"\u10dc\u10d0\u10d2\u10e3\u10da\u10d8\u10e1\u10ee\u10db\u10d4\u10d5\u10d8:\",\n  \"choices:\": \"\u10d0\u10e0\u10e9\u10d4\u10d5\u10dc\u10d4\u10d1\u10d8:\",\n  \"aliases:\": \"\u10e4\u10e1\u10d4\u10d5\u10d3\u10dd\u10dc\u10d8\u10db\u10d4\u10d1\u10d8:\",\n  \"generated-value\": \"\u10d3\u10d0\u10d2\u10d4\u10dc\u10d4\u10e0\u10d8\u10e0\u10d4\u10d1\u10e3\u10da\u10d8-\u10db\u10dc\u10d8\u10e8\u10d5\u10dc\u10d4\u10da\u10dd\u10d1\u10d0\",\n  \"Not enough non-option arguments: got %s, need at least %s\": {\n    \"one\": \"\u10d0\u10e0\u10d0\u10e1\u10d0\u10d9\u10db\u10d0\u10e0\u10d8\u10e1\u10d8 \u10d0\u10e0\u10d0\u10de\u10d0\u10e0\u10d0\u10db\u10d4\u10e2\u10e0\u10e3\u10da\u10d8 \u10d0\u10e0\u10d2\u10e3\u10db\u10d4\u10dc\u10e2\u10d8: \u10db\u10d0\u10e5\u10d5\u10e1 %s, \u10e1\u10d0\u10ed\u10d8\u10e0\u10dd\u10d0 \u10e1\u10e3\u10da \u10ea\u10dd\u10e2\u10d0 %s\",\n    \"other\": \"\u10d0\u10e0\u10d0\u10e1\u10d0\u10d9\u10db\u10d0\u10e0\u10d8\u10e1\u10d8 \u10d0\u10e0\u10d0\u10de\u10d0\u10e0\u10d0\u10db\u10d4\u10e2\u10e0\u10e3\u10da\u10d8 \u10d0\u10e0\u10d2\u10e3\u10db\u10d4\u10dc\u10e2\u10d4\u10d1\u10d8: \u10db\u10d0\u10e5\u10d5\u10e1 %s, \u10e1\u10d0\u10ed\u10d8\u10e0\u10dd\u10d0 \u10e1\u10e3\u10da \u10ea\u10dd\u10e2\u10d0 %s\"\n  },\n  \"Too many non-option arguments: got %s, maximum of %s\":",
+        "path": "locales/ka.json",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 3918,
+          "hex_escape_runs": 0,
+          "lines": 56,
+          "longest_line": 197,
+          "nonprintable_milli": 653
+        },
+        "status": "added"
+      },
+      {
+        "head": "{\n  \"Commands:\": \"\u05e4\u05e7\u05d5\u05d3\u05d5\u05ea:\",\n  \"Options:\": \"\u05d0\u05d5\u05e4\u05e6\u05d9\u05d5\u05ea:\",\n  \"Examples:\": \"\u05d3\u05d5\u05d2\u05de\u05d5\u05ea:\",\n  \"boolean\": \"\u05d1\u05d5\u05dc\u05d9\u05d0\u05e0\u05d9\",\n  \"count\": \"\u05e1\u05e4\u05d9\u05e8\u05d4\",\n  \"string\": \"\u05de\u05d7\u05e8\u05d5\u05d6\u05ea\",\n  \"number\": \"\u05de\u05e1\u05e4\u05e8\",\n  \"array\": \"\u05de\u05e2\u05e8\u05da\",\n  \"required\": \"\u05d3\u05e8\u05d5\u05e9\",\n  \"default\": \"\u05d1\u05e8\u05d9\u05e8\u05ea \u05de\u05d7\u05d3\u05dc\",\n  \"default:\": \"\u05d1\u05e8\u05d9\u05e8\u05ea \u05de\u05d7\u05d3\u05dc:\",\n  \"choices:\": \"\u05d1\u05d7\u05d9\u05e8\u05d5\u05ea:\",\n  \"aliases:\": \"\u05db\u05d9\u05e0\u05d5\u05d9\u05d9\u05dd:\",\n  \"generated-value\": \"\u05e2\u05e8\u05da-\u05e9\u05e0\u05d5\u05e6\u05e8\",\n  \"Not enough non-option arguments: got %s, need at least %s\": {\n    \"one\": \"\u05d0\u05d9\u05df \u05de\u05e1\u05e4\u05d9\u05e7 \u05d8\u05d9\u05e2\u05d5\u05e0\u05d9\u05dd \u05e9\u05d0\u05d9\u05e0\u05dd \u05d0\u05d5\u05e4\u05e6\u05d9\u05d5\u05e0\u05dc\u05d9\u05dd: \u05e7\u05d9\u05d1\u05dc %s, \u05e6\u05e8\u05d9\u05da \u05dc\u05e4\u05d7\u05d5\u05ea %s\",\n    \"other\": \"\u05d0\u05d9\u05df \u05de\u05e1\u05e4\u05d9\u05e7 \u05d8\u05d9\u05e2\u05d5\u05e0\u05d9\u05dd \u05e9\u05d0\u05d9\u05e0\u05dd \u05d0\u05d5\u05e4\u05e6\u05d9\u05d5\u05e0\u05dc\u05d9\u05dd: \u05e7\u05d9\u05d1\u05dc %s, \u05e6\u05e8\u05d9\u05da \u05dc\u05e4\u05d7\u05d5\u05ea %s\"\n  },\n  \"Too many non-option arguments: got %s, maximum of %s\": {\n    \"one\": \"\u05d9\u05d5\u05ea\u05e8 \u05de\u05d3\u05d9 \u05d8\u05d9\u05e2\u05d5\u05e0\u05d9\u05dd \u05e9\u05d0\u05d9\u05e0\u05dd \u05d0\u05d5\u05e4\u05e6\u05d9\u05d5\u05e0\u05dc\u05d9\u05dd: \u05e7\u05d9\u05d1\u05dc %s, \u05de\u05e7\u05e1\u05d9\u05de\u05d5\u05dd \u05e9\u05dc %s\",\n    \"other\": \"\u05d9\u05d5\u05ea\u05e8 \u05de\u05d3\u05d9 \u05d8\u05d9\u05e2\u05d5\u05e0\u05d9\u05dd \u05e9\u05d0\u05d9\u05e0\u05dd \u05d0\u05d5\u05e4\u05e6\u05d9\u05d5\u05e0\u05dc\u05d9\u05dd: \u05e7\u05d9\u05d1\u05dc %s, \u05de\u05e7\u05e1\u05d9\u05de\u05d5\u05dd \u05e9\u05dc %s\"\n  },\n  \"Missing argument value: %s\": {\n    \"one\": \"\u05d7\u05e1\u05e8 \u05e2\u05e8\u05da \u05d4\u05d8\u05e2\u05e0\u05d4: %s\",\n    \"other\": \"\u05d7\u05e1\u05e8\u05d9\u05dd \u05e2\u05e8\u05db\u05d9 \u05d4\u05d8\u05e2\u05e0\u05d4: %s\"\n  },\n  \"Missing required argument: %s\": ",
+        "path": "locales/he.json",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 2487,
+          "hex_escape_runs": 0,
+          "lines": 56,
+          "longest_line": 116,
+          "nonprintable_milli": 444
+        },
+        "status": "added"
+      }
+    ],
+    "opaque_coverage": {
+      "candidate_count": 3,
+      "complete": true
+    },
+    "publisher": {
+      "from": "shadowspawn",
+      "to": "shadowspawn"
+    },
+    "purpose": {
+      "description": "yargs the modern, pirate-themed, successor to optimist.",
+      "keywords": [
+        "argument",
+        "args",
+        "option",
+        "parser",
+        "parsing",
+        "cli",
+        "command"
+      ]
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/yargs",
+    "https://registry.npmjs.org/yargs/-/yargs-17.7.3.tgz",
+    "https://registry.npmjs.org/yargs/-/yargs-18.1.0.tgz"
+  ],
+  "from_version": "17.7.3",
+  "package": "yargs",
+  "pin": {
+    "from": {
+      "integrity": "sha512-GZtjxm/J/4TSxuL3FNYjCmLktBTnIw/rVmKSIyKeYAZpmJB2ig9VauCC5xsa82GNKVKDAqpOn3KVzNt0zmrU0g==",
+      "published_at": "2026-06-19T02:08:41.275Z",
+      "registry_integrity": "sha512-GZtjxm/J/4TSxuL3FNYjCmLktBTnIw/rVmKSIyKeYAZpmJB2ig9VauCC5xsa82GNKVKDAqpOn3KVzNt0zmrU0g==",
+      "registry_shasum": "779dffe6bcafec596a7172e983289a588647faaa",
+      "tarball_bytes": 73972,
+      "tarball_sha256": "76ac30834674f0d8da9c7bfedb175f6ada260420e6475edfdcc551c601f8717e"
+    },
+    "to": {
+      "integrity": "sha512-2rAgRKu54VsHkqI0/tYkmluGXHD4KW7yZoycuqDQ15QOTnc2VVfy0nN/1eMhnQLO00A+dwtK20xuCnc1YGeUyg==",
+      "published_at": "2026-07-26T04:07:48.666Z",
+      "registry_integrity": "sha512-2rAgRKu54VsHkqI0/tYkmluGXHD4KW7yZoycuqDQ15QOTnc2VVfy0nN/1eMhnQLO00A+dwtK20xuCnc1YGeUyg==",
+      "registry_shasum": "cd7e98c703ef51695bbbf062ed58f28e94291b56",
+      "tarball_bytes": 48638,
+      "tarball_sha256": "2bbc63973e98118422e316d8ae90fe4f07114ffc46d8d20523f2d0589b232252"
+    }
+  },
+  "registry": "npm",
+  "to_version": "18.1.0",
+  "version": "attaint/1"
+}

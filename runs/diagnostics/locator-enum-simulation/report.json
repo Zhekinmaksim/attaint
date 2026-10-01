@@ -1,0 +1,9 @@
+{
+  "kind": "read-only GenVM simulation; not a receipt",
+  "production_source_sha256": "80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa",
+  "validator_disagreements": [
+    null,
+    null
+  ],
+  "passed": true
+}

@@ -1,0 +1,9 @@
+.vercel
+
+node_modules
+__pycache__
+*.pyc
+.env*
+*.log
+*.zip
+web/app.bundle.js

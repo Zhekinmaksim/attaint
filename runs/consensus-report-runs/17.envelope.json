@@ -1,0 +1,228 @@
+{
+  "author_note": "",
+  "envelope_hash": "a22474f7179a0182bdf7f840898a55f22c04a28c31efd6c96418de62e3934486",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {},
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 6,
+      "candidates": [
+        {
+          "excerpt": "Ye.product)<0),tt=\"undefined\"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope&&\"function\"==typeof self.importScripts,nt=Ze&&window.location.href||\"http://localhost\",rt=b(b({},Object.freeze({__proto__:null,hasBrowserEnv:Ze,hasStandardBrowserEnv:et,hasStandardBrowserWebWorkerEnv:tt,navigator:Ye,origin:nt})),Qe);function ot(e){if(e>100)throw new Be(\"FormData field is too deeply nested (\"+e+\" levels). Max depth: 100\",Be.ERR_FORM_DATA_DEPTH_EXCEEDED)}function it(e){fu",
+          "line": 4,
+          "line_bytes": 58110,
+          "path": "dist/axios.min.js"
+        },
+        {
+          "excerpt": "ve \\\"blob\\\": an object with a `uri` attribute. Optionally, it can\\n * also have a `name` and `type` attribute to specify filename and content type\\n *\\n * @see https://github.com/facebook/react-native/blob/26684cf3adf4094eb6c405d345a75bf8c7c0bf88/Libraries/Network/FormData.js#L68-L71\\n *\\n * @param {*} value The value to test\\n *\\n * @returns {boolean} True if value is a React Native Blob, otherwise false\\n */\\nconst isReactNativeBlob = (value) => {\\n  return !!(value && type",
+          "line": 1,
+          "line_bytes": 236383,
+          "path": "dist/axios.min.js.map"
+        },
+        {
+          "excerpt": "Re.product)<0),_e=\"undefined\"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope&&\"function\"==typeof self.importScripts,Ae=Oe&&window.location.href||\"http://localhost\";var ve={...Object.freeze({__proto__:null,hasBrowserEnv:Oe,hasStandardBrowserEnv:Se,hasStandardBrowserWebWorkerEnv:_e,navigator:Re,origin:Ae}),...Ee};function Te(e){if(e>100)throw new ae(\"FormData field is too deeply nested (\"+e+\" levels). Max depth: 100\",ae.ERR_FORM_DATA_DEPTH_EXCEEDED)}function Pe(e)",
+          "line": 2,
+          "line_bytes": 45997,
+          "path": "dist/esm/axios.min.js"
+        },
+        {
+          "excerpt": "ve \\\"blob\\\": an object with a `uri` attribute. Optionally, it can\\n * also have a `name` and `type` attribute to specify filename and content type\\n *\\n * @see https://github.com/facebook/react-native/blob/26684cf3adf4094eb6c405d345a75bf8c7c0bf88/Libraries/Network/FormData.js#L68-L71\\n *\\n * @param {*} value The value to test\\n *\\n * @returns {boolean} True if value is a React Native Blob, otherwise false\\n */\\nconst isReactNativeBlob = (value) => {\\n  return !!(value && type",
+          "line": 1,
+          "line_bytes": 226601,
+          "path": "dist/esm/axios.min.js.map"
+        },
+        {
+          "excerpt": "    const urlBase = socketPath ? 'http://localhost' : platform.hasBrowserEnv ? platform.origin : undefined;",
+          "line": 3658,
+          "line_bytes": 107,
+          "path": "dist/node/axios.cjs"
+        },
+        {
+          "excerpt": "        ? 'http://localhost'",
+          "line": 668,
+          "line_bytes": 28,
+          "path": "lib/adapters/http.js"
+        }
+      ],
+      "complete": false,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [],
+      "changed_source_count": 25,
+      "changed_sources": [
+        "dist/axios.js",
+        "dist/axios.min.js",
+        "dist/axios.min.js.map",
+        "dist/browser/axios.cjs",
+        "dist/esm/axios.js",
+        "dist/esm/axios.min.js",
+        "dist/esm/axios.min.js.map",
+        "dist/node/axios.cjs",
+        "index.d.ts",
+        "lib/adapters/adapters.js",
+        "lib/adapters/fetch.js",
+        "lib/adapters/http.js",
+        "lib/adapters/xhr.js",
+        "lib/core/AxiosError.js",
+        "lib/core/mergeConfig.js",
+        "lib/env/data.js",
+        "lib/helpers/AxiosURLSearchParams.js",
+        "lib/helpers/buildURL.js",
+        "lib/helpers/composeSignals.js",
+        "lib/helpers/cookies.js"
+      ],
+      "count_from": 85,
+      "count_to": 85,
+      "listing_truncated": true,
+      "removed": []
+    },
+    "install_hooks": {
+      "from": {
+        "prepare": "husky"
+      },
+      "to": {
+        "prepare": "husky"
+      }
+    },
+    "license": {
+      "from": "MIT",
+      "to": "MIT"
+    },
+    "maintainers": {
+      "from": [
+        "jasonsaayman"
+      ],
+      "to": [
+        "jasonsaayman"
+      ]
+    },
+    "opaque_candidates": [
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"axios.min.js\",\"sources\":[\"../lib/helpers/bind.js\",\"../lib/utils.js\",\"../lib/helpers/parseHeaders.js\",\"../lib/helpers/sanitizeHeaderValue.js\",\"../lib/core/AxiosHeaders.js\",\"../lib/core/AxiosError.js\",\"../lib/helpers/toFormData.js\",\"../lib/helpers/AxiosURLSearchParams.js\",\"../lib/helpers/buildURL.js\"",
+        "path": "dist/axios.min.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 236383,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 236383,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"axios.min.js\",\"sources\":[\"../../lib/helpers/bind.js\",\"../../lib/utils.js\",\"../../lib/helpers/parseHeaders.js\",\"../../lib/helpers/sanitizeHeaderValue.js\",\"../../lib/core/AxiosHeaders.js\",\"../../lib/core/AxiosError.js\",\"../../lib/helpers/toFormData.js\",\"../../lib/helpers/AxiosURLSearchParams.js\",\"../",
+        "path": "dist/esm/axios.min.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 226601,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 226601,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "/*! Axios v1.18.1 Copyright (c) 2026 Matt Zabriskie and contributors */\n!function(e,t){\"object\"==typeof exports&&\"undefined\"!=typeof module?module.exports=t():\"function\"==typeof define&&define.amd?define(t):(e=\"undefined\"!=typeof globalThis?globalThis:e||self).axios=t()}(this,function(){\"use strict\";function e(e,t){thi",
+        "path": "dist/axios.min.js",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 62406,
+          "hex_escape_runs": 0,
+          "lines": 6,
+          "longest_line": 58110,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "/*! Axios v1.18.1 Copyright (c) 2026 Matt Zabriskie and contributors */\nfunction e(e,t){return function(){return e.apply(t,arguments)}}const{toString:t}=Object.prototype,{getPrototypeOf:n}=Object,{iterator:r,toStringTag:o}=Symbol,s=(({hasOwnProperty:e})=>(t,n)=>e.call(t,n))(Object.prototype),i=(e,t)=>{let r=e;const o=[",
+        "path": "dist/esm/axios.min.js",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 46108,
+          "hex_escape_runs": 0,
+          "lines": 4,
+          "longest_line": 45997,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "/*! Axios v1.18.1 Copyright (c) 2026 Matt Zabriskie and contributors */\n(function (global, factory) {\n  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :\n  typeof define === 'function' && define.amd ? define(factory) :\n  (global = typeof globalThis !== 'undefined' ? globalThis ",
+        "path": "dist/axios.js",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 185229,
+          "hex_escape_runs": 0,
+          "lines": 5250,
+          "longest_line": 862,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      }
+    ],
+    "opaque_coverage": {
+      "candidate_count": 5,
+      "complete": true
+    },
+    "publisher": {
+      "from": "GitHub Actions",
+      "to": "GitHub Actions"
+    },
+    "purpose": {
+      "description": "Promise based HTTP client for the browser and node.js",
+      "keywords": [
+        "xhr",
+        "http",
+        "ajax",
+        "promise",
+        "node",
+        "browser",
+        "fetch",
+        "rest",
+        "api",
+        "client"
+      ]
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/axios",
+    "https://registry.npmjs.org/axios/-/axios-1.18.0.tgz",
+    "https://registry.npmjs.org/axios/-/axios-1.18.1.tgz"
+  ],
+  "from_version": "1.18.0",
+  "package": "axios",
+  "pin": {
+    "from": {
+      "integrity": "sha512-E32NzpYKp++W7XRe52rHiXV2ehxmh3wbdgO7MHeFM+vqxLBYHzt0ElkiImtOBxtOmyp0yoC8C6uESVV84Y2/hw==",
+      "published_at": "2026-06-14T18:07:37.143Z",
+      "registry_integrity": "sha512-E32NzpYKp++W7XRe52rHiXV2ehxmh3wbdgO7MHeFM+vqxLBYHzt0ElkiImtOBxtOmyp0yoC8C6uESVV84Y2/hw==",
+      "registry_shasum": "8a7f8854af280fcaae063272df2ed9f3837d2398",
+      "tarball_bytes": 488655,
+      "tarball_sha256": "5cd85fce29cbc3c1f2fafbad54721a6f27e76a32b5bfb5003b2c92393a8357cf"
+    },
+    "to": {
+      "integrity": "sha512-3nTvFlvpn9Zu/RkHUqtc7/+al4UpRW5az71ap5zccp6e8RAYEzhMTecX8Dz1wWDYrPpUoB1HAQEGEAEvUr7S9g==",
+      "published_at": "2026-06-22T18:28:17.985Z",
+      "registry_integrity": "sha512-3nTvFlvpn9Zu/RkHUqtc7/+al4UpRW5az71ap5zccp6e8RAYEzhMTecX8Dz1wWDYrPpUoB1HAQEGEAEvUr7S9g==",
+      "registry_shasum": "d63f9863bcd8938815c86f9e2abd380189d96dfe",
+      "tarball_bytes": 496115,
+      "tarball_sha256": "0c9c4ae1c7d2c65168676039b7d7d80912a4644459b4885036088201b2b3e21a"
+    }
+  },
+  "registry": "npm",
+  "to_version": "1.18.1",
+  "version": "attaint/1"
+}

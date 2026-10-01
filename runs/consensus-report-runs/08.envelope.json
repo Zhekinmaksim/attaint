@@ -1,0 +1,97 @@
+{
+  "author_note": "",
+  "envelope_hash": "32d0972d42762dbdc0d8ae0e7e3dd55a485b65386b139950ab2394a64f1e140b",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {},
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 0,
+      "candidates": [],
+      "complete": true,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [],
+      "changed_source_count": 3,
+      "changed_sources": [
+        "package.json",
+        "src/browser.js",
+        "src/common.js"
+      ],
+      "count_from": 7,
+      "count_to": 7,
+      "removed": []
+    },
+    "install_hooks": {
+      "from": {},
+      "to": {}
+    },
+    "license": {
+      "from": "MIT",
+      "to": "MIT"
+    },
+    "maintainers": {
+      "from": [
+        "qix",
+        "thebigredgeek",
+        "tjholowaychuk",
+        "tootallnate"
+      ],
+      "to": [
+        "qix",
+        "thebigredgeek",
+        "tjholowaychuk",
+        "tootallnate"
+      ]
+    },
+    "opaque_candidates": [],
+    "opaque_coverage": {
+      "candidate_count": 0,
+      "complete": true
+    },
+    "publisher": {
+      "from": "qix",
+      "to": "qix"
+    },
+    "purpose": {
+      "description": "Lightweight debugging utility for Node.js and the browser",
+      "keywords": [
+        "debug",
+        "log",
+        "debugger"
+      ]
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/debug",
+    "https://registry.npmjs.org/debug/-/debug-4.3.7.tgz",
+    "https://registry.npmjs.org/debug/-/debug-4.4.0.tgz"
+  ],
+  "from_version": "4.3.7",
+  "package": "debug",
+  "pin": {
+    "from": {
+      "integrity": "sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==",
+      "published_at": "2024-09-06T00:52:57.702Z",
+      "registry_integrity": "sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==",
+      "registry_shasum": "87945b4151a011d76d95a198d7111c865c360a52",
+      "tarball_bytes": 13173,
+      "tarball_sha256": "c803a8ca9b835b7a75f7150ee52f7f640675515bafbe8f5da78fcc0ae12914ac"
+    },
+    "to": {
+      "integrity": "sha512-6WTZ/IxCY/T6BALoZHaE4ctp9xm+Z5kY/pzYaCHRFeyVhojxlrm+46y68HA6hr0TcwEssoxNiDEUJQjfPZ/RYA==",
+      "published_at": "2024-12-06T12:32:46.280Z",
+      "registry_integrity": "sha512-6WTZ/IxCY/T6BALoZHaE4ctp9xm+Z5kY/pzYaCHRFeyVhojxlrm+46y68HA6hr0TcwEssoxNiDEUJQjfPZ/RYA==",
+      "registry_shasum": "2b3f2aea2ffeb776477460267377dc8710faba8a",
+      "tarball_bytes": 13390,
+      "tarball_sha256": "fd9c4f0ca9acd1103099f038754eb21f94497456fb9b195b18fd582fa6982d1c"
+    }
+  },
+  "registry": "npm",
+  "to_version": "4.4.0",
+  "version": "attaint/1"
+}

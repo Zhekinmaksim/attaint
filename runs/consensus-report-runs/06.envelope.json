@@ -1,0 +1,91 @@
+{
+  "author_note": "",
+  "envelope_hash": "b733ccb77f3196afb8da0d73ccecec9feb8177603ce2a1d58cb0fcb5afe83b04",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {},
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 0,
+      "candidates": [],
+      "complete": true,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [],
+      "changed_source_count": 1,
+      "changed_sources": [
+        "package.json"
+      ],
+      "count_from": 7,
+      "count_to": 7,
+      "removed": []
+    },
+    "install_hooks": {
+      "from": {},
+      "to": {}
+    },
+    "license": {
+      "from": "MIT",
+      "to": "MIT"
+    },
+    "maintainers": {
+      "from": [
+        "qix",
+        "tootallnate"
+      ],
+      "to": [
+        "qix",
+        "tootallnate"
+      ]
+    },
+    "opaque_candidates": [],
+    "opaque_coverage": {
+      "candidate_count": 0,
+      "complete": true
+    },
+    "publisher": {
+      "from": "qix",
+      "to": "qix"
+    },
+    "purpose": {
+      "description": "Lightweight debugging utility for Node.js and the browser",
+      "keywords": [
+        "debug",
+        "log",
+        "debugger"
+      ]
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/debug",
+    "https://registry.npmjs.org/debug/-/debug-4.4.1.tgz",
+    "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz"
+  ],
+  "from_version": "4.4.1",
+  "package": "debug",
+  "pin": {
+    "from": {
+      "integrity": "sha512-KcKCqiftBJcZr++7ykoDIEwSa3XWowTfNPo92BYxjXiyYEVrUQh2aLyhxBCwww+heortUFxEJYcRzosstTEBYQ==",
+      "published_at": "2025-05-13T20:56:36.431Z",
+      "registry_integrity": "sha512-KcKCqiftBJcZr++7ykoDIEwSa3XWowTfNPo92BYxjXiyYEVrUQh2aLyhxBCwww+heortUFxEJYcRzosstTEBYQ==",
+      "registry_shasum": "e5a8bc6cbc4c6cd3e64308b0693a3d4fa550189b",
+      "tarball_bytes": 13448,
+      "tarball_sha256": "265ca7c6f05089b9c148f849ca778f4af71ffa11172863644ed1ae6e1ed3dace"
+    },
+    "to": {
+      "integrity": "sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==",
+      "published_at": "2025-09-13T17:25:19.732Z",
+      "registry_integrity": "sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==",
+      "registry_shasum": "c6ae432d9bd9662582fce08709b038c58e9e3d6a",
+      "tarball_bytes": 13449,
+      "tarball_sha256": "89c1ac9c946ee8905a875837114528e97eeae35e03be3190584b2216af43e4a7"
+    }
+  },
+  "registry": "npm",
+  "to_version": "4.4.3",
+  "version": "attaint/1"
+}

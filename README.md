@@ -1,2 +1,237 @@
-# attaint
-A consensus CI gate for pinned npm dependency updates, built on GenLayer Bradbury.
+# Attaint
+
+A GenLayer consensus gate for npm dependency updates. It judges one package moving
+from version A to version B under an immutable consumer policy, then exposes a
+CI decision: `CLEAN` → 0, `RISK` → 1, `INCONCLUSIVE` → 2.
+
+Hosted application: [attaint.vercel.app](https://attaint.vercel.app).
+A successful live release of the corrected contract is pending. The previous
+smoke run ended `UNDETERMINED`; see release status before using a result as CI
+evidence.
+
+The six judgment classes are licence incompatibility (`LICENSE_SHIFT`), unexplained
+transfer of publisher trust (`MAINTAINER_SHIFT`), new or changed install behaviour
+beyond build needs (`INSTALL_HOOK`), new unreadable content of unexplained origin
+(`OPAQUE`), unjustified outbound calls (`EGRESS`), and new dependencies with an
+unexplained role (`DEP_ADDED`). A deterministic builder collects
+candidates. GenLayer consensus decides whether they establish a blocked class.
+Every positive finding means newly introduced risk. Explained opaque content or
+a dependency serving an evidenced purpose is ordinary. A complete empty candidate
+set means no finding within that extraction scope; incomplete coverage or missing
+context remains inconclusive. Initial findings use a constrained locator: the
+class's evidence field, an added dependency name, or an evidenced candidate path.
+Arbitrary explanations and JSON fragments cannot serve as locators.
+
+The publisher controls much of the evidence. The contract fences that material,
+uses comparative consensus for each class, and accepts bonded challenges against
+the same stored evidence. A successful challenge changes the recorded verdict and
+returns the challenger's bond as a withdrawable credit.
+
+## What a result establishes
+
+A result applies to the policy's selected classes and the supplied evidence. It
+is not a certificate that an entire package is safe. The builder checks downloaded
+tarball bytes against registry integrity, but extracts bounded excerpts. Static
+network candidates can miss encoded or computed calls. Explicitly incomplete
+EGRESS or OPAQUE coverage blocks a pass. For other context gaps, the consensus
+judge is instructed to return `INCONCLUSIVE`; this depends on its judgment.
+
+| Level | Evidence | Judgment scope |
+|---|---|---|
+| 1 | Both tarballs downloaded and byte integrity checked by the builder. | All six classes, subject to sufficient context and coverage. |
+| 2 | Recovered checksums and dependency graph, with supporting sources. | `MAINTAINER_SHIFT` and `DEP_ADDED`, only with the required metadata. |
+| 3 | No usable pin. | Always `INCONCLUSIVE`. |
+
+A recovered checksum cannot recover bytes or establish publisher history. At level
+1 the contract independently fetches npm version manifests to compare
+identity, declared integrity, licence, publisher, hooks and dependency changes.
+It does not fetch the tarball or authenticate client-built file excerpts. A hash
+commits to submitted text; it cannot make fabricated excerpts true. Rebuild
+envelopes from the public sources to verify the extracted evidence. Read
+[`spec/classes.md`](spec/classes.md) for the class questions and
+[`spec/attaint-spec.md`](spec/attaint-spec.md) for the ABI and trust boundaries.
+
+## Historical baseline
+
+The original mechanical scan used 45 release pairs from 15 popular npm packages.
+It hit at least one of four candidate classes on 57.8% of those pairs:
+`OPAQUE` 44.4%, `MAINTAINER_SHIFT` 15.5%, `INSTALL_HOOK` 2.2%, and
+`LICENSE_SHIFT` 0.0%. These are candidate hit rates, not consensus verdicts or
+measured false positives. Raw results are in [`FINDINGS.md`](FINDINGS.md) and
+[`corpus/scan-report.json`](corpus/scan-report.json).
+
+Most historical malicious versions in the incident corpus are no longer served
+by npm. Recovered lockfile checksums and graph data are in
+[`corpus/recovered-pins.json`](corpus/recovered-pins.json); recovery limitations
+are in [`corpus/RECOVERY.md`](corpus/RECOVERY.md). The loss of source bytes is
+reported as missing evidence, never converted into a clean result.
+
+A consensus comparison must reuse those same 45 package/version pairs and report
+its policy, receipts, failures and inconclusive rows. A six-class policy has a
+different scope from the four-class baseline. No consensus improvement is claimed
+until the actual run is complete.
+
+## Build evidence and run checks
+
+The envelope builder and offline tests use Python 3.10+ and the standard library.
+
+```sh
+python3 cli/envelope.py event-stream 3.3.4 3.3.5 --out corpus/event-stream-live.json
+python3 test/run_tests.py
+```
+
+The builder writes no new envelope and exits 2 if fetching or byte verification
+fails. The offline scripted stub exercises state, validation and accounting. It
+does not simulate validator consensus or prove Bradbury compatibility. Run the
+contract tests after every contract edit.
+
+With a confirmed attestation, read the live gate in CI:
+
+```sh
+python3 cli/attaint_gate.py \
+  --contract "$ATTAINT_CONTRACT" \
+  --policy "$ATTAINT_POLICY_ID" \
+  --policy-hash "$ATTAINT_POLICY_HASH" \
+  --attestation "$ATTAINT_ATTESTATION_ID" \
+  --envelope corpus/event-stream-live.json --json
+```
+
+This command must verify the expected policy and update, not accept an unrelated
+clean attestation. Network errors, pending transactions, invalid responses and
+identity mismatches exit 2. A challenge may change an earlier gate result; CI
+reads current contract state.
+
+## Live transaction runner
+
+The Bradbury source artifact is generated from `contracts/attaint.py` by
+`scripts/compile_contract.py`. The pinned `python-minifier` version removes
+comments/docstrings and shortens internal names and whitespace to fit the RPC
+transaction gas cap. Public method and argument names, storage fields, annotations
+and prompt strings are preserved. The compiler checks the public ABI; run the
+full offline suite against both forms. Deploy `contracts/attaint.bradbury.py`,
+keeping the readable source for review.
+
+The SDK runner requires Node.js and an installed GenLayer CLI. Run `npm ci` to
+install the lockfile-pinned SDK dependencies. It imports the GenLayer SDK from
+local dependencies or the CLI installation. Writes use an
+unlocked CLI account from the system keychain; `--account` selects one. The
+`GENLAYER_PRIVATE_KEY` environment variable is an alternative. Never publish
+credentials in source or output artifacts.
+
+```sh
+npm ci
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements-dev.txt
+.venv/bin/python scripts/compile_contract.py
+python3 test/run_tests.py
+ATTAINT_CONTRACT_PATH=contracts/attaint.bradbury.py python3 test/run_tests.py
+node scripts/live.mjs deploy --file contracts/attaint.bradbury.py --out deployment.json --wait
+node scripts/live.mjs write --address "$ATTAINT_CONTRACT" \
+  --method register_policy --args-file policy-args.json \
+  --out policy-receipt.json --wait
+```
+
+The proposed six-class policy uses this `policy-args.json` JSON argument array:
+
+```json
+["mit,apache-2.0,isc,bsd-2-clause,bsd-3-clause", "DEP_ADDED,EGRESS,INSTALL_HOOK,LICENSE_SHIFT,MAINTAINER_SHIFT,OPAQUE", 6, 1, 1000000000000000]
+```
+
+Registering a different policy creates a new immutable ID. `min_rounds` counts
+class judgments completed by the contract; it is not a count of validator votes.
+A threshold above the number of readable blocking classes produces an inconclusive
+result. This policy requires all six class judgments, evidence level 1,
+and a minimum challenge bond of 1,000,000,000,000,000 wei. This example registration attaches no value and starts with a pool of 0.
+
+Use `write` for `request_attestation`, `read` for `gate`, and `settle` to wait for
+a transaction by hash. Submit the canonical envelope body as the `evidence`
+argument. Its package, versions, hash and evidence level must match the request.
+Keep confirmed receipts with the run artifacts and verify the resulting state.
+Reusing a journal resumes its transaction instead of broadcasting a duplicate.
+
+Repeat the exact saved 45-pair control sample through live consensus:
+
+```sh
+python3 probes/scan.py --consensus \
+  --contract "$ATTAINT_CONTRACT" --policy "$ATTAINT_POLICY_ID" \
+  --policy-hash "$ATTAINT_POLICY_HASH" \
+  --out runs/consensus-report.json --account "$GENLAYER_ACCOUNT" --timeout 3600
+```
+
+Resume with the same command and output path. The saved mechanical baseline
+remains separate from confirmed consensus outcomes. Count both `RISK` and
+`INCONCLUSIVE` as CI blocks; a reduction in risk findings alone is not a reduction
+in blocked updates. The report's sibling
+`consensus-report-runs/` directory holds per-pair envelopes and transaction
+journals. The CLI checks deployed code against the generated Bradbury artifact
+when present; `--code-hash` pins an explicitly reviewed alternative.
+`--expected-requester` can additionally pin the attestation requester.
+
+## Repository
+
+| Path | Purpose |
+|---|---|
+| `contracts/attaint.py` | Readable Intelligent Contract source. |
+| `contracts/attaint.bradbury.py` | Generated Bradbury deployment artifact. |
+| `scripts/compile_contract.py` | Minify with a pinned dependency and verify the public ABI. |
+| `cli/envelope.py` | Checksum verification and bounded evidence extraction. |
+| `cli/attaint_gate.py` | Live CI gate with exit codes 0, 1 and 2. |
+| `scripts/live.mjs` | SDK deployment, write, read and transaction settlement. |
+| `probes/scan.py` | Corpus scan and consensus comparison. |
+| `probes/recover_pins.py` | Recover unpublished-version checksum records. |
+| `probes/recover_sources.py` | Document attempts to recover source bytes. |
+| `test/run_tests.py` | Offline state-machine and accounting tests. |
+| `web/index.html` | Public page and contract interface. |
+| `corpus/` | Baseline results and evidence artifacts. |
+
+## Release status
+
+As of 1 October 2026, the Vercel application and source archive are published. A
+corrected candidate passed two read-only GenVM validator replays, with no
+reported disagreement (`null`, `null`). The simulation leader returned
+`RISK` / `MAINTAINER_SHIFT` at `publisher` for the event-stream case. The report
+is [published as a read-only diagnostic](https://attaint.vercel.app/diagnostics/locator-enum-simulation/report.json). Readable-source and
+generated-artifact offline suites also pass. These results are diagnostics, not
+an actual attestation receipt or finalized chain gate. A fresh deployment has not
+been confirmed on chain; the new contract address, registered policy and
+successful attestation remain pending.
+No 45-pair consensus scan has started; there are 0 of 45 finalized corpus gates.
+
+- Intended network: Bradbury, chain ID 4221.
+- Corrected candidate artifact SHA-256: `80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa` (20,100 UTF-8 bytes). This is not a verified new deployed-code hash.
+- New release contract address: pending.
+- New release policy ID and hash: pending verified registration.
+- First successful new-release attestation: pending.
+
+The previous attempt at
+[`0x74407aE5e92002F4F0E1A912C7e785837a67F3C8`](https://explorer-bradbury.genlayer.com/contracts/0x74407aE5e92002F4F0E1A912C7e785837a67F3C8)
+had finalized deployment and policy registration. An earlier registry-API
+attempt failed closed before any class judgments; its corpus submissions are
+excluded from the final measurement. Its smoke transaction
+[`0x73a16013b755850a3c399b8955ca4564f22f29a996cea7bac769ebcf0a5ce393`](https://explorer-bradbury.genlayer.com/transactions/0x73a16013b755850a3c399b8955ca4564f22f29a996cea7bac769ebcf0a5ce393)
+ended `UNDETERMINED`, producing no accepted attestation. Validator simulations
+reproduced `nondet_disagree` at `INSTALL_HOOK`: the leader and validator disagreed
+on whether the answer was inconclusive. The SDK incorrectly labelled numeric vote
+4 as `DETERMINISTIC_VIOLATION`; that stale label does not establish a deterministic
+replay fault. The questions also needed corrected risk
+polarity for `OPAQUE`/`DEP_ADDED` and clearer install behaviour scope. These
+findings are summarized in the public
+[failed-attempt history](https://attaint.vercel.app/attempt-history.json).
+That contract is failed-attempt evidence, not the current release.
+
+Keep the application and CLI fail closed until the corrected release has a
+finalized successful transaction and matching current gate state. The consensus
+report must retain failures and inconclusive rows; no improvement is claimed
+before a completed confirmed run.
+
+Published source paths: [readable contract](https://attaint.vercel.app/attaint.py),
+[Bradbury artifact](https://attaint.vercel.app/attaint.bradbury.py),
+[evidence builder](https://attaint.vercel.app/envelope.py),
+[CLI gate](https://attaint.vercel.app/attaint_gate.py),
+[class vocabulary](https://attaint.vercel.app/spec/classes.md), and
+[specification](https://attaint.vercel.app/spec/attaint-spec.md).
+The [complete source archive](https://attaint.vercel.app/source.zip) is published
+with a SHA-256 manifest. Check the manifest/release status for its revision; a
+published source artifact alone does not establish a successful deployment.
+Source repository: [Zhekinmaksim/attaint](https://github.com/Zhekinmaksim/attaint). `attaint.xyz` will be configured
+by the user; its live routing has not been verified.

@@ -1,0 +1,107 @@
+{
+  "author_note": "",
+  "envelope_hash": "cf26565b2399a53b56c4f3d32e44795a99de8a077eac5946973edda5128d6152",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {},
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 0,
+      "candidates": [],
+      "complete": true,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [],
+      "changed_source_count": 9,
+      "changed_sources": [
+        "index.js",
+        "lib/argument.js",
+        "lib/command.js",
+        "lib/error.js",
+        "lib/help.js",
+        "lib/option.js",
+        "lib/suggestSimilar.js",
+        "package.json",
+        "typings/index.d.ts"
+      ],
+      "count_from": 14,
+      "count_to": 12,
+      "removed": [
+        "esm.mjs",
+        "typings/esm.d.mts"
+      ]
+    },
+    "install_hooks": {
+      "from": {},
+      "to": {}
+    },
+    "license": {
+      "from": "MIT",
+      "to": "MIT"
+    },
+    "maintainers": {
+      "from": [
+        "abetomo",
+        "shadowspawn"
+      ],
+      "to": [
+        "abetomo",
+        "shadowspawn"
+      ]
+    },
+    "opaque_candidates": [],
+    "opaque_coverage": {
+      "candidate_count": 0,
+      "complete": true
+    },
+    "publisher": {
+      "from": "abetomo",
+      "to": "abetomo"
+    },
+    "purpose": {
+      "description": "the complete solution for node.js command-line programs",
+      "keywords": [
+        "commander",
+        "command",
+        "option",
+        "parser",
+        "cli",
+        "argument",
+        "args",
+        "argv"
+      ]
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/commander",
+    "https://registry.npmjs.org/commander/-/commander-14.0.3.tgz",
+    "https://registry.npmjs.org/commander/-/commander-15.0.0.tgz"
+  ],
+  "from_version": "14.0.3",
+  "package": "commander",
+  "pin": {
+    "from": {
+      "integrity": "sha512-H+y0Jo/T1RZ9qPP4Eh1pkcQcLRglraJaSLoyOtHxu6AapkjWVCy2Sit1QQ4x3Dng8qDlSsZEet7g5Pq06MvTgw==",
+      "published_at": "2026-01-31T01:47:17.592Z",
+      "registry_integrity": "sha512-H+y0Jo/T1RZ9qPP4Eh1pkcQcLRglraJaSLoyOtHxu6AapkjWVCy2Sit1QQ4x3Dng8qDlSsZEet7g5Pq06MvTgw==",
+      "registry_shasum": "425d79b48f9af82fcd9e4fc1ea8af6c5ec07bbc2",
+      "tarball_bytes": 53293,
+      "tarball_sha256": "5849703c500e0f324eb01340d8bda1f9ec48fc37bb7be9712eb0dd52aad92f6c"
+    },
+    "to": {
+      "integrity": "sha512-z67u4ZhzCL/Tydu1lJARtEZYWbWaN7oYLHbsuzocr6y4N6WZAagG3RQ4FW61V1/0+jImpj293XfrcYnd1qxtPg==",
+      "published_at": "2026-05-29T09:16:23.076Z",
+      "registry_integrity": "sha512-z67u4ZhzCL/Tydu1lJARtEZYWbWaN7oYLHbsuzocr6y4N6WZAagG3RQ4FW61V1/0+jImpj293XfrcYnd1qxtPg==",
+      "registry_shasum": "96f3961f12adac1799ef3fbd8bc61d40572d1b11",
+      "tarball_bytes": 52736,
+      "tarball_sha256": "632c1e039b31e98fa79c4fae5b10a5ffbbf9df0f21c9ffb3d74e95734b30696f"
+    }
+  },
+  "registry": "npm",
+  "to_version": "15.0.0",
+  "version": "attaint/1"
+}

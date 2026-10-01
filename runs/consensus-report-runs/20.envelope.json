@@ -1,0 +1,102 @@
+{
+  "author_note": "",
+  "envelope_hash": "8584399633ccf2e788051956acd87dbe7fee01c95c1d2116b37deef8ccae0df3",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {},
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 0,
+      "candidates": [],
+      "complete": true,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [],
+      "changed_source_count": 3,
+      "changed_sources": [
+        "lib/command.js",
+        "package.json",
+        "typings/index.d.ts"
+      ],
+      "count_from": 14,
+      "count_to": 14,
+      "removed": []
+    },
+    "install_hooks": {
+      "from": {},
+      "to": {}
+    },
+    "license": {
+      "from": "MIT",
+      "to": "MIT"
+    },
+    "maintainers": {
+      "from": [
+        "abetomo",
+        "shadowspawn",
+        "somekittens",
+        "tjholowaychuk"
+      ],
+      "to": [
+        "abetomo",
+        "shadowspawn",
+        "somekittens",
+        "tjholowaychuk"
+      ]
+    },
+    "opaque_candidates": [],
+    "opaque_coverage": {
+      "candidate_count": 0,
+      "complete": true
+    },
+    "publisher": {
+      "from": "abetomo",
+      "to": "abetomo"
+    },
+    "purpose": {
+      "description": "the complete solution for node.js command-line programs",
+      "keywords": [
+        "commander",
+        "command",
+        "option",
+        "parser",
+        "cli",
+        "argument",
+        "args",
+        "argv"
+      ]
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/commander",
+    "https://registry.npmjs.org/commander/-/commander-14.0.1.tgz",
+    "https://registry.npmjs.org/commander/-/commander-14.0.2.tgz"
+  ],
+  "from_version": "14.0.1",
+  "package": "commander",
+  "pin": {
+    "from": {
+      "integrity": "sha512-2JkV3gUZUVrbNA+1sjBOYLsMZ5cEEl8GTFP2a4AVz5hvasAMCQ1D2l2le/cX+pV4N6ZU17zjUahLpIXRrnWL8A==",
+      "published_at": "2025-09-12T07:27:06.725Z",
+      "registry_integrity": "sha512-2JkV3gUZUVrbNA+1sjBOYLsMZ5cEEl8GTFP2a4AVz5hvasAMCQ1D2l2le/cX+pV4N6ZU17zjUahLpIXRrnWL8A==",
+      "registry_shasum": "2f9225c19e6ebd0dc4404dd45821b2caa17ea09b",
+      "tarball_bytes": 53152,
+      "tarball_sha256": "a9bb12a316cff1290ba35a647c96c6a83d6b5fe95f51a817058d4171d4f6e2b0"
+    },
+    "to": {
+      "integrity": "sha512-TywoWNNRbhoD0BXs1P3ZEScW8W5iKrnbithIl0YH+uCmBd0QpPOA8yc82DS3BIE5Ma6FnBVUsJ7wVUDz4dvOWQ==",
+      "published_at": "2025-10-25T12:07:44.078Z",
+      "registry_integrity": "sha512-TywoWNNRbhoD0BXs1P3ZEScW8W5iKrnbithIl0YH+uCmBd0QpPOA8yc82DS3BIE5Ma6FnBVUsJ7wVUDz4dvOWQ==",
+      "registry_shasum": "b71fd37fe4069e4c3c7c13925252ada4eba14e8e",
+      "tarball_bytes": 53082,
+      "tarball_sha256": "09106ecd2c62a34c8bc466d5b46096e383e474af120a6295dcd0473e45b6c2f1"
+    }
+  },
+  "registry": "npm",
+  "to_version": "14.0.2",
+  "version": "attaint/1"
+}

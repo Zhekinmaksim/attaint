@@ -1,0 +1,301 @@
+{
+  "author_note": "",
+  "envelope_hash": "b11f77fd4fa7cc78288a1217ee8d45db98269f5827d14e9dd4187c726d04069a",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {},
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 6,
+      "candidates": [
+        {
+          "excerpt": "ll\\n   * _always_ start in the `x:/` or `//host/share` directory,\\n   * regardless of the `root` setting.\\n   */\\n  root?: string\\n\\n  /**\\n   * A [PathScurry](http://npm.im/path-scurry) object used\\n   * to traverse the file system. If the `nocase` option is set\\n   * explicitly, then any provided `scurry` object must match this\\n   * setting.\\n   */\\n  scurry?: PathScurry\\n\\n  /**\\n   * Call `lstat()` on all entries, whether required or not to determine\\n   * if it's a vali",
+          "line": 1,
+          "line_bytes": 28548,
+          "path": "dist/commonjs/glob.js.map"
+        },
+        {
+          "excerpt": "d. If using lru-cache in node 14, load an AbortController polyfill from the `node-abort-controller` package. A minimal polyfill is provided for use by LRUCache.fetch(), but it should not be relied upon in other contexts (eg, passing it to other APIs that use AbortController/AbortSignal might have undesirable effects). You may disable this with LRU_CACHE_IGNORE_AC_WARNING=1 in the env.\",\"NO_ABORT_CONTROLLER\",\"ENOTSUP\",t))}}var sr=n=>!as.has(n),V=n=>n&&n===Math.floor(n)&&n>0&&i",
+          "line": 3,
+          "line_bytes": 67628,
+          "path": "dist/commonjs/index.min.js"
+        },
+        {
+          "excerpt": " a{b}c\\nexport const braceExpand = (\\n  pattern: string,\\n  options: MinimatchOptions = {},\\n) => {\\n  assertValidPattern(pattern)\\n\\n  // Thanks to Yeting Li <https://github.com/yetingli> for\\n  // improving this regexp to avoid a ReDOS vulnerability.\\n  if (options.nobrace || !/\\\\{(?:(?!\\\\{).)*\\\\}/.test(pattern)) {\\n    // shortcut. no need to expand.\\n    return [pattern]\\n  }\\n\\n  return expand(pattern, { max: options.braceExpandMax })\\n}\\nminimatch.braceExpand = braceExp",
+          "line": 4,
+          "line_bytes": 363172,
+          "path": "dist/commonjs/index.min.js.map"
+        },
+        {
+          "excerpt": "ll\\n   * _always_ start in the `x:/` or `//host/share` directory,\\n   * regardless of the `root` setting.\\n   */\\n  root?: string\\n\\n  /**\\n   * A [PathScurry](http://npm.im/path-scurry) object used\\n   * to traverse the file system. If the `nocase` option is set\\n   * explicitly, then any provided `scurry` object must match this\\n   * setting.\\n   */\\n  scurry?: PathScurry\\n\\n  /**\\n   * Call `lstat()` on all entries, whether required or not to determine\\n   * if it's a vali",
+          "line": 1,
+          "line_bytes": 28707,
+          "path": "dist/esm/glob.js.map"
+        },
+        {
+          "excerpt": "d. If using lru-cache in node 14, load an AbortController polyfill from the `node-abort-controller` package. A minimal polyfill is provided for use by LRUCache.fetch(), but it should not be relied upon in other contexts (eg, passing it to other APIs that use AbortController/AbortSignal might have undesirable effects). You may disable this with LRU_CACHE_IGNORE_AC_WARNING=1 in the env.\",\"NO_ABORT_CONTROLLER\",\"ENOTSUP\",t))}}var ii=n=>!Oe.has(n);var q=n=>n&&n===Math.floor(n)&&n>",
+          "line": 3,
+          "line_bytes": 63532,
+          "path": "dist/esm/index.min.js"
+        },
+        {
+          "excerpt": " a{b}c\\nexport const braceExpand = (\\n  pattern: string,\\n  options: MinimatchOptions = {},\\n) => {\\n  assertValidPattern(pattern)\\n\\n  // Thanks to Yeting Li <https://github.com/yetingli> for\\n  // improving this regexp to avoid a ReDOS vulnerability.\\n  if (options.nobrace || !/\\\\{(?:(?!\\\\{).)*\\\\}/.test(pattern)) {\\n    // shortcut. no need to expand.\\n    return [pattern]\\n  }\\n\\n  return expand(pattern, { max: options.braceExpandMax })\\n}\\nminimatch.braceExpand = braceExp",
+          "line": 4,
+          "line_bytes": 363172,
+          "path": "dist/esm/index.min.js.map"
+        }
+      ],
+      "complete": false,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [],
+      "changed_source_count": 21,
+      "changed_sources": [
+        "dist/commonjs/glob.d.ts",
+        "dist/commonjs/glob.d.ts.map",
+        "dist/commonjs/glob.js",
+        "dist/commonjs/glob.js.map",
+        "dist/commonjs/index.min.js",
+        "dist/commonjs/index.min.js.map",
+        "dist/commonjs/pattern.d.ts",
+        "dist/commonjs/pattern.d.ts.map",
+        "dist/commonjs/pattern.js",
+        "dist/commonjs/pattern.js.map",
+        "dist/esm/glob.d.ts",
+        "dist/esm/glob.d.ts.map",
+        "dist/esm/glob.js",
+        "dist/esm/glob.js.map",
+        "dist/esm/index.min.js",
+        "dist/esm/index.min.js.map",
+        "dist/esm/pattern.d.ts",
+        "dist/esm/pattern.d.ts.map",
+        "dist/esm/pattern.js",
+        "dist/esm/pattern.js.map"
+      ],
+      "count_from": 65,
+      "count_to": 65,
+      "listing_truncated": true,
+      "removed": []
+    },
+    "install_hooks": {
+      "from": {
+        "prepare": "tshy && bash scripts/build.sh"
+      },
+      "to": {
+        "prepare": "tshy && bash scripts/build.sh"
+      }
+    },
+    "license": {
+      "from": "BlueOak-1.0.0",
+      "to": "BlueOak-1.0.0"
+    },
+    "maintainers": {
+      "from": [
+        "isaacs"
+      ],
+      "to": [
+        "isaacs"
+      ]
+    },
+    "opaque_candidates": [
+      {
+        "excerpt_truncated": true,
+        "head": "{\n  \"version\": 3,\n  \"sources\": [\"../../node_modules/balanced-match/src/index.ts\", \"../../node_modules/brace-expansion/src/index.ts\", \"../../node_modules/minimatch/src/assert-valid-pattern.ts\", \"../../node_modules/minimatch/src/brace-expressions.ts\", \"../../node_modules/minimatch/src/unescape.ts\", \"../../node_modules/mi",
+        "path": "dist/commonjs/index.min.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 493771,
+          "hex_escape_runs": 0,
+          "lines": 8,
+          "longest_line": 363172,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\n  \"version\": 3,\n  \"sources\": [\"../../node_modules/balanced-match/src/index.ts\", \"../../node_modules/brace-expansion/src/index.ts\", \"../../node_modules/minimatch/src/assert-valid-pattern.ts\", \"../../node_modules/minimatch/src/brace-expressions.ts\", \"../../node_modules/minimatch/src/unescape.ts\", \"../../node_modules/mi",
+        "path": "dist/esm/index.min.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 491205,
+          "hex_escape_runs": 0,
+          "lines": 8,
+          "longest_line": 363172,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "\"use strict\";var R=(n,t)=>()=>(t||n((t={exports:{}}).exports,t),t.exports);var Ge=R(Y=>{\"use strict\";Object.defineProperty(Y,\"__esModule\",{value:!0});Y.range=Y.balanced=void 0;var Gs=(n,t,e)=>{let s=n instanceof RegExp?Ie(n,e):n,i=t instanceof RegExp?Ie(t,e):t,r=s!==null&&i!=null&&(0,Y.range)(s,i,e);return r&&{start:r[",
+        "path": "dist/commonjs/index.min.js",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 88429,
+          "hex_escape_runs": 0,
+          "lines": 5,
+          "longest_line": 67628,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "var Gt=(n,t,e)=>{let s=n instanceof RegExp?ce(n,e):n,i=t instanceof RegExp?ce(t,e):t,r=s!==null&&i!=null&&ss(s,i,e);return r&&{start:r[0],end:r[1],pre:e.slice(0,r[0]),body:e.slice(r[0]+s.length,r[1]),post:e.slice(r[1]+i.length)}},ce=(n,t)=>{let e=t.match(n);return e?e[0]:null},ss=(n,t,e)=>{let s,i,r,o,h,a=e.indexOf(n),",
+        "path": "dist/esm/index.min.js",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 82683,
+          "hex_escape_runs": 0,
+          "lines": 5,
+          "longest_line": 63532,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"glob.js\",\"sourceRoot\":\"\",\"sources\":[\"../../src/glob.ts\"],\"names\":[],\"mappings\":\"AAAA,OAAO,EAAE,SAAS,EAAoB,MAAM,WAAW,CAAA;AAEvD,OAAO,EAAE,aAAa,EAAE,MAAM,UAAU,CAAA;AACxC,OAAO,EAGL,UAAU,EACV,gBAAgB,EAChB,eAAe,EACf,eAAe,GAChB,MAAM,aAAa,CAAA;AAEpB,OAAO,EAAE,OAAO,EAAE,MAAM,cAAc,CAAA;AACtC,OAAO,EAAE,UAAU,",
+        "path": "dist/esm/glob.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 28707,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 28707,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"glob.js\",\"sourceRoot\":\"\",\"sources\":[\"../../src/glob.ts\"],\"names\":[],\"mappings\":\";;;AAAA,yCAAuD;AAEvD,uCAAwC;AACxC,6CAOoB;AAEpB,6CAAsC;AACtC,2CAAoD;AAKpD,4CAA4C;AAC5C,gDAAgD;AAChD,MAAM,eAAe,GACnB,CACE,OAAO,OAAO,KAAK,QAAQ;IAC3B,OAAO;IACP,OAAO,OAAO,CAAC,QAAQ,KAAK,QAAQ,CACrC,CAAC,CAAC;IACD,OAAO,CAAC,QA",
+        "path": "dist/commonjs/glob.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 28548,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 28548,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"pattern.js\",\"sourceRoot\":\"\",\"sources\":[\"../../src/pattern.ts\"],\"names\":[],\"mappings\":\"AAAA,yEAAyE;AAEzE,OAAO,EAAE,QAAQ,EAAE,MAAM,WAAW,CAAA;AAgBpC,MAAM,aAAa,GAAG,CAAC,EAAe,EAAqB,EAAE,CAC3D,EAAE,CAAC,MAAM,IAAI,CAAC,CAAA;AAChB,MAAM,UAAU,GAAG,CAAC,EAAY,EAAkB,EAAE,CAAC,EAAE,CAAC,MAAM,IAAI,CAAC,CAAA;AAEn",
+        "path": "dist/esm/pattern.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 13778,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 13778,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"pattern.js\",\"sourceRoot\":\"\",\"sources\":[\"../../src/pattern.ts\"],\"names\":[],\"mappings\":\";AAAA,yEAAyE;;;AAEzE,yCAAoC;AAgBpC,MAAM,aAAa,GAAG,CAAC,EAAe,EAAqB,EAAE,CAC3D,EAAE,CAAC,MAAM,IAAI,CAAC,CAAA;AAChB,MAAM,UAAU,GAAG,CAAC,EAAY,EAAkB,EAAE,CAAC,EAAE,CAAC,MAAM,IAAI,CAAC,CAAA;AAEnE,MAAM,aAAa,GAAG,MAAM,CAA",
+        "path": "dist/commonjs/pattern.js.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 13762,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 13762,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"glob.d.ts\",\"sourceRoot\":\"\",\"sources\":[\"../../src/glob.ts\"],\"names\":[],\"mappings\":\"AAAA,OAAO,EAAE,SAAS,EAAoB,MAAM,WAAW,CAAA;AACvD,OAAO,EAAE,QAAQ,EAAE,MAAM,UAAU,CAAA;AAEnC,OAAO,EACL,QAAQ,EACR,IAAI,EACJ,UAAU,EAIX,MAAM,aAAa,CAAA;AACpB,OAAO,EAAE,UAAU,EAAE,MAAM,aAAa,CAAA;AACxC,OAAO,EAAE,OAAO,EAAE,MAAM,cA",
+        "path": "dist/commonjs/glob.d.ts.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 4084,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 4084,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"glob.d.ts\",\"sourceRoot\":\"\",\"sources\":[\"../../src/glob.ts\"],\"names\":[],\"mappings\":\"AAAA,OAAO,EAAE,SAAS,EAAoB,MAAM,WAAW,CAAA;AACvD,OAAO,EAAE,QAAQ,EAAE,MAAM,UAAU,CAAA;AAEnC,OAAO,EACL,QAAQ,EACR,IAAI,EACJ,UAAU,EAIX,MAAM,aAAa,CAAA;AACpB,OAAO,EAAE,UAAU,EAAE,MAAM,aAAa,CAAA;AACxC,OAAO,EAAE,OAAO,EAAE,MAAM,cA",
+        "path": "dist/esm/glob.d.ts.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 4084,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 4084,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      },
+      {
+        "excerpt_truncated": true,
+        "head": "{\"version\":3,\"file\":\"pattern.d.ts\",\"sourceRoot\":\"\",\"sources\":[\"../../src/pattern.ts\"],\"names\":[],\"mappings\":\"AAEA,OAAO,EAAE,QAAQ,EAAE,MAAM,WAAW,CAAA;AACpC,MAAM,MAAM,SAAS,GAAG,MAAM,GAAG,MAAM,GAAG,OAAO,QAAQ,CAAA;AAGzD,MAAM,MAAM,WAAW,GAAG,CAAC,CAAC,EAAE,SAAS,EAAE,GAAG,IAAI,EAAE,SAAS,EAAE,CAAC,CAAA;AAC9D,MAAM,MAAM,cAAc,GAA",
+        "path": "dist/commonjs/pattern.d.ts.map",
+        "signals": {
+          "base64_runs": 0,
+          "bytes": 1366,
+          "hex_escape_runs": 0,
+          "lines": 1,
+          "longest_line": 1366,
+          "nonprintable_milli": 0
+        },
+        "status": "changed"
+      }
+    ],
+    "opaque_coverage": {
+      "candidate_count": 12,
+      "complete": false
+    },
+    "publisher": {
+      "from": "isaacs",
+      "to": "isaacs"
+    },
+    "purpose": {
+      "description": "the most correct and second fastest glob implementation in JavaScript",
+      "keywords": []
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/glob",
+    "https://registry.npmjs.org/glob/-/glob-13.0.4.tgz",
+    "https://registry.npmjs.org/glob/-/glob-13.0.5.tgz"
+  ],
+  "from_version": "13.0.4",
+  "package": "glob",
+  "pin": {
+    "from": {
+      "integrity": "sha512-KACie1EOs9BIOMtenFaxwmYODWA3/fTfGSUnLhMJpXRntu1g+uL/Xvub5f8SCTppvo9q62Qy4LeOoUiaL54G5A==",
+      "published_at": "2026-02-17T04:34:19.780Z",
+      "registry_integrity": "sha512-KACie1EOs9BIOMtenFaxwmYODWA3/fTfGSUnLhMJpXRntu1g+uL/Xvub5f8SCTppvo9q62Qy4LeOoUiaL54G5A==",
+      "registry_shasum": "8479df26cb72f9a878179704f6ef3fb7db7cba09",
+      "tarball_bytes": 362686,
+      "tarball_sha256": "367b79efacaaa4d71362df0ad316da955bebd01a79b8317e81439739b6210bd2"
+    },
+    "to": {
+      "integrity": "sha512-BzXxZg24Ibra1pbQ/zE7Kys4Ua1ks7Bn6pKLkVPZ9FZe4JQS6/Q7ef3LG1H+k7lUf5l4T3PLSyYyYJVYUvfgTw==",
+      "published_at": "2026-02-17T16:25:26.053Z",
+      "registry_integrity": "sha512-BzXxZg24Ibra1pbQ/zE7Kys4Ua1ks7Bn6pKLkVPZ9FZe4JQS6/Q7ef3LG1H+k7lUf5l4T3PLSyYyYJVYUvfgTw==",
+      "registry_shasum": "a48f760c6312b1a19d2950fcb577384221c4ec00",
+      "tarball_bytes": 363753,
+      "tarball_sha256": "afdbb686c86592fd659d73277c6bb7ccc01f368a3e5e9367e54356a3deef0610"
+    }
+  },
+  "registry": "npm",
+  "to_version": "13.0.5",
+  "version": "attaint/1"
+}

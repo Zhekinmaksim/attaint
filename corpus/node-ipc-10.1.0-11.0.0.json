@@ -1,0 +1,90 @@
+{
+  "author_note": "post-incident release, peacenotwar era",
+  "envelope_hash": "f5fd1fcb7b3cf8c556a07103e6dbbf67ce60b50b0bbd407bb3d17f807a3fe495",
+  "facts": {
+    "dependencies": {
+      "added": {
+        "peacenotwar": "^9.1.3"
+      },
+      "changed": {},
+      "removed": []
+    },
+    "files": {
+      "added": [],
+      "count_from": 23,
+      "count_to": 23,
+      "removed": []
+    },
+    "install_hooks": {
+      "from": {
+        "prepare": "esbuild node-ipc.js --bundle --format=cjs --target=es2018 --platform=node --outfile=node-ipc.cjs"
+      },
+      "to": {
+        "prepare": "esbuild node-ipc.js --bundle --format=cjs --target=es2018 --platform=node --outfile=node-ipc.cjs"
+      }
+    },
+    "license": {
+      "from": "MIT",
+      "to": "MIT"
+    },
+    "maintainers": {
+      "from": [
+        "alansikora",
+        "atiertant",
+        "gloridea",
+        "kevinwilson541",
+        "lstratman",
+        "mayberex",
+        "mostafa-samir",
+        "riaevangelist",
+        "robatron",
+        "rsp",
+        "theadd",
+        "vvinder"
+      ],
+      "to": [
+        "alansikora",
+        "atiertant",
+        "gloridea",
+        "kevinwilson541",
+        "lstratman",
+        "mayberex",
+        "mostafa-samir",
+        "riaevangelist",
+        "robatron",
+        "rsp",
+        "theadd",
+        "vvinder"
+      ]
+    },
+    "opaque_candidates": [],
+    "publisher": {
+      "from": "riaevangelist",
+      "to": "riaevangelist"
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/node-ipc",
+    "https://registry.npmjs.org/node-ipc/-/node-ipc-10.1.0.tgz",
+    "https://registry.npmjs.org/node-ipc/-/node-ipc-11.0.0.tgz"
+  ],
+  "from_version": "10.1.0",
+  "package": "node-ipc",
+  "pin": {
+    "from": {
+      "integrity": "sha512-JBHRlMU8xAoo1kPtcvlBAa/6OBi/FUZoO/NbZf63q5Fe8q2aDhVJFryBFSq5T3E7EM13NnAUyEYk1b0IF6QV3Q==",
+      "published_at": "2021-09-15T18:26:43.784Z",
+      "tarball_bytes": 36016,
+      "tarball_sha256": "3ae711f24ce5e31b696e4228452258954b1cbc0983fdb345b0755cd9e9366a2b"
+    },
+    "to": {
+      "integrity": "sha512-1WyjtPx/4XNjqlU1TBaIq7FokPI4n1Ftb+D8iGgK3oTApSAol7MuPGSHIWv4+rR1j08oBBRuTvxnebLOWHFcwA==",
+      "published_at": "2022-03-08T17:25:35.673Z",
+      "tarball_bytes": 37281,
+      "tarball_sha256": "24388fb7f28c167afd426b17667a2563ec6f094a7e83f3aef84d48a73b11a37b"
+    }
+  },
+  "registry": "npm",
+  "to_version": "11.0.0",
+  "version": "attaint/1"
+}

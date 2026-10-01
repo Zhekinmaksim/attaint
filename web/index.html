@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Attaint — a consensus gate for dependency updates</title>
+<meta name="description" content="Judges the pinned diff of a release and answers whether the update carries a risk the version number does not report.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAFAF7; --ink:#0C0D0C; --dim:#3B423E; --muted:#5C6560;
+    --rule:#C7CCC5; --panel:#EFEFE9; --panel2:#F4F4EF; --hair:#E2E4DE;
+    --clean:#0B6E4F; --risk:#8C1D2F; --unknown:#8A6A00; --accent:#2F2A8C;
+    --risk-wash:#FBEAED; --unknown-wash:#FBF4E2; --clean-wash:#E7F3ED;
+    --sans:"Space Grotesk",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  a{color:inherit}
+  a:hover{color:var(--accent)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  code{font-family:var(--mono);font-size:14px}
+  @keyframes atFade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  @keyframes atSweep{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  /* rail */
+  .rail{position:sticky;top:0;z-index:30;background:rgba(250,250,247,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--ink)}
+  .rail-in{max-width:1120px;margin:0 auto;padding:11px 28px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .mark{font-weight:700;font-size:19px;letter-spacing:-.03em}
+  .chip{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--unknown);color:var(--unknown);padding:3px 7px}
+  .nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:.04em}
+  .nav a{padding:7px 10px;color:var(--muted);text-decoration:none;text-transform:uppercase;border-bottom:2px solid transparent}
+  .nav a:hover{color:var(--ink);background:var(--panel)}
+  .nav a.on{color:var(--ink);border-bottom-color:var(--accent)}
+  .progress{height:2px}
+  .progress i{display:block;height:2px;background:var(--ink);transform-origin:0 50%;transform:scaleX(0)}
+  @media(max-width:640px){.nav{order:3;width:100%;margin-left:0}}
+
+  /* hero */
+  .hero{padding:44px 0 52px;display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:52px;align-items:start}
+  h1{font-size:clamp(33px,4.4vw,58px);line-height:1.02;letter-spacing:-.045em;font-weight:700;margin-bottom:20px;max-width:15ch;text-wrap:balance}
+  .lede{font-size:19px;line-height:1.55;color:var(--dim);max-width:44ch;margin-bottom:22px}
+  .lede.sm{font-size:16px;color:var(--muted);margin-bottom:0}
+  .buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+  .btn{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:13px 19px;background:var(--ink);color:var(--paper);text-decoration:none;border:1px solid var(--ink)}
+  .btn:hover{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+  .btn.ghost:hover{background:var(--panel);border-color:var(--ink);color:var(--ink)}
+
+  .picker{margin-top:34px;border-top:1px solid var(--rule);padding-top:18px}
+  .kicker{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .cases{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+  .cases button{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;text-align:left;border:0;cursor:pointer;font:inherit;padding:11px 13px;background:#fff;color:var(--dim)}
+  .cases button:hover{filter:brightness(.97)}
+  .cases button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+  .cases .cname{font-family:var(--mono);font-size:12.5px;letter-spacing:-.01em}
+  .cases .ckind{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.72}
+
+  /* exhibit */
+  .exhibit{border:1px solid var(--ink);background:#fff;outline:1px solid #D8D9D2;outline-offset:7px}
+  .ex-head{display:flex;align-items:center;gap:10px;padding:10px 15px;border-bottom:1px solid var(--ink);background:var(--panel);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .ex-head .who{margin-left:auto;letter-spacing:.05em}
+  .ex-body{padding:18px 18px 20px}
+  .diff{font-family:var(--mono);font-size:13.5px;line-height:1.9;border:1px solid var(--hair);background:var(--panel2)}
+  .diff div{padding:2px 12px;white-space:pre-wrap;word-break:break-word}
+  .diff .minus{background:#F7ECEE;color:var(--risk)}
+  .diff .plus{background:var(--clean-wash);color:var(--clean)}
+  .diff .ctx{color:var(--muted)}
+  .verdict-note{font-size:14.5px;color:var(--dim);margin:16px 0 4px;max-width:52ch}
+
+  .levels{display:flex;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:18px;flex-wrap:wrap}
+  .levels button{flex:1 1 150px;background:#fff;border:0;padding:11px 8px 12px;cursor:pointer;font:inherit;text-align:left;color:var(--muted)}
+  .levels button b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px}
+  .levels button span{font-size:12.5px;line-height:1.4;display:block}
+  .levels button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+  .levels button:hover:not([aria-pressed="true"]):not([disabled]){background:var(--panel)}
+  .levels button[disabled]{opacity:.42;cursor:not-allowed}
+  .level-hint{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--unknown);margin-top:8px}
+
+  .readout{margin-top:14px;border:1px solid var(--hair);padding:14px 15px;background:var(--panel2)}
+  .readout .top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:9px}
+  .readout .tag{font-family:var(--mono);font-size:17px;font-weight:700;letter-spacing:-.02em;animation:atFade .28s ease both}
+  .readout .tag.RISK{color:var(--risk)}
+  .readout .tag.CLEAN{color:var(--clean)}
+  .readout .tag.INCONCLUSIVE{color:var(--unknown)}
+  .readout .exit{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-left:auto}
+  .readout p{font-size:13.5px;line-height:1.55;color:var(--dim)}
+  .cls{font-family:var(--mono);font-size:11.5px;margin-top:9px;display:flex;gap:6px;flex-wrap:wrap}
+  .cls i{font-style:normal;padding:2px 7px;border:1px solid var(--rule);color:var(--muted);animation:atFade .3s ease both}
+  .cls i.hit{border-color:var(--risk);color:var(--risk);background:var(--risk-wash)}
+  .cls i.unk{border-color:var(--unknown);color:var(--unknown);background:var(--unknown-wash)}
+
+  section{padding:52px 0;border-top:1px solid var(--rule)}
+  h2{font-size:clamp(24px,2.8vw,33px);letter-spacing:-.035em;line-height:1.1;margin-bottom:14px;max-width:22ch}
+  .sub{font-size:17px;color:var(--dim);max-width:60ch;margin-bottom:30px}
+  p.body{font-size:16px;color:var(--dim);max-width:62ch;margin-bottom:14px}
+  .note{font-size:14px;color:var(--muted);max-width:62ch}
+
+  .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+  .col{background:var(--paper);padding:20px 18px}
+  .col:hover{background:#fff}
+  .col h3{font-size:16px;letter-spacing:-.01em;margin-bottom:8px}
+  .col p{font-size:14px;color:var(--muted);line-height:1.55}
+  .col .lv{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:9px}
+
+  /* measurement */
+  .measure{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:36px;align-items:start}
+  .modes{display:flex;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:16px}
+  .modes button{flex:1;border:0;cursor:pointer;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:10px 8px;background:#fff;color:var(--muted)}
+  .modes button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+  .grid{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;max-width:420px}
+  .grid button{aspect-ratio:1;border:1px solid var(--hair);background:var(--panel2);cursor:pointer;padding:0;outline-offset:2px}
+  .grid button.blocked{border-color:var(--risk);background:var(--risk-wash)}
+  .grid button.pass{background:var(--clean-wash)}
+  .grid button.unknown{background:var(--unknown-wash);border-color:var(--unknown)}
+  .grid button.sel{border-color:var(--ink)}
+  .grid button.blocked.sel{background:var(--risk)}
+  .grid button.pass.sel{background:var(--clean)}
+  .cellbox{margin-top:14px;border:1px solid var(--hair);background:var(--panel2);padding:12px 14px;min-height:96px}
+  .cellbox .cn{font-family:var(--mono);font-size:12.5px;margin-bottom:7px}
+  .cellbox p{font-size:12.5px;color:var(--muted);line-height:1.5}
+
+  .bars{display:grid;gap:9px;margin:0 0 18px}
+  .bar{display:grid;grid-template-columns:minmax(110px,150px) minmax(0,1fr) 58px;gap:12px;align-items:center}
+  .bar .n{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;color:var(--dim)}
+  .bar .t{height:16px;background:var(--panel);border:1px solid var(--hair);position:relative;display:block}
+  .bar .t i{position:absolute;inset:0 auto 0 0;display:block;background:var(--risk);width:0;transition:width .45s cubic-bezier(.2,.7,.2,1)}
+  .bar.ok .t i{background:var(--clean)}
+  .bar .v{font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums;text-align:right}
+  .tally{border:1px solid var(--ink);padding:16px 18px;background:#fff}
+  .tally .big{font-family:var(--mono);font-size:38px;font-weight:700;letter-spacing:-.04em;line-height:1;color:var(--risk);font-variant-numeric:tabular-nums}
+  .tally.cons .big{color:var(--muted)}
+  .tally p{font-size:13.5px;color:var(--dim);margin-top:9px;max-width:40ch}
+
+  /* corpus */
+  .filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+  .filters button{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;padding:6px 10px;border:1px solid var(--rule);background:transparent;color:var(--muted);cursor:pointer}
+  .filters button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0 16px}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--hair);vertical-align:top}
+  th{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--ink)}
+  tbody tr{animation:atFade .25s ease both}
+  tbody tr:hover{background:var(--panel2)}
+  td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+  td .st{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:1px 6px;border:1px solid}
+  .st.strong{color:var(--clean);border-color:var(--clean)}
+  .st.fair{color:var(--unknown);border-color:var(--unknown)}
+  .st.weak,.st.none{color:var(--risk);border-color:var(--risk)}
+  .repos{display:flex;align-items:center;gap:9px}
+  .repos .num{font-family:var(--mono);font-variant-numeric:tabular-nums;min-width:2ch}
+  .repos .t{height:8px;flex:1;min-width:44px;background:var(--panel);border:1px solid var(--hair);display:block;position:relative}
+  .repos .t i{position:absolute;inset:0 auto 0 0;display:block;transform-origin:0 50%;animation:atSweep .5s cubic-bezier(.2,.7,.2,1) both}
+
+  /* challenge */
+  .challenge{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:var(--rule);border:1px solid var(--ink);margin-top:30px}
+  .challenge .pane{background:#fff}
+  .challenge .phead{padding:10px 15px;border-bottom:1px solid var(--rule);background:var(--panel);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .challenge pre{margin:0;padding:15px;font-family:var(--mono);font-size:12px;line-height:1.75;color:var(--dim);white-space:pre-wrap;word-break:break-word}
+  .challenge .form{background:var(--paper);padding:15px}
+  .challenge input{width:100%;font-family:var(--mono);font-size:12.5px;padding:10px 12px;border:1px solid var(--ink);background:#fff;color:var(--ink)}
+  .presets{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+  .presets button{font-family:var(--mono);font-size:10.5px;padding:5px 9px;border:1px dashed var(--rule);background:transparent;color:var(--muted);cursor:pointer}
+  .presets button:hover{border-color:var(--ink);color:var(--ink)}
+  .cverdict{margin-top:14px;border:1px solid var(--hair);background:var(--panel2);padding:12px 14px;min-height:104px}
+  .cverdict .ct{font-family:var(--mono);font-size:12.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+  .cverdict p{font-size:13px;line-height:1.55;color:var(--dim)}
+  .cverdict.ok{border-color:var(--clean);background:var(--clean-wash)}
+  .cverdict.ok .ct{color:var(--clean)}
+  .cverdict.bad{border-color:var(--risk);background:var(--risk-wash)}
+  .cverdict.bad .ct{color:var(--risk)}
+
+  .apart{display:grid;gap:18px;max-width:70ch}
+  .apart div{border-left:3px solid var(--ink);padding-left:16px}
+  .apart h3{font-size:16.5px;margin-bottom:5px}
+  .apart p{font-size:14.5px;color:var(--muted)}
+
+  footer{border-top:1px solid var(--ink);padding:26px 0 44px;font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted);display:flex;gap:18px;flex-wrap:wrap}
+  footer a{text-decoration:none}
+  .status{margin-left:auto;color:var(--unknown)}
+
+  .live-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:28px;margin-top:24px}
+  .live-box{border:1px solid var(--rule);padding:20px;background:#fff;min-width:0}
+  .live-box label{display:block;font:11px var(--mono);text-transform:uppercase;margin:16px 0 7px;color:var(--dim)}
+  .live-box input{width:100%;padding:10px;border:1px solid var(--rule);font:13px var(--mono);background:var(--paper)}
+  .live-box button{cursor:pointer;font:11px var(--mono);padding:11px 14px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);margin:8px 6px 0 0}
+  .live-box button:disabled{opacity:.45;cursor:default}
+  .live-box pre{max-height:280px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font:11px/1.7 var(--mono);margin-top:12px}
+  .live-box summary{cursor:pointer;margin-top:16px;font:11px var(--mono)}
+  .live-box a,.live-meta{overflow-wrap:anywhere;font:11px/1.8 var(--mono)}
+  .live-result{font:700 18px var(--mono);margin:16px 0}.live-result.RISK{color:var(--risk)}.live-result.CLEAN{color:var(--clean)}.live-result.INCONCLUSIVE{color:var(--unknown)}
+  #live-notice{padding:14px;border-left:3px solid var(--accent);background:var(--panel);margin-top:20px}
+  @media(max-width:640px){.hero{grid-template-columns:minmax(0,1fr);gap:30px}.wrap{padding:0 20px}.live-box{padding:16px}.rail-in{padding:10px 20px}.measure{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+
+<div class="rail">
+  <div class="rail-in">
+    <span class="mark">Attaint</span>
+    <span class="chip">Not yet deployed</span>
+    <nav class="nav" id="nav">
+      <a href="#live">Live gate</a>
+      <a href="#gate">Examples</a>
+      <a href="#levels">Evidence</a>
+      <a href="#noise">Measurement</a>
+      <a href="#corpus">Corpus</a>
+      <a href="#apart">Neighbours</a>
+    </nav>
+  </div>
+  <div class="progress"><i id="progress"></i></div>
+</div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div>
+      <h1>The version number is not the change.</h1>
+      <p class="lede">Attaint judges the pinned diff of a release and answers one question: does this update carry a risk the version number does not report?</p>
+      <p class="lede sm">A patch release that adds a dependency, hands the package to a new publisher, or ships an install script is in no vulnerability database. That is what every headline supply-chain attack looked like on the day it landed.</p>
+      <div class="buttons">
+        <a class="btn" href="#noise">See the measurement</a>
+        <a class="btn ghost" href="#corpus">Read the corpus</a>
+      </div>
+
+      <div class="picker">
+        <div class="kicker">Illustrative examples · no chain verdicts</div>
+        <div class="cases" id="cases"></div>
+      </div>
+    </div>
+
+    <div class="exhibit" id="gate">
+      <div class="ex-head"><span>Illustration · package.json</span><span class="who" id="speed"></span></div>
+      <div class="ex-body">
+        <div class="diff">
+          <div class="ctx">   "dependencies": {</div>
+          <div class="minus" id="diffMinus"></div>
+          <div class="plus" id="diffPlus"></div>
+          <div class="ctx">   }</div>
+        </div>
+        <p class="verdict-note" id="caseNote"></p>
+
+        <div class="levels" id="levelBtns" role="group" aria-label="Evidence level"></div>
+        <p class="level-hint" id="levelHint"></p>
+
+        <div class="readout" aria-live="polite">
+          <div class="top">
+            <span class="tag" id="tag">RISK</span>
+            <span class="exit" id="exit">exit 1</span>
+          </div>
+          <p id="say"></p>
+          <div class="cls" id="cls"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <section id="live">
+    <div class="kicker">Bradbury · live consensus</div>
+    <h2>One update. One pinned policy. A chain verdict.</h2>
+    <p class="sub">Inspect the published record without a wallet. To judge another update, build its envelope locally and submit it with your Bradbury wallet.</p>
+    <p class="live-meta">Contract: <span id="live-contract">Awaiting verified deployment</span></p>
+    <p class="live-meta" id="live-policy">No policy loaded.</p>
+    <div class="live-grid">
+      <div class="live-box">
+        <h3>Submit an update</h3>
+        <button type="button" id="live-example">Load event-stream 3.3.4 → 3.3.5</button>
+        <label for="live-envelope">Or upload an attaint/1 envelope</label>
+        <input type="file" accept="application/json,.json" id="live-envelope">
+        <p class="live-meta" id="live-object">No envelope selected.</p>
+        <button type="button" id="live-connect" disabled>Connect wallet</button>
+        <button type="button" id="live-send" disabled>Request attestation</button>
+        <details><summary>Inspect the evidence before signing</summary><pre id="live-evidence"></pre></details>
+        <p class="note" style="margin-top:16px">Create your envelope: <code>python3 cli/envelope.py PACKAGE FROM TO --out update.json</code>. Checksums verify downloaded bytes. The contract checks registry metadata; file excerpts rely on this builder. A CLEAN result covers the supplied evidence and policy.</p>
+      </div>
+      <div class="live-box">
+        <h3>Read the chain gate</h3>
+        <label for="live-attestation">Attestation ID</label>
+        <input type="number" min="0" step="1" id="live-attestation" value="0">
+        <button type="button" id="live-refresh">Read chain gate</button>
+        <div class="live-result" id="live-result">No chain result loaded</div>
+        <details open><summary>Gate record</summary><pre id="live-gate"></pre></details>
+        <label for="live-hash">Resume a consensus transaction by hash</label>
+        <input type="text" id="live-hash" placeholder="0x…" autocomplete="off">
+        <button type="button" id="live-check">Check transaction</button>
+        <button type="button" id="live-finalize" hidden>Finalize accepted transaction</button>
+        <div id="live-transaction" class="live-meta"></div>
+        <button type="button" id="live-download" hidden>Download transaction record</button>
+        <details><summary>Consensus receipt</summary><pre id="live-receipt"></pre></details>
+      </div>
+    </div>
+    <p id="live-notice" role="status">Reading deployment manifest…</p>
+    <p class="note" style="margin-top:20px"><a href="/attaint.py">Contract source</a> · <a href="/envelope.py">Evidence builder</a> · <a href="/attaint_gate.py">CLI gate</a> · <a href="/source.zip">Complete source archive</a> · <a href="/mechanical-report.json">45-pair baseline</a> · <a href="/consensus-report.json">Consensus report</a></p>
+  </section>
+
+  <section id="levels">
+    <h2>Evidence has a level, and the level bounds what can be said</h2>
+    <p class="sub">Every headline npm incident has had its malicious versions unpublished. The tarballs return 404 and the version manifests are gone. What survives is the checksum recorded in other people's lockfiles, together with the resolved dependency graph.</p>
+    <div class="cols">
+      <div class="col">
+        <div class="lv">Level 1 — registry pin</div>
+        <h3>Bytes in hand</h3>
+        <p>Both tarballs downloaded and hashed against the integrity the registry published. Registry metadata can be checked. File-based classes require complete bounded excerpts; missing coverage stays inconclusive.</p>
+      </div>
+      <div class="col">
+        <div class="lv">Level 2 — lockfile rebuild</div>
+        <h3>Checksum without the file</h3>
+        <p>The tarball is gone. The checksum and the dependency graph are recovered from independent lockfiles. Publisher changes and added dependencies are still judged; anything needing file contents returns inconclusive.</p>
+      </div>
+      <div class="col">
+        <div class="lv">Level 3 — nothing</div>
+        <h3>Inconclusive, always</h3>
+        <p>No pin, no verdict. This blocks rather than passes, because making the evidence unreadable is otherwise the cheapest attack there is.</p>
+      </div>
+    </div>
+    <p class="body" style="margin-top:26px">A clean verdict that does not say which level produced it is a lie about what was checked. The level is written into the attestation and returned by the gate.</p>
+  </section>
+
+  <section id="noise">
+    <h2>A detector that fires on three updates in five gets switched off</h2>
+    <p class="sub" style="margin-bottom:26px">Forty-five consecutive releases of fifteen ordinary packages, read the way a deterministic linter reads them. This is the number a supply-chain gate lives or dies on, and it is rarely published.</p>
+
+    <div class="measure">
+      <div>
+        <div class="modes" id="modes"></div>
+        <div class="grid" id="grid"></div>
+        <div class="cellbox">
+          <div class="cn" id="cellName"></div>
+          <div class="cls" id="cellCls" style="margin-top:0;margin-bottom:8px"></div>
+          <p id="cellSay"></p>
+        </div>
+      </div>
+
+      <div>
+        <div class="bars" id="bars"></div>
+        <div class="tally" id="tally">
+          <div class="kicker">Ordinary releases blocked</div>
+          <div class="big" id="tallyBig"></div>
+          <p id="tallySay"></p>
+        </div>
+      </div>
+    </div>
+
+    <p class="body" style="margin-top:26px">The obfuscated-blob rule alone fires on nearly half the sample, because a minified <code>dist</code> directory is ordinary npm practice. It flags esbuild, prettier, axios and glob in a row. Adding a second maintainer is routine housekeeping, not a handover.</p>
+    <p class="body">So the classes are not written as detections. Attaint does not ask whether an install script appeared; it asks whether the script does something the build of this package does not need. That question has no regular expression, which is the entire reason it goes to consensus instead of a linter.</p>
+    <p class="note">Measured 4 September 2026 against the live npm registry. The prefilter that produces a candidate never decides anything — it extracts and pins, and the verdict is the validators'.</p>
+  </section>
+
+  <section id="corpus">
+    <h2>What is left of the famous incidents</h2>
+    <p class="sub" style="margin-bottom:22px">Seven of nine evidence pairs cannot be pinned from the registry any more. The checksums were recovered from third-party lockfiles instead, and recovery turns out to be inversely proportional to how fast the incident was caught.</p>
+
+    <div class="filters" id="filters"></div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Version</th><th>Pin</th><th>Independent repositories</th><th>What it shows</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p class="body">event-stream 3.3.6 sat in the registry for about ten weeks and settled into thirty lockfiles. The ua-parser-js versions were pulled within hours and left almost no trace. The rows that recovered nothing stay on this page rather than being quietly dropped.</p>
+    <p class="body">The bytes are not recoverable at all: npm and the yarn mirror both return 404, and GitHub excludes <code>node_modules</code> from its code search index. A recovered checksum is a number that would verify an archived copy, not a copy.</p>
+  </section>
+
+  <section id="hostile">
+    <h2>The evidence is written by whoever is being judged</h2>
+    <p class="body">A release description, a README, the text of an install script — all of it is authored by the publisher under review. That is injection into fetched content, and a single model is defeated by trying wordings until one lands.</p>
+    <p class="body">Attaint uses a quoting fence derived from the hash of the evidence, so the evidence cannot close it early. Judges read the pinned evidence as supplied; duplicate requests are scoped to the release, checksum pins, policy and requester. A round that cannot be parsed is inconclusive and blocks the gate.</p>
+    <p class="body">A challenger who thinks a class was missed stakes a bond and points at a fragment. Before any consensus round is spent, the contract checks the fragment appears verbatim in the pinned evidence. Producing a different commit, a different version, or a later release is not a finding — it is a different object, and the bond is forfeit. Without that check the bonded market simply pays for swapping the facts.</p>
+
+    <div class="challenge">
+      <div class="pane">
+        <div class="phead">Illustrative evidence — no on-chain challenge</div>
+        <pre id="evidence"></pre>
+      </div>
+      <div class="form">
+        <div class="kicker">Stake a bond, point at a fragment</div>
+        <input id="fragment" placeholder="paste a fragment of the evidence" autocomplete="off">
+        <div class="presets" id="presets"></div>
+        <div class="cverdict" id="cverdict" aria-live="polite">
+          <div class="ct" id="ctag"></div>
+          <p id="csay"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="apart">
+    <h2>Where this sits</h2>
+    <div class="apart">
+      <div>
+        <h3>Not a vulnerability scanner</h3>
+        <p>Those compare versions against a database of what is already known. A patch release carrying exfiltration appears in no database on the day it ships.</p>
+      </div>
+      <div>
+        <h3>Not a vendor verdict</h3>
+        <p>Behavioural supply-chain tools judge the same object and reach it first. The difference is not the subject, it is the trust model: their verdict cannot be contested, is validated by a private research team, and cannot be recomputed by anyone else. Here the verdict is bonded, replayable against pinned evidence, and the consumer policy is fixed on chain so the gate cannot be quietly relaxed.</p>
+      </div>
+      <div>
+        <h3>Not Jastrow, not Suborn</h3>
+        <p>Jastrow asks whether a specification is decidable at all. Suborn asks whether a decidable specification survives hostile evidence. Attaint applies that defence to one object — a package update — and adds the consumer's policy.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <a href="https://github.com/Zhekinmaksim/jastrow">Jastrow</a>
+    <a href="https://github.com/Zhekinmaksim/suborn">Suborn</a>
+    <span>GenLayer · Bradbury</span>
+    <span class="status">Contract not yet deployed — no receipts published</span>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- data ---------- */
+
+var CLASSES = ["DEP_ADDED","MAINTAINER_SHIFT","INSTALL_HOOK","OPAQUE","LICENSE_SHIFT","EGRESS"];
+
+var CASES = {
+  es:{name:"event-stream 3.3.5 → 3.3.6", kind:"takeover", speed:"illustrative scenario",
+      minus:'-    "event-stream": "3.3.5",', plus:'+    "event-stream": "3.3.6",',
+      note:"A patch bump on a stream utility with two million weekly installs. What it actually carried was a new dependency, published four days earlier by an account with no history.",
+      levels:[1,2], best:2,
+      states:{
+        1:{tag:"RISK",exit:"exit 1",
+           say:"Both tarballs were fetched and hashed against the registry. A dependency appeared that did not exist in 3.3.5, published by an account with no history. Every class had something to read.",
+           hits:{DEP_ADDED:"hit"}},
+        2:{tag:"RISK",exit:"exit 1",
+           say:"The tarball is gone from the registry. The checksum and the dependency graph were rebuilt from thirty independent lockfiles, which is enough to see the added dependency — an added dependency can be judged. A policy requiring file contents still returns inconclusive overall.",
+           hits:{DEP_ADDED:"hit",INSTALL_HOOK:"unk",OPAQUE:"unk",LICENSE_SHIFT:"unk"}}
+      }},
+  nipc:{name:"node-ipc 9.2.1 → 9.2.2", kind:"protestware", speed:"illustrative scenario",
+      minus:'-    "node-ipc": "9.2.1",', plus:'+    "node-ipc": "9.2.2",',
+      note:"A protestware release. The tarball is unpublished, but thirty lockfiles pinned the checksum, and the maintainer set moved in the same window.",
+      levels:[2], best:2,
+      states:{
+        2:{tag:"RISK",exit:"exit 1",
+           say:"Level 2: checksum and graph rebuilt from thirty independent lockfiles. The publisher change is judged; the file contents that would show what the release does are not available, so those classes are inconclusive rather than clean.",
+           hits:{MAINTAINER_SHIFT:"hit",INSTALL_HOOK:"unk",OPAQUE:"unk",LICENSE_SHIFT:"unk"}}
+      }},
+  uap:{name:"ua-parser-js 0.7.28 → 0.8.0", kind:"unrecoverable", speed:"live for hours",
+      minus:'-    "ua-parser-js": "0.7.28",', plus:'+    "ua-parser-js": "0.8.0",',
+      note:"Caught within hours, then unpublished. No tarball, no manifest, and no lockfile in the sample recorded the checksum. Nothing about this update can be pinned.",
+      levels:[3], best:3,
+      states:{
+        3:{tag:"INCONCLUSIVE",exit:"exit 2",
+           say:"Nothing about this update can be pinned: no tarball, no checksum, no graph. The build is blocked. Passing here would make unreadable evidence the cheapest attack available.",
+           hits:{DEP_ADDED:"unk",MAINTAINER_SHIFT:"unk",INSTALL_HOOK:"unk",OPAQUE:"unk",LICENSE_SHIFT:"unk"}}
+      }},
+  esb:{name:"esbuild 0.21.4 → 0.21.5", kind:"ordinary release", speed:"illustrative scenario",
+      minus:'-    "esbuild": "0.21.4",', plus:'+    "esbuild": "0.21.5",',
+      note:"An illustrative ordinary release. The mechanical baseline and live consensus measurements are shown separately below.",
+      levels:[1], best:1,
+      states:{
+        1:{tag:"CLEAN",exit:"exit 0",
+           say:"Bytes in hand. The opaque-blob rule fires — the dist directory is minified — but a minified build output is what this package is for, and the class asks whether the blob does something the build does not need. Same publisher, no install script, licence unchanged.",
+           hits:{}}
+      }}
+};
+
+var LEVEL_META = {
+  1:{title:"Level 1",desc:"Both tarballs fetched, bytes match the registry"},
+  2:{title:"Level 2",desc:"Rebuilt from independent lockfiles"},
+  3:{title:"Level 3",desc:"Nothing pinnable survives"}
+};
+
+var ROWS = [
+  {version:"event-stream 3.3.6",pin:"Strong",repos:30,shows:"Added flatmap-stream in a patch release"},
+  {version:"flatmap-stream 0.1.1",pin:"Strong",repos:29,shows:"The payload carrier itself"},
+  {version:"node-ipc 9.2.2",pin:"Strong",repos:30,shows:"Protestware release"},
+  {version:"node-ipc 10.1.1",pin:"Fair",repos:2,shows:"Too few sources to rely on"},
+  {version:"ua-parser-js 0.7.29",pin:"Weak",repos:1,shows:"Live for hours; almost nobody locked it"},
+  {version:"ua-parser-js 0.8.0 / 1.0.0",pin:"None",repos:0,shows:"Not recoverable"},
+  {version:"coa 2.0.3, rc 1.2.9",pin:"None",repos:0,shows:"Not recoverable"}
+];
+var PIN_COLOR = {Strong:"var(--clean)",Fair:"var(--unknown)",Weak:"var(--risk)",None:"var(--risk)"};
+
+/* 45 releases: OPAQUE on 20 (44.4%), MAINTAINER_SHIFT on 7 (15.5%, one overlapping),
+   INSTALL_HOOK on 1 (2.2%, inside the opaque set) -> 26 blocked (57.8%), 19 untouched (42.2%). */
+/* BEGIN REAL GRID */
+var GRID = [{"name":"lodash 4.18.0 → 4.18.1","hits":["OPAQUE"]},{"name":"lodash 4.17.23 → 4.18.0","hits":["OPAQUE"]},{"name":"lodash 4.17.21 → 4.17.23","hits":["MAINTAINER_SHIFT","OPAQUE"]},{"name":"chalk 5.6.2 → 6.0.0","hits":[]},{"name":"chalk 5.6.0 → 5.6.2","hits":["MAINTAINER_SHIFT"]},{"name":"chalk 5.5.0 → 5.6.0","hits":[]},{"name":"debug 4.4.1 → 4.4.3","hits":[]},{"name":"debug 4.4.0 → 4.4.1","hits":["MAINTAINER_SHIFT"]},{"name":"debug 4.3.7 → 4.4.0","hits":[]},{"name":"semver 7.8.4 → 7.8.5","hits":[]},{"name":"semver 7.8.3 → 7.8.4","hits":[]},{"name":"semver 7.8.2 → 7.8.3","hits":[]},{"name":"express 4.22.1 → 4.22.2","hits":[]},{"name":"express 5.2.1 → 4.22.1","hits":[]},{"name":"express 5.2.0 → 5.2.1","hits":["MAINTAINER_SHIFT"]},{"name":"axios 1.19.0 → 1.20.0","hits":["OPAQUE"]},{"name":"axios 1.18.1 → 1.19.0","hits":["OPAQUE"]},{"name":"axios 1.18.0 → 1.18.1","hits":["OPAQUE"]},{"name":"commander 14.0.3 → 15.0.0","hits":[]},{"name":"commander 14.0.2 → 14.0.3","hits":["MAINTAINER_SHIFT"]},{"name":"commander 14.0.1 → 14.0.2","hits":[]},{"name":"yargs 17.7.3 → 18.1.0","hits":["OPAQUE"]},{"name":"yargs 16.2.2 → 17.7.3","hits":["OPAQUE"]},{"name":"yargs 18.0.0 → 16.2.2","hits":["MAINTAINER_SHIFT","OPAQUE"]},{"name":"rimraf 6.1.2 → 6.1.3","hits":["OPAQUE"]},{"name":"rimraf 6.1.1 → 6.1.2","hits":[]},{"name":"rimraf 6.1.0 → 6.1.1","hits":[]},{"name":"glob 13.0.5 → 13.0.6","hits":["OPAQUE"]},{"name":"glob 13.0.4 → 13.0.5","hits":["OPAQUE"]},{"name":"glob 13.0.3 → 13.0.4","hits":["OPAQUE"]},{"name":"uuid 14.0.1 → 14.0.2","hits":[]},{"name":"uuid 13.0.2 → 14.0.1","hits":["INSTALL_HOOK"]},{"name":"uuid 11.1.1 → 13.0.2","hits":["OPAQUE"]},{"name":"dotenv 17.4.1 → 17.4.2","hits":["MAINTAINER_SHIFT"]},{"name":"dotenv 17.4.0 → 17.4.1","hits":[]},{"name":"dotenv 17.3.1 → 17.4.0","hits":[]},{"name":"cross-env 10.0.0 → 10.1.0","hits":[]},{"name":"cross-env 7.0.3 → 10.0.0","hits":[]},{"name":"cross-env 7.0.2 → 7.0.3","hits":[]},{"name":"esbuild 0.28.1 → 0.28.2","hits":["OPAQUE"]},{"name":"esbuild 0.28.0 → 0.28.1","hits":["OPAQUE"]},{"name":"esbuild 0.27.7 → 0.28.0","hits":["OPAQUE"]},{"name":"prettier 3.9.5 → 3.9.6","hits":["OPAQUE"]},{"name":"prettier 3.9.4 → 3.9.5","hits":["OPAQUE"]},{"name":"prettier 3.9.3 → 3.9.4","hits":["OPAQUE"]}];
+/* END REAL GRID */
+var BLOCKED = GRID.filter(function(c){return c.hits.length;}).length;
+var CONSENSUS = null;
+
+var EVIDENCE = [
+  "envelope   attaint/1",
+  "object     event-stream 3.3.5 -> 3.3.6",
+  "level      2  (checksum rebuilt from 30 lockfiles)",
+  "integrity  sha512-<recovered, tarball 404>",
+  "",
+  "dependencies added: flatmap-stream ^0.1.0",
+  "maintainers 3.3.5: dominictarr",
+  "maintainers 3.3.6: dominictarr, right9ctrl",
+  "install scripts: none declared",
+  "license: MIT (unchanged)"
+].join("\n");
+
+var PRESETS = [
+  ["dependencies added: flatmap-stream ^0.1.0","verbatim line"],
+  ["right9ctrl","publisher name"],
+  ["flatmap-stream 0.1.2 exfiltrates wallet keys","a later release"]
+];
+
+var BAR_ROWS = [
+  {name:"Obfuscated blob", value:"44.4%", width:"44.4%"},
+  {name:"Publisher changed", value:"15.5%", width:"15.5%"},
+  {name:"Install script", value:"2.2%", width:"2.2%"},
+  {name:"License changed", value:"0.0%", width:"0%"},
+  {name:"Passed untouched", value:"42.2%", width:"42.2%", ok:true}
+];
+
+/* ---------- state ---------- */
+
+var state = {caseId:"es", level:null, mode:"mech", cell:0, filter:"All"};
+var $ = function(id){ return document.getElementById(id); };
+function el(tag, cls, text){
+  var n = document.createElement(tag);
+  if(cls) n.className = cls;
+  if(text != null) n.textContent = text;
+  return n;
+}
+
+/* ---------- the gate ---------- */
+
+function curLevel(){
+  var c = CASES[state.caseId];
+  return (state.level && c.levels.indexOf(state.level) > -1) ? state.level : c.best;
+}
+
+function renderCases(){
+  var box = $("cases");
+  box.textContent = "";
+  Object.keys(CASES).forEach(function(id){
+    var c = CASES[id];
+    var b = el("button");
+    b.type = "button";
+    b.setAttribute("aria-pressed", id === state.caseId ? "true" : "false");
+    b.appendChild(el("span","cname",c.name));
+    b.appendChild(el("span","ckind",c.kind));
+    b.addEventListener("click", function(){ state.caseId = id; state.level = null; renderGate(); });
+    box.appendChild(b);
+  });
+}
+
+function renderGate(){
+  var c = CASES[state.caseId], lvl = curLevel(), st = c.states[lvl];
+
+  renderCases();
+  $("speed").textContent = c.speed;
+  $("caseNote").textContent = c.note;
+  $("diffMinus").textContent = c.minus;
+  $("diffPlus").textContent = c.plus;
+
+  var box = $("levelBtns");
+  box.textContent = "";
+  [1,2,3].forEach(function(n){
+    var avail = c.levels.indexOf(n) > -1;
+    var b = el("button");
+    b.type = "button";
+    b.disabled = !avail;
+    b.setAttribute("aria-pressed", n === lvl ? "true" : "false");
+    b.appendChild(el("b", null, LEVEL_META[n].title));
+    b.appendChild(el("span", null, LEVEL_META[n].desc));
+    b.addEventListener("click", function(){ state.level = n; renderGate(); });
+    box.appendChild(b);
+  });
+
+  $("levelHint").textContent = c.levels.length > 1
+    ? "Illustrated evidence levels; these controls do not query the chain."
+    : "Illustrative level " + c.best + "; use the live gate below for chain records.";
+
+  var tag = $("tag");
+  tag.textContent = st.tag;
+  tag.className = "tag " + st.tag;
+  void tag.offsetWidth;
+  $("exit").textContent = st.exit;
+  $("say").textContent = st.say;
+
+  var cls = $("cls");
+  cls.textContent = "";
+  CLASSES.forEach(function(name, i){
+    var kind = st.hits[name] || "";
+    var n = el("i", kind || null, name);
+    n.style.animationDelay = (0.05 + i * 0.045).toFixed(2) + "s";
+    cls.appendChild(n);
+  });
+}
+
+/* ---------- measurement ---------- */
+
+function renderModes(){
+  var box = $("modes");
+  box.textContent = "";
+  [["mech","Read as a linter"],["cons","Judged by consensus"]].forEach(function(m){
+    var b = el("button", null, m[1]);
+    b.type = "button";
+    b.setAttribute("aria-pressed", state.mode === m[0] ? "true" : "false");
+    b.addEventListener("click", function(){ state.mode = m[0]; renderMeasure(); });
+    box.appendChild(b);
+  });
+}
+
+function renderGrid(){
+  var box = $("grid");
+  box.textContent = "";
+  GRID.forEach(function(g, i){
+    var b = el("button");
+    b.type = "button";
+    b.setAttribute("aria-label", g.name);
+    var cls = [];
+    if(state.mode === "mech") cls.push(g.hits.length ? "blocked" : "pass");
+    else if(CONSENSUS){
+      var gate = CONSENSUS.controls[i].gate;
+      if(gate.gate === "CLEAN") cls.push("pass");
+      else if(gate.gate === "RISK") cls.push("blocked");
+      else cls.push("unknown");
+    }
+    if(state.cell === i) cls.push("sel");
+    b.className = cls.join(" ");
+    function sel(){ state.cell = i; renderCell(); renderGrid(); }
+    b.addEventListener("mouseenter", sel);
+    b.addEventListener("focus", sel);
+    b.addEventListener("click", sel);
+    box.appendChild(b);
+  });
+}
+
+function renderCell(){
+  var cell = GRID[state.cell];
+  $("cellName").textContent = cell.name;
+  var cls = $("cellCls");
+  cls.textContent = "";
+  if(state.mode === "mech"){
+    cell.hits.forEach(function(n){ cls.appendChild(el("i","hit",n)); });
+  } else if(CONSENSUS){
+    var row = CONSENSUS.controls[state.cell], gate = row.gate;
+    gate.findings.forEach(function(n){ cls.appendChild(el("i","hit",n)); });
+    gate.inconclusive_classes.forEach(function(n){ cls.appendChild(el("i","unk",n)); });
+    $("cellSay").textContent = gate.gate + " · attestation #" + gate.att_id + " · " + gate.rounds + " class rounds. Published from finalized receipts; select the ID in the live gate to reread chain state.";
+    var receipt = el("a",null,"Consensus transaction");
+    receipt.href = "https://explorer-bradbury.genlayer.com/transactions/" + row.transaction_hash;
+    receipt.target = "_blank"; receipt.rel = "noopener";
+    $("cellSay").appendChild(document.createTextNode(" "));
+    $("cellSay").appendChild(receipt);
+    return;
+  }
+  $("cellSay").textContent = state.mode === "cons"
+    ? "The consensus pass over the control sample has not been run yet. Until it is, this cell has no verdict — and that is honest rather than flattering."
+    : (cell.hits.length
+        ? "Blocked by a mechanical reading. None of it is a detection of anything: a minified dist directory and a second maintainer are ordinary npm practice."
+        : "Passed untouched. Nineteen of forty-five releases give a deterministic linter nothing to say.");
+}
+
+function renderBars(){
+  var box = $("bars");
+  box.textContent = "";
+  if(state.mode === "cons" && CONSENSUS){
+    ["CLEAN","RISK","INCONCLUSIVE"].forEach(function(name){
+      var count = CONSENSUS.controls.filter(function(r){return r.gate.gate === name;}).length;
+      var row = el("div","bar" + (name === "CLEAN" ? " ok" : ""));
+      row.appendChild(el("span","n",name));
+      var track = el("span","t"), fill = el("i");
+      fill.style.width = (count / 45 * 100) + "%";
+      if(name === "INCONCLUSIVE") fill.style.background = "var(--unknown)";
+      track.appendChild(fill);row.appendChild(track);
+      row.appendChild(el("span","v",(count / 45 * 100).toFixed(1) + "%"));
+      box.appendChild(row);
+    });
+    return;
+  }
+  BAR_ROWS.forEach(function(r){
+    var row = el("div", "bar" + (r.ok ? " ok" : ""));
+    row.appendChild(el("span","n",r.name));
+    var track = el("span","t");
+    var fill = el("i");
+    fill.style.width = "0";
+    track.appendChild(fill);
+    row.appendChild(track);
+    row.appendChild(el("span","v", state.mode === "mech" ? r.value : "—"));
+    box.appendChild(row);
+    requestAnimationFrame(function(){ fill.style.width = state.mode === "mech" ? r.width : "0"; });
+  });
+}
+
+function renderTally(){
+  var mech = state.mode === "mech";
+  $("tally").className = "tally" + (mech ? "" : " cons");
+  $("tallyBig").textContent = mech ? (BLOCKED / 45 * 100).toFixed(1) + "%" : "not measured";
+  $("tallySay").textContent = mech
+    ? BLOCKED + " of 45 consecutive releases of fifteen popular packages. A gate that blocks three updates in five is switched off on its first day."
+    : "The second pass, judged by consensus rather than mechanically, is still to run. The gap between the two tables is the contribution, expressed as a number.";
+  if(!mech && CONSENSUS){
+    var counts = CONSENSUS.consensus_counts;
+    var blocked = counts.RISK + counts.INCONCLUSIVE;
+    $("tallyBig").textContent = (blocked / 45 * 100).toFixed(1) + "%";
+    $("tallySay").textContent = blocked + "/45 blocked: " + counts.RISK + " risk, " + counts.INCONCLUSIVE + " inconclusive; " + counts.CLEAN + " clean. Same 45 pairs, six-class policy. Baseline checked four candidate classes. Inconclusive updates block CI and are counted here.";
+  }
+}
+
+function renderMeasure(){ renderModes(); renderGrid(); renderCell(); renderBars(); renderTally(); }
+
+fetch('/consensus-report.json', {cache:'no-store'}).then(function(r){ if(!r.ok) throw new Error('unavailable'); return r.json(); }).then(function(report){
+  if(report.source !== 'live-bradbury-consensus' || report.chainId !== 4221 || report.completed !== true || report.controls.length !== 45) return;
+  var valid = report.controls.every(function(row,i){
+    return row.package + ' ' + row.from + ' → ' + row.to === GRID[i].name && row.status === 'FINALIZED' && row.gate && row.gate.envelope_hash === row.envelope_hash && row.gate.policy_hash === report.policy_hash && /^0x[0-9a-f]{64}$/i.test(row.transaction_hash) && ['CLEAN','RISK','INCONCLUSIVE'].indexOf(row.gate.gate) > -1;
+  });
+  if(valid){ CONSENSUS = report; renderMeasure(); }
+}).catch(function(){ /* Pending measurements stay empty. */ });
+
+/* ---------- corpus ---------- */
+
+function renderFilters(){
+  var box = $("filters");
+  box.textContent = "";
+  ["All","Strong","Fair","Weak","None"].forEach(function(f){
+    var b = el("button", null, f);
+    b.type = "button";
+    b.setAttribute("aria-pressed", state.filter === f ? "true" : "false");
+    b.addEventListener("click", function(){ state.filter = f; renderFilters(); renderRows(); });
+    box.appendChild(b);
+  });
+}
+
+function renderRows(){
+  var body = $("rows");
+  body.textContent = "";
+  ROWS.filter(function(r){ return state.filter === "All" || r.pin === state.filter; }).forEach(function(r){
+    var tr = el("tr");
+    var td1 = el("td","n",r.version);
+    var td2 = el("td");
+    td2.appendChild(el("span","st " + r.pin.toLowerCase(), r.pin));
+    var td3 = el("td");
+    var w = el("span","repos");
+    w.appendChild(el("span","num",String(r.repos)));
+    var track = el("span","t");
+    var fill = el("i");
+    fill.style.width = (r.repos / 30 * 100) + "%";
+    fill.style.background = PIN_COLOR[r.pin];
+    track.appendChild(fill);
+    w.appendChild(track);
+    td3.appendChild(w);
+    var td4 = el("td", null, r.shows);
+    [td1,td2,td3,td4].forEach(function(td){ tr.appendChild(td); });
+    body.appendChild(tr);
+  });
+}
+
+/* ---------- challenge ---------- */
+
+function renderChallenge(){
+  var frag = $("fragment").value.trim();
+  var box = $("cverdict");
+  if(!frag){
+    box.className = "cverdict";
+    $("ctag").textContent = "Awaiting fragment";
+    $("csay").textContent = "The contract checks the quoted fragment appears verbatim in the pinned evidence before any consensus round is spent.";
+  } else if(EVIDENCE.indexOf(frag) > -1){
+    box.className = "cverdict ok";
+    $("ctag").textContent = "Local fragment match · no transaction sent";
+    $("csay").textContent = "This illustration checks a substring only. No bond is held and no validators were called. A real challenge requires an on-chain transaction.";
+  } else {
+    box.className = "cverdict bad";
+    $("ctag").textContent = "No local match · no bond transferred";
+    $("csay").textContent = "A different commit, a different version or a later release is not a finding — it is a different object. Without this check the bonded market simply pays for swapping the facts.";
+  }
+}
+
+function initChallenge(){
+  $("evidence").textContent = EVIDENCE;
+  var box = $("presets");
+  PRESETS.forEach(function(p){
+    var b = el("button", null, p[1]);
+    b.type = "button";
+    b.addEventListener("click", function(){ $("fragment").value = p[0]; renderChallenge(); });
+    box.appendChild(b);
+  });
+  $("fragment").addEventListener("input", renderChallenge);
+  renderChallenge();
+}
+
+/* ---------- rail ---------- */
+
+function initRail(){
+  var ids = ["#gate","#levels","#noise","#corpus","#hostile","#apart"];
+  var links = [].slice.call(document.querySelectorAll("#nav a"));
+  function onScroll(){
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - window.innerHeight;
+    $("progress").style.transform = "scaleX(" + (max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0) + ")";
+    var active = ids[0];
+    ids.forEach(function(id){
+      var n = document.querySelector(id);
+      if(n && n.getBoundingClientRect().top <= 140) active = id;
+    });
+    if(active === "#hostile") active = "#corpus";
+    links.forEach(function(a){ a.classList.toggle("on", a.getAttribute("href") === active); });
+  }
+  window.addEventListener("scroll", onScroll, {passive:true});
+  onScroll();
+}
+
+renderGate();
+renderMeasure();
+renderFilters();
+renderRows();
+initChallenge();
+initRail();
+})();
+</script>
+<script type="module" src="/app.bundle.js"></script>
+</body>
+</html>

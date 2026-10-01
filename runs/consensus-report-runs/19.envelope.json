@@ -1,0 +1,112 @@
+{
+  "author_note": "",
+  "envelope_hash": "5c52da559ef3b5f9ccfebd85e9c67e00dfba531b7e9b27b6d0e38d15051d15b0",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {},
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 2,
+      "candidates": [
+        {
+          "excerpt": "          \"https://github.com/sponsors/abetomo\",",
+          "line": 13,
+          "line_bytes": 48,
+          "path": "package-support.json"
+        },
+        {
+          "excerpt": "          \"https://github.com/sponsors/shadowspawn\"",
+          "line": 14,
+          "line_bytes": 51,
+          "path": "package-support.json"
+        }
+      ],
+      "complete": true,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [],
+      "changed_source_count": 2,
+      "changed_sources": [
+        "package-support.json",
+        "package.json"
+      ],
+      "count_from": 14,
+      "count_to": 14,
+      "removed": []
+    },
+    "install_hooks": {
+      "from": {},
+      "to": {}
+    },
+    "license": {
+      "from": "MIT",
+      "to": "MIT"
+    },
+    "maintainers": {
+      "from": [
+        "abetomo",
+        "shadowspawn",
+        "somekittens",
+        "tjholowaychuk"
+      ],
+      "to": [
+        "abetomo",
+        "shadowspawn"
+      ]
+    },
+    "opaque_candidates": [],
+    "opaque_coverage": {
+      "candidate_count": 0,
+      "complete": true
+    },
+    "publisher": {
+      "from": "abetomo",
+      "to": "abetomo"
+    },
+    "purpose": {
+      "description": "the complete solution for node.js command-line programs",
+      "keywords": [
+        "commander",
+        "command",
+        "option",
+        "parser",
+        "cli",
+        "argument",
+        "args",
+        "argv"
+      ]
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/commander",
+    "https://registry.npmjs.org/commander/-/commander-14.0.2.tgz",
+    "https://registry.npmjs.org/commander/-/commander-14.0.3.tgz"
+  ],
+  "from_version": "14.0.2",
+  "package": "commander",
+  "pin": {
+    "from": {
+      "integrity": "sha512-TywoWNNRbhoD0BXs1P3ZEScW8W5iKrnbithIl0YH+uCmBd0QpPOA8yc82DS3BIE5Ma6FnBVUsJ7wVUDz4dvOWQ==",
+      "published_at": "2025-10-25T12:07:44.078Z",
+      "registry_integrity": "sha512-TywoWNNRbhoD0BXs1P3ZEScW8W5iKrnbithIl0YH+uCmBd0QpPOA8yc82DS3BIE5Ma6FnBVUsJ7wVUDz4dvOWQ==",
+      "registry_shasum": "b71fd37fe4069e4c3c7c13925252ada4eba14e8e",
+      "tarball_bytes": 53082,
+      "tarball_sha256": "09106ecd2c62a34c8bc466d5b46096e383e474af120a6295dcd0473e45b6c2f1"
+    },
+    "to": {
+      "integrity": "sha512-H+y0Jo/T1RZ9qPP4Eh1pkcQcLRglraJaSLoyOtHxu6AapkjWVCy2Sit1QQ4x3Dng8qDlSsZEet7g5Pq06MvTgw==",
+      "published_at": "2026-01-31T01:47:17.592Z",
+      "registry_integrity": "sha512-H+y0Jo/T1RZ9qPP4Eh1pkcQcLRglraJaSLoyOtHxu6AapkjWVCy2Sit1QQ4x3Dng8qDlSsZEet7g5Pq06MvTgw==",
+      "registry_shasum": "425d79b48f9af82fcd9e4fc1ea8af6c5ec07bbc2",
+      "tarball_bytes": 53293,
+      "tarball_sha256": "5849703c500e0f324eb01340d8bda1f9ec48fc37bb7be9712eb0dd52aad92f6c"
+    }
+  },
+  "registry": "npm",
+  "to_version": "14.0.3",
+  "version": "attaint/1"
+}
