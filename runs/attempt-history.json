@@ -81,6 +81,34 @@
       }
     }
   ],
+  "canceled_consensus_attempts": [
+    {
+      "consensus_commit": false,
+      "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "envelope_hash": "d390e0d8506bf9b85e807d90e2740b0e4e92d0e4ee66a0e2eb27a53cf6617edd",
+      "from": "3.9.5",
+      "hash": "0xaa3cd3b21060c549a0a97cb152387a5a16f773970d7198ac1a046bc2c8b20294",
+      "package": "prettier",
+      "proof_sha256": "37a5880ae76c13dff3d4d50dc4b9d25e4ac5071d390fdb12b2c0bd58d3be027c",
+      "requester": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "retry_basis": "Explicit one replacement anchored to this raw CANCELED/outside-queue hash, exact unchanged calldata, and both state views without a matching attestation.",
+      "status": "RAW_CANCELED",
+      "to": "3.9.6"
+    },
+    {
+      "consensus_commit": false,
+      "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "envelope_hash": "5b10344d5636df1acab0d2cc58363a3b8796d8579b7c701dd7f19546de7f52e8",
+      "from": "3.9.4",
+      "hash": "0x9c4710610908c6a2321938232440e5d8a7852f41306a9f79df73820496a18870",
+      "package": "prettier",
+      "proof_sha256": "887486cac75f145aec62b374448526913b230faa53253ad45c4a6c2b67a47974",
+      "requester": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "retry_basis": "Explicit one replacement anchored to this raw CANCELED/outside-queue hash, exact unchanged calldata, and both state views without a matching attestation.",
+      "status": "RAW_CANCELED",
+      "to": "3.9.5"
+    }
+  ],
   "chain_id": 4221,
   "diagnostic_basis": "Read-only GenVM simulations are diagnostics, not consensus receipts. No private credentials or raw LLM logs are included.",
   "evm_submission_failures": [

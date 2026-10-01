@@ -90,7 +90,7 @@ try {
       if(ttl&&signingKind==='submission') {
         request={...request,data:ttl.rewrite(request.data)};
         // Protocol deadline range and exact calldata must pass before SDK signing.
-        await publicClient.call({account:request.from,to:request.to,data:request.data,value:request.value,blockTag:'pending'});
+        await publicClient.call({account:request.from,to:request.to,data:request.data,value:request.value,gas:requestedCap,blockTag:'pending'});
       }
       return originalEstimate(request);
     },readRpc});
@@ -104,7 +104,7 @@ try {
       gasGuard.assertCanSign();
       if(ttl&&signingKind==='submission') {
         transaction={...transaction,data:ttl.rewrite(transaction.data)};
-        await readRpc(()=>publicClient.call({account:account.address,to:transaction.to,data:transaction.data,value:transaction.value,blockTag:'pending'}));
+        await readRpc(()=>publicClient.call({account:account.address,to:transaction.to,data:transaction.data,value:transaction.value,gas:requestedCap,blockTag:'pending'}));
         result.submission_ttl=ttl.metadata();
       }
       let operationHash;

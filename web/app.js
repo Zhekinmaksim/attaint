@@ -162,7 +162,12 @@ async function poll() {
     notify(`${pending.status}: waiting for finalized consensus. An accepted decision is provisional.`);
   } catch (error) {
     notify(error.shortMessage || error.message);
-    if (pending.status === 'FINALIZED' || ['UNDETERMINED', 'CANCELED', 'EVM_REVERTED'].includes(pending.status)) { $('live-result').textContent = 'INCONCLUSIVE · transaction verification failed · exit 2'; return; }
+    if (pending.status === 'FINALIZED' || ['UNDETERMINED', 'CANCELED', 'EVM_REVERTED'].includes(pending.status)) {
+      $('live-result').textContent = 'INCONCLUSIVE · transaction verification failed · exit 2';
+      $('live-result').className = 'live-result INCONCLUSIVE';
+      $('live-gate').textContent = '';
+      return;
+    }
   }
   if (Date.now() < pending.deadline) pollTimer = setTimeout(poll, 12000);
   else notify('Automatic checks paused after 30 minutes. Keep the hash and use Check transaction to resume.');

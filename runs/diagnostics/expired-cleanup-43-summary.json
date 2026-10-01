@@ -1,0 +1,35 @@
+{
+  "kind": "human-approved43-only expired own-head cancellation",
+  "observed_at": "2026-10-01T17:50:24.671844+00:00",
+  "row": 43,
+  "consensus_hash": "0x9c4710610908c6a2321938232440e5d8a7852f41306a9f79df73820496a18870",
+  "cleanup_evm_hash": "0x32c575376e9d74f9f1387a0a2e65e0f06ecd4ecd28218942bffeb8e65691f9cd",
+  "evm_status": "success",
+  "fee_wei": "300911806343700",
+  "maximum_budget_wei": "750000000000000",
+  "gas_used": "2384561",
+  "effective_gas_price_wei": "126191700",
+  "proof": {
+    "hash": "0x9c4710610908c6a2321938232440e5d8a7852f41306a9f79df73820496a18870",
+    "head": "0x9c4710610908c6a2321938232440e5d8a7852f41306a9f79df73820496a18870",
+    "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+    "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+    "manager": "0x1D301aCEf55EAf7df5D3741659d426f51061Ec8d",
+    "queue": "0x56a05a9bB7B261ad720020a08B9Fd5A13177b949",
+    "block": "23282390",
+    "block_timestamp": "1790876969",
+    "raw_status": 1,
+    "valid_until": "1790874820",
+    "pending": 4,
+    "tx_slot": "48"
+  },
+  "queue_after": {
+    "source": "AddressManager\u2192Queues",
+    "address": "0x56a05a9bB7B261ad720020a08B9Fd5A13177b949",
+    "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+    "block": "23282392",
+    "maximum": 20,
+    "pending": 3
+  },
+  "attestation_requests_in_this_cleanup": 0
+}

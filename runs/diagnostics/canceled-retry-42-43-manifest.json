@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "chainId": 4221,
+  "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+  "code_sha256": "80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa",
+  "policy_id": 0,
+  "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+  "requester": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+  "maximum_fresh_requests": 2,
+  "conditional_requirement": "43 must first be raw CANCELED8 and outside queue; both views without matching attestation; explicit human approval before execution",
+  "rows": [
+    {
+      "index": 42,
+      "expected_old_hash": "0xaa3cd3b21060c549a0a97cb152387a5a16f773970d7198ac1a046bc2c8b20294",
+      "envelope_hash": "d390e0d8506bf9b85e807d90e2740b0e4e92d0e4ee66a0e2eb27a53cf6617edd"
+    },
+    {
+      "index": 43,
+      "expected_old_hash": "0x9c4710610908c6a2321938232440e5d8a7852f41306a9f79df73820496a18870",
+      "envelope_hash": "5b10344d5636df1acab0d2cc58363a3b8796d8579b7c701dd7f19546de7f52e8"
+    }
+  ]
+}

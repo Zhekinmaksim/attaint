@@ -111,7 +111,8 @@ either state view. The sanitized proof is
 `runs/diagnostics/yargs-finalized-no-commit.json`. The user explicitly approved
 exactly one fresh Yargs request with the same policy and envelope. Its
 [replacement](https://explorer-bradbury.genlayer.com/tx/0xc496de7de05cdb11dbce0c4fd606e2dc9d0b1c287c51fe3ce8e71dcf5a83b48f)
-was projected as `CANCELED` at this checkpoint. Both approvals have been used. One retry
+subsequently reached `FINALIZED / NO_MAJORITY` (result 5), without a committed
+attestation. Its one approved retry is used, with no third request authorized. One retry
 each for indices 23 and 24 is separately approved. Those requests and original
 index 44 have now been submitted with six-hour V6 deadlines, preserving all other
 submission arguments:
@@ -119,7 +120,9 @@ submission arguments:
 [24](https://explorer-bradbury.genlayer.com/tx/0xe0d87e4fa0ce20e486572c0330a9c86a1d6951c6f2405cedab22493ace1017ae),
 [44](https://explorer-bradbury.genlayer.com/tx/0xfd481df56855efb35eb64cf903f42f2a5c2a9f1878941d063f4f9bcea5ff0491).
 The subsequent queue read showed six pending entries. These submissions are not
-finalized gates. Original audits are
+finalized gates. Index 23 is `UNDETERMINED`, result 2, with normal finalization
+eligibility at 18:25:11 UTC. Indices 24 and 44 remain raw unexpired `PENDING`
+despite a projected `CANCELED` view. Original audits are
 preserved; no further retries of indices 13 or 21 are authorized.
 The counts above remain a verified
 checkpoint, not a live total.
@@ -141,6 +144,19 @@ untouched. The public
 [cleanup summary](https://attaint.vercel.app/diagnostics/expired-cleanup-summary.json)
 preserves the receipts. This authorized no new retries and supplied no consensus
 verdicts; the 21/45 gate checkpoint is unchanged.
+
+A separate approved index-43 cleanup completed at 17:50 UTC, reducing the queue
+from 4 to 3. Its successful
+[transaction](https://explorer-bradbury.genlayer.com/tx/0x32c575376e9d74f9f1387a0a2e65e0f06ecd4ecd28218942bffeb8e65691f9cd)
+cost 0.0003009118063437 test GEN within a 0.00075 cap; the public
+[summary](https://attaint.vercel.app/diagnostics/expired-cleanup-43-summary.json)
+records no attestation requests. The one approved replacement each for indices
+42 and 43 has now been submitted with six-hour deadlines:
+[42](https://explorer-bradbury.genlayer.com/tx/0x2d3c7a7ee860fa8e7a3a22c51c3a35441f254923113470690f67c983c4eeda9a),
+[43](https://explorer-bradbury.genlayer.com/tx/0xaf98606b962d010e2b7c25c5da31f09ce1df987ef78bb5581bc5b44b971aaf5f).
+Both allowances are used. The pre-sign RPC issue is resolved; these requests
+are not finalized gates. The 18-entry batch remains unapproved and the 21/45
+gate checkpoint is unchanged.
 
 The historical
 [post-cleanup no-commit audit](https://attaint.vercel.app/diagnostics/post-cleanup-unfinished-no-commit.json)

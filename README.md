@@ -182,8 +182,13 @@ failed hash, and leaves it `RETRY_APPROVAL_PENDING` while the other pairs procee
 Each approved retry is limited to one fresh request for its exact pair. Once
 submitted, resume its saved hash; reusing a retry flag cannot authorize another
 replacement. Pairs 13 and 21 have already used their approved requests.
-The current authorized retries are `--reschedule-disagree 23` and
-`--reschedule-disagree 24`, one request each.
+The approved requests for indices 23 and 24 have also been submitted. The sole
+writer has submitted the one approved replacement each for indices 42 and 43,
+using `--reschedule-canceled runs/diagnostics/canceled-retry-42-43-manifest.json`.
+This immutable manifest pins each old hash and envelope, the policy, code and
+requester. Each fresh write requires raw `CANCELED` state outside the pending
+queue and complete final/current gate audits showing no committed identity.
+A signed replacement consumes that one-request allowance even if it fails.
 The new submissions use a six-hour submission deadline
 (`--submission-ttl 21600`) for new writes. The runner changes only the V6
 `validUntil` argument, simulates the exact calldata before estimation and signing,
@@ -274,8 +279,9 @@ views contained 22 attestations and no matching Yargs identity; the sanitized
 audit is `runs/diagnostics/yargs-finalized-no-commit.json`. The user explicitly
 approved exactly one fresh Yargs request with the same policy and envelope.
 Its [replacement](https://explorer-bradbury.genlayer.com/tx/0xc496de7de05cdb11dbce0c4fd606e2dc9d0b1c287c51fe3ce8e71dcf5a83b48f)
-was also projected as `CANCELED` at this checkpoint. Both one-request approvals have been
-used; their original failed-finalization audits remain preserved. The user has
+subsequently reached `FINALIZED / NO_MAJORITY` (result 5), without a committed
+attestation. Its one-request approval is used; no third request is authorized.
+Both original failed-finalization audits remain preserved. The user has
 separately approved one retry each for indices 23 and 24. These retries and
 original index 44 have now been submitted with `--submission-ttl 21600`:
 
@@ -285,6 +291,9 @@ original index 44 have now been submitted with `--submission-ttl 21600`:
 
 The subsequent queue read showed six pending entries. Submission does not count
 as a finalized gate; no further retries of indices 13 or 21 are authorized.
+Index 23's replacement is `UNDETERMINED`, result 2, awaiting normal finalization
+eligibility at 18:25:11 UTC. Raw records for indices 24 and 44 remain unexpired
+`PENDING`, despite the status view projecting `CANCELED`; their hashes are retained.
 The counts above are a verified checkpoint, not an updated live total. This is partial progress;
 the full 45-pair comparison and measured risk/block-rate differences remain
 pending, with no full-sample percentages or improvement claimed.
@@ -313,6 +322,22 @@ untouched. The receipt-backed
 is also saved as `runs/diagnostics/expired-cleanup-summary.json`.
 This cleanup authorized no new retries and produced no consensus verdicts;
 the 21/45 gate checkpoint remains unchanged.
+
+A separate, explicitly approved index-43 cleanup completed at 17:50 UTC. Its
+[successful EVM transaction](https://explorer-bradbury.genlayer.com/tx/0x32c575376e9d74f9f1387a0a2e65e0f06ecd4ecd28218942bffeb8e65691f9cd)
+reduced pending entries from 4 to 3, costing 0.0003009118063437 test GEN against
+a 0.00075 test GEN cap. The public
+[index-43 summary](https://attaint.vercel.app/diagnostics/expired-cleanup-43-summary.json)
+records zero attestation requests. The one approved replacement each for indices
+42 and 43 has now been submitted with a 21,600-second deadline; both allowances
+are used:
+
+- [Index 42 consensus transaction](https://explorer-bradbury.genlayer.com/tx/0x2d3c7a7ee860fa8e7a3a22c51c3a35441f254923113470690f67c983c4eeda9a), EVM hash `0xae2fbc16b2b64544f09ba7307ee297d04789f69cff078ed0754db6bff5fc7e7d`.
+- [Index 43 consensus transaction](https://explorer-bradbury.genlayer.com/tx/0xaf98606b962d010e2b7c25c5da31f09ce1df987ef78bb5581bc5b44b971aaf5f), EVM hash `0x1a0301a8ba0cb223f1d18006f19541291ed4ae2d15982b786ca4a62be9bb84c7`.
+
+The earlier pre-sign RPC error was resolved by passing the tested gas cap in the
+simulation. These are submitted requests, not finalized gates. The 18-entry
+batch remains unapproved, and the 21/45 gate checkpoint is unchanged.
 
 The historical
 [post-cleanup no-commit audit](https://attaint.vercel.app/diagnostics/post-cleanup-unfinished-no-commit.json)

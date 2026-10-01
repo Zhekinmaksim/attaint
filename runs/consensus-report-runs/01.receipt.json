@@ -9,7 +9,7 @@
   "hash": "0xd04e4e139e446ba2a43d71dbd3c7184760d52b9e57a89b814e7aacb214373f50",
   "trace_verified": true,
   "receipt": {
-    "currentTimestamp": "1790876345",
+    "currentTimestamp": "1790877893",
     "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
     "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
     "initialRotations": "3",
@@ -121,16 +121,16 @@
         "level": "info",
         "message": "logging initialized",
         "target": "genvm_common",
-        "ts": "1790876352953",
+        "ts": "1790877901602",
         "version": "v0.2.11-x86_64-linux-release"
       },
       {
         "file": "src/exe/run.rs:150",
-        "genvm_id": "5122828",
+        "genvm_id": "5123595",
         "level": "info",
         "message": "genvm id",
         "target": "genvm::exe::run",
-        "ts": "1790876352955"
+        "ts": "1790877901604"
       },
       {
         "default": "v0.1.0",
@@ -138,7 +138,7 @@
         "level": "warn",
         "message": "runner comment does not start with version, using default",
         "target": "genvm::runners::parse",
-        "ts": "1790876352977"
+        "ts": "1790877901626"
       },
       {
         "file": "src/lib.rs:299",
@@ -147,7 +147,7 @@
         "metrics": {
           "gvm": {
             "host": {
-              "time": 26219
+              "time": 27363
             },
             "llm_module": {
               "calls": 0,
@@ -167,14 +167,14 @@
           "web": null
         },
         "target": "genvm",
-        "ts": "1790876353209"
+        "ts": "1790877901871"
       },
       {
         "file": "src/exe/run.rs:111",
         "level": "warn",
         "message": "sigterm received",
         "target": "genvm::exe::run",
-        "ts": "1790876353209"
+        "ts": "1790877901872"
       }
     ],
     "storage_proof": "0xb48a31548f736fa13e2e623953d35c079a9475f36669075449aab1e40be49c48",
