@@ -1,0 +1,29 @@
+{
+  "network": "bradbury",
+  "chainId": 4221,
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "command": "write",
+  "address": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+  "method": "request_attestation",
+  "args": [
+    0,
+    "chalk",
+    "5.6.2",
+    "6.0.0",
+    1,
+    "afd8db524349e1c5b8fbe07eb2a897d7b4a81a58198d1d49662a6064750c9277",
+    "{\"facts\":{\"dependencies\":{\"added\":{},\"changed\":{},\"removed\":[]},\"egress\":{\"candidate_count\":2,\"candidates\":[{\"excerpt\":\"\\tUse an [8-bit unsigned number](https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit) to set background color.\",\"line\":121,\"line_bytes\":110,\"path\":\"source/index.d.ts\"},{\"excerpt\":\"\\tUse an [8-bit unsigned number](https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit) to set underline color.\",\"line\":165,\"line_bytes\":109,\"path\":\"source/index.d.ts\"}],\"complete\":true,\"scope\":\"static changed-source network patterns; not a whole-program proof\",\"skipped_files\":[]},\"files\":{\"added\":[],\"changed_source_count\":8,\"changed_sources\":[\"package.json\",\"source/index.d.ts\",\"source/index.js\",\"source/utilities.js\",\"source/vendor/ansi-styles/index.d.ts\",\"source/vendor/ansi-styles/index.js\",\"source/vendor/supports-color/browser.js\",\"source/vendor/supports-color/index.js\"],\"count_from\":12,\"count_to\":12,\"removed\":[]},\"install_hooks\":{\"from\":{},\"to\":{}},\"license\":{\"from\":\"MIT\",\"to\":\"MIT\"},\"maintainers\":{\"from\":[\"sindresorhus\"],\"to\":[\"sindresorhus\"]},\"opaque_candidates\":[],\"opaque_coverage\":{\"candidate_count\":0,\"complete\":true},\"publisher\":{\"from\":\"sindresorhus\",\"to\":\"sindresorhus\"},\"purpose\":{\"description\":\"Terminal string styling done right\",\"keywords\":[\"color\",\"colour\",\"colors\",\"terminal\",\"console\",\"cli\",\"string\",\"ansi\",\"style\",\"styles\",\"tty\",\"formatting\",\"rgb\",\"256\",\"shell\",\"xterm\",\"log\",\"logging\",\"command-line\",\"text\"]}},\"fetched_from\":[\"https://registry.npmjs.org/chalk\",\"https://registry.npmjs.org/chalk/-/chalk-5.6.2.tgz\",\"https://registry.npmjs.org/chalk/-/chalk-6.0.0.tgz\"],\"from_version\":\"5.6.2\",\"package\":\"chalk\",\"pin\":{\"from\":{\"integrity\":\"sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA==\",\"published_at\":\"2025-09-08T14:47:54.486Z\",\"registry_integrity\":\"sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA==\",\"registry_shasum\":\"b1238b6e23ea337af71c7f8a295db5af0c158aea\",\"tarball_bytes\":13831,\"tarball_sha256\":\"94957715a483aa3b9db60c8f22d5498227d8025c407f982eef81e34f37574ffd\"},\"to\":{\"integrity\":\"sha512-2uNTXIuTTxk7ciZgAU1BQcgnchcG0xXnrs6jzkQfj9SsRa9M2s5zE8WT96hS6KmG4MzWHSrvH43DF1m4XRkrFg==\",\"published_at\":\"2026-07-26T14:51:07.269Z\",\"registry_integrity\":\"sha512-2uNTXIuTTxk7ciZgAU1BQcgnchcG0xXnrs6jzkQfj9SsRa9M2s5zE8WT96hS6KmG4MzWHSrvH43DF1m4XRkrFg==\",\"registry_shasum\":\"a3bae843bc8454f41ef66ef3fd584dcf34dd805d\",\"tarball_bytes\":16388,\"tarball_sha256\":\"85d0ce26b8a6098d3826d9ec17cf16c7a9326dfce3f2545ecc1133581c981399\"}},\"registry\":\"npm\",\"to_version\":\"6.0.0\",\"version\":\"attaint/1\"}"
+  ],
+  "hash": "0x12e35c5d79a969796877e922ceec65d8614eaa5042c8182cc79b1932e7107258",
+  "value_wei": "0",
+  "submission_intent": {
+    "evm_hash": "0x277104a0f578214d661535a9a2481de959acbf2cdc023af24117da1a32c9587e",
+    "state": "SIGNED",
+    "nonce": "452",
+    "to": "0x0112Bf6e83497965A5fdD6Dad1E447a6E004271D",
+    "chainId": 4221,
+    "from": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+    "value_wei": "0",
+    "operation_sha256": "95f0378aa9acf965171374e6da40fb162faf2db264087e6a9c5ee59d6eb4e484"
+  }
+}

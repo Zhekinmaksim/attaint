@@ -1,0 +1,29 @@
+{
+  "network": "bradbury",
+  "chainId": 4221,
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "command": "write",
+  "address": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+  "method": "request_attestation",
+  "args": [
+    0,
+    "semver",
+    "7.8.2",
+    "7.8.3",
+    1,
+    "7c0ce257909c490170508835f0d1312efda149fb4ca1322781cf8bd8f4a41fae",
+    "{\"facts\":{\"dependencies\":{\"added\":{},\"changed\":{},\"removed\":[]},\"egress\":{\"candidate_count\":0,\"candidates\":[],\"complete\":true,\"scope\":\"static changed-source network patterns; not a whole-program proof\",\"skipped_files\":[]},\"files\":{\"added\":[],\"changed_source_count\":2,\"changed_sources\":[\"classes/range.js\",\"package.json\"],\"count_from\":53,\"count_to\":53,\"removed\":[]},\"install_hooks\":{\"from\":{},\"to\":{}},\"license\":{\"from\":\"ISC\",\"to\":\"ISC\"},\"maintainers\":{\"from\":[\"npm-cli-ops\",\"owlstronaut\",\"reggi\",\"saquibkhan\"],\"to\":[\"npm-cli-ops\",\"owlstronaut\",\"reggi\",\"saquibkhan\"]},\"opaque_candidates\":[],\"opaque_coverage\":{\"candidate_count\":0,\"complete\":true},\"publisher\":{\"from\":\"GitHub Actions\",\"to\":\"GitHub Actions\"},\"purpose\":{\"description\":\"The semantic version parser used by npm.\",\"keywords\":[]}},\"fetched_from\":[\"https://registry.npmjs.org/semver\",\"https://registry.npmjs.org/semver/-/semver-7.8.2.tgz\",\"https://registry.npmjs.org/semver/-/semver-7.8.3.tgz\"],\"from_version\":\"7.8.2\",\"package\":\"semver\",\"pin\":{\"from\":{\"integrity\":\"sha512-c8jsqUZm3omBOI66G90z1Dyw5z622G8oLG+omfsHBJf3CWQTlOcwOjvOG6wtiNfW6anKm/eA39LMwMtMez2TiQ==\",\"published_at\":\"2026-06-04T15:21:18.269Z\",\"registry_integrity\":\"sha512-c8jsqUZm3omBOI66G90z1Dyw5z622G8oLG+omfsHBJf3CWQTlOcwOjvOG6wtiNfW6anKm/eA39LMwMtMez2TiQ==\",\"registry_shasum\":\"194bd65723a28cf82542d2bf176b91c26b343be1\",\"tarball_bytes\":29273,\"tarball_sha256\":\"6586a8fa60ae36173444a8f8f3e264248c98fc15382cac46058c63c2077e7490\"},\"to\":{\"integrity\":\"sha512-wnilbGyMxzbY7dNOl7jpKbLSjcfeweJWU5j4+u5qW+6/wuGD9KzIGOyZnQVSBM9E7DtWaaH3CyHkppYrKYoxwg==\",\"published_at\":\"2026-06-08T15:31:41.168Z\",\"registry_integrity\":\"sha512-wnilbGyMxzbY7dNOl7jpKbLSjcfeweJWU5j4+u5qW+6/wuGD9KzIGOyZnQVSBM9E7DtWaaH3CyHkppYrKYoxwg==\",\"registry_shasum\":\"c350de61c2a1ddbc96d7fae3e5b6fcf92d477fbe\",\"tarball_bytes\":29268,\"tarball_sha256\":\"c3bedc0d1d6713fce5809bea5b117fb8db5faaebef45453aa24d3bb588a8b7f9\"}},\"registry\":\"npm\",\"to_version\":\"7.8.3\",\"version\":\"attaint/1\"}"
+  ],
+  "hash": "0xd1ea920cab8c04376723d4411200fd4994bcd08dfca80f3c42d0dc3004ffd15c",
+  "value_wei": "0",
+  "submission_intent": {
+    "evm_hash": "0x5fa2ce33f0614caa4a4fd01677b52029034d592af4315ecb6cdbb2bf97aead01",
+    "state": "SIGNED",
+    "nonce": "460",
+    "to": "0x0112Bf6e83497965A5fdD6Dad1E447a6E004271D",
+    "chainId": 4221,
+    "from": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+    "value_wei": "0",
+    "operation_sha256": "353bae9837451147918e1de27c7df6eb5f77e7a507a60f92934b0006e892ea72"
+  }
+}

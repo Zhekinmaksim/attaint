@@ -1,0 +1,430 @@
+{
+  "control_tally": {
+    "INSTALL_HOOK": 1,
+    "LICENSE_SHIFT": 0,
+    "MAINTAINER_SHIFT": 7,
+    "OPAQUE": 20
+  },
+  "control_total": 45,
+  "controls": [
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "4.18.0",
+      "package": "lodash",
+      "to": "4.18.1"
+    },
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "4.17.23",
+      "package": "lodash",
+      "to": "4.18.0"
+    },
+    {
+      "classes": [
+        "MAINTAINER_SHIFT",
+        "OPAQUE"
+      ],
+      "from": "4.17.21",
+      "package": "lodash",
+      "to": "4.17.23"
+    },
+    {
+      "classes": [],
+      "from": "5.6.2",
+      "package": "chalk",
+      "to": "6.0.0"
+    },
+    {
+      "classes": [
+        "MAINTAINER_SHIFT"
+      ],
+      "from": "5.6.0",
+      "package": "chalk",
+      "to": "5.6.2"
+    },
+    {
+      "classes": [],
+      "from": "5.5.0",
+      "package": "chalk",
+      "to": "5.6.0"
+    },
+    {
+      "classes": [],
+      "from": "4.4.1",
+      "package": "debug",
+      "to": "4.4.3"
+    },
+    {
+      "classes": [
+        "MAINTAINER_SHIFT"
+      ],
+      "from": "4.4.0",
+      "package": "debug",
+      "to": "4.4.1"
+    },
+    {
+      "classes": [],
+      "from": "4.3.7",
+      "package": "debug",
+      "to": "4.4.0"
+    },
+    {
+      "classes": [],
+      "from": "7.8.4",
+      "package": "semver",
+      "to": "7.8.5"
+    },
+    {
+      "classes": [],
+      "from": "7.8.3",
+      "package": "semver",
+      "to": "7.8.4"
+    },
+    {
+      "classes": [],
+      "from": "7.8.2",
+      "package": "semver",
+      "to": "7.8.3"
+    },
+    {
+      "classes": [],
+      "from": "4.22.1",
+      "package": "express",
+      "to": "4.22.2"
+    },
+    {
+      "classes": [],
+      "from": "5.2.1",
+      "package": "express",
+      "to": "4.22.1"
+    },
+    {
+      "classes": [
+        "MAINTAINER_SHIFT"
+      ],
+      "from": "5.2.0",
+      "package": "express",
+      "to": "5.2.1"
+    },
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "1.19.0",
+      "package": "axios",
+      "to": "1.20.0"
+    },
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "1.18.1",
+      "package": "axios",
+      "to": "1.19.0"
+    },
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "1.18.0",
+      "package": "axios",
+      "to": "1.18.1"
+    },
+    {
+      "classes": [],
+      "from": "14.0.3",
+      "package": "commander",
+      "to": "15.0.0"
+    },
+    {
+      "classes": [
+        "MAINTAINER_SHIFT"
+      ],
+      "from": "14.0.2",
+      "package": "commander",
+      "to": "14.0.3"
+    },
+    {
+      "classes": [],
+      "from": "14.0.1",
+      "package": "commander",
+      "to": "14.0.2"
+    },
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "17.7.3",
+      "package": "yargs",
+      "to": "18.1.0"
+    },
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "16.2.2",
+      "package": "yargs",
+      "to": "17.7.3"
+    },
+    {
+      "classes": [
+        "MAINTAINER_SHIFT",
+        "OPAQUE"
+      ],
+      "from": "18.0.0",
+      "package": "yargs",
+      "to": "16.2.2"
+    },
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "6.1.2",
+      "package": "rimraf",
+      "to": "6.1.3"
+    },
+    {
+      "classes": [],
+      "from": "6.1.1",
+      "package": "rimraf",
+      "to": "6.1.2"
+    },
+    {
+      "classes": [],
+      "from": "6.1.0",
+      "package": "rimraf",
+      "to": "6.1.1"
+    },
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "13.0.5",
+      "package": "glob",
+      "to": "13.0.6"
+    },
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "13.0.4",
+      "package": "glob",
+      "to": "13.0.5"
+    },
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "13.0.3",
+      "package": "glob",
+      "to": "13.0.4"
+    },
+    {
+      "classes": [],
+      "from": "14.0.1",
+      "package": "uuid",
+      "to": "14.0.2"
+    },
+    {
+      "classes": [
+        "INSTALL_HOOK"
+      ],
+      "from": "13.0.2",
+      "package": "uuid",
+      "to": "14.0.1"
+    },
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "11.1.1",
+      "package": "uuid",
+      "to": "13.0.2"
+    },
+    {
+      "classes": [
+        "MAINTAINER_SHIFT"
+      ],
+      "from": "17.4.1",
+      "package": "dotenv",
+      "to": "17.4.2"
+    },
+    {
+      "classes": [],
+      "from": "17.4.0",
+      "package": "dotenv",
+      "to": "17.4.1"
+    },
+    {
+      "classes": [],
+      "from": "17.3.1",
+      "package": "dotenv",
+      "to": "17.4.0"
+    },
+    {
+      "classes": [],
+      "from": "10.0.0",
+      "package": "cross-env",
+      "to": "10.1.0"
+    },
+    {
+      "classes": [],
+      "from": "7.0.3",
+      "package": "cross-env",
+      "to": "10.0.0"
+    },
+    {
+      "classes": [],
+      "from": "7.0.2",
+      "package": "cross-env",
+      "to": "7.0.3"
+    },
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "0.28.1",
+      "package": "esbuild",
+      "to": "0.28.2"
+    },
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "0.28.0",
+      "package": "esbuild",
+      "to": "0.28.1"
+    },
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "0.27.7",
+      "package": "esbuild",
+      "to": "0.28.0"
+    },
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "3.9.5",
+      "package": "prettier",
+      "to": "3.9.6"
+    },
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "3.9.4",
+      "package": "prettier",
+      "to": "3.9.5"
+    },
+    {
+      "classes": [
+        "OPAQUE"
+      ],
+      "from": "3.9.3",
+      "package": "prettier",
+      "to": "3.9.4"
+    }
+  ],
+  "incidents": [
+    {
+      "classes": [
+        "MAINTAINER_SHIFT"
+      ],
+      "envelope_hash": "8df1d6d637382411c2b67810f6c8ef70811c1bcf688c3ffb5512e0eeca540908",
+      "from": "3.3.4",
+      "note": "takeover: right9ctrl gains publish rights",
+      "package": "event-stream",
+      "pinnable": true,
+      "to": "3.3.5"
+    },
+    {
+      "from": "3.3.5",
+      "note": "payload: flatmap-stream pulled in",
+      "package": "event-stream",
+      "pinnable": false,
+      "reason": "event-stream@3.3.6 (to side) is not in the registry but was published at 2018-09-09T08:28:59.503Z",
+      "to": "3.3.6"
+    },
+    {
+      "from": "0.1.0",
+      "note": "payload carrier",
+      "package": "flatmap-stream",
+      "pinnable": false,
+      "reason": "flatmap-stream@0.1.0 (from side) is not in the registry",
+      "to": "0.1.1"
+    },
+    {
+      "from": "0.7.28",
+      "note": "account compromise, preinstall added",
+      "package": "ua-parser-js",
+      "pinnable": false,
+      "reason": "ua-parser-js@0.7.29 (to side) is not in the registry but was published at 2021-10-22T12:15:21.378Z",
+      "to": "0.7.29"
+    },
+    {
+      "from": "0.7.29",
+      "note": "cleanup release",
+      "package": "ua-parser-js",
+      "pinnable": false,
+      "reason": "ua-parser-js@0.7.29 (from side) is not in the registry but was published at 2021-10-22T12:15:21.378Z",
+      "to": "0.7.30"
+    },
+    {
+      "from": "10.1.0",
+      "note": "protestware, file overwrite",
+      "package": "node-ipc",
+      "pinnable": false,
+      "reason": "node-ipc@10.1.1 (to side) is not in the registry but was published at 2022-03-07T11:03:59.179Z",
+      "to": "10.1.1"
+    },
+    {
+      "from": "10.1.1",
+      "note": "protestware follow-up",
+      "package": "node-ipc",
+      "pinnable": false,
+      "reason": "node-ipc@10.1.1 (from side) is not in the registry but was published at 2022-03-07T11:03:59.179Z",
+      "to": "10.1.2"
+    },
+    {
+      "from": "2.0.2",
+      "note": "account compromise",
+      "package": "coa",
+      "pinnable": false,
+      "reason": "coa@2.0.3 (to side) is not in the registry but was published at 2021-11-04T13:02:34.339Z",
+      "to": "2.0.3"
+    },
+    {
+      "from": "1.2.8",
+      "note": "account compromise",
+      "package": "rc",
+      "pinnable": false,
+      "reason": "rc@1.2.9 (to side) is not in the registry but was published at 2021-11-04T15:30:19.438Z",
+      "to": "1.2.9"
+    },
+    {
+      "classes": [],
+      "envelope_hash": "f5fd1fcb7b3cf8c556a07103e6dbbf67ce60b50b0bbd407bb3d17f807a3fe495",
+      "from": "10.1.0",
+      "note": "post-incident release, peacenotwar era",
+      "package": "node-ipc",
+      "pinnable": true,
+      "to": "11.0.0"
+    },
+    {
+      "classes": [],
+      "envelope_hash": "b5259010c62a969afa0e27d6c291e312ef670f6a8b3d0cc39bf0d3fc5a0be2e9",
+      "from": "9.1.2",
+      "note": "the protestware dependency itself",
+      "package": "peacenotwar",
+      "pinnable": true,
+      "to": "9.1.3"
+    }
+  ]
+}

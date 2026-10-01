@@ -38,7 +38,7 @@ if (deployment) {
   if (deployment.chain_id !== 4221 || deployment.code_sha256 !== createHash('sha256').update(compiled).digest('hex')) throw new Error('Release manifest does not match the Bradbury artifact.');
   for (const name of ['deploy', 'policy', 'first-attestation']) {
     const journal = JSON.parse(await readFile(`runs/${name}.json`, 'utf8'));
-    if (journal.receipt?.statusName !== 'FINALIZED' || journal.trace?.result_code !== 0 || journal.trace_verified !== true || journal.trace_identity?.round !== Number(journal.receipt.lastRound?.round)) throw new Error(`Release ${name} must have finalized successfully with its accepted-round trace verified.`);
+    if (journal.receipt?.statusName !== 'FINALIZED' || journal.trace?.result_code !== 0 || journal.trace_verified !== true || journal.trace_identity?.round !== Number(journal.receipt.numOfRounds) || Number(journal.trace_identity.round_data_round ?? journal.trace_identity.round) !== Number(journal.receipt.lastRound?.round)) throw new Error(`Release ${name} must have finalized successfully with its accepted-round trace verified.`);
     if (journal.chainId !== 4221 || journal.receipt.txId?.toLowerCase() !== journal.hash?.toLowerCase() || journal.receipt.txExecutionResultName !== 'FINISHED_WITH_RETURN') throw new Error(`Release ${name} receipt identity or execution mismatch.`);
     if (name === 'deploy') {
       if (journal.source_sha256 !== deployment.code_sha256 || journal.receipt.txDataDecoded?.contractAddress?.toLowerCase() !== deployment.contract.toLowerCase()) throw new Error('Deployment receipt does not match the published source and contract.');
@@ -51,6 +51,10 @@ if (deployment) {
   if (gate.policy_hash !== deployment.policy_hash || Number(gate.policy_id) !== deployment.policy_id || Number(gate.att_id) !== deployment.first_attestation_id || gate.envelope_hash !== deployment.first_envelope_hash || gate.registry_verification !== 'VERIFIED' || Number(gate.rounds) !== 6) throw new Error('First chain gate does not match the published release.');
   await copyFile('runs/deployment.json', 'web/deployment.json');
 }
+// Publication badges follow the verified release, including builds after its removal.
+html = html.replace(/(<span class="chip" id="deployment-status">)[^<]*(<\/span>)/, `$1${deployment ? 'Deployed on Bradbury' : 'Not yet deployed'}$2`);
+html = html.replace(/(<span class="status" id="receipt-status">)[^<]*(<\/span>)/, `$1${deployment ? 'First attestation finalized · receipts published' : 'Contract not yet deployed — no receipts published'}$2`);
+await writeFile('web/index.html', html);
 try { await copyFile('runs/attempt-history.json', 'web/attempt-history.json'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 for (const name of ['manifest.json', 'report.json', 'leader-summary.json', 'validator-1-summary.json', 'validator-2-summary.json', 'diagnostic-code.py']) {
   const directory = 'diagnostics/locator-enum-simulation';

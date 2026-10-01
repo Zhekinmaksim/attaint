@@ -2,6 +2,7 @@ import { createClient } from 'genlayer-js';
 import { testnetBradbury } from 'genlayer-js/chains';
 import { TransactionHashVariant } from 'genlayer-js/types';
 import { parseEventLogs, createPublicClient, http } from 'viem';
+import { createGasGuard } from '../scripts/gas_guard.mjs';
 
 const EXPLORER = 'https://explorer-bradbury.genlayer.com';
 const reader = createClient({ chain: testnetBradbury });
@@ -10,6 +11,7 @@ const $ = id => document.getElementById(id);
 const json = value => JSON.stringify(value, (_, v) => typeof v === 'bigint' ? v.toString() : v, 2);
 const link = (label, path) => { const a = document.createElement('a'); a.textContent = label; a.href = `${EXPLORER}/${path}`; a.target = '_blank'; a.rel = 'noopener'; return a; };
 let deployment, account, writer, envelope, pending, busy = false, pollTimer, generation = 0, walletOperation = '';
+let walletEstimate, submissionGasGuard;
 const read = (method, args = []) => reader.readContract({ address: deployment.contract, functionName: method, args, jsonSafeReturn: true, transactionHashVariant: TransactionHashVariant.LATEST_FINAL });
 const notify = message => { $('live-notice').textContent = message; };
 function controls() {
@@ -86,6 +88,7 @@ async function connect() {
     if (Number(await provider.request({ method: 'eth_chainId' })) !== 4221 || !accounts[0]) throw new Error('Select an account on Bradbury chain 4221.');
     account = accounts[0];
     const tracked = { request: async request => {
+      if (request.method === 'eth_sendTransaction' && walletOperation === 'attest') submissionGasGuard?.assertCanSign();
       if (request.method === 'eth_sendTransaction' && request.params?.[0]?.gas) {
         const tx = request.params[0], cap = 16777216n, estimate = BigInt(tx.gas);
         if (estimate > cap) throw new Error('Transaction exceeds the Bradbury gas cap. No transaction was sent.');
@@ -98,6 +101,7 @@ async function connect() {
       return result;
     } };
     writer = createClient({ chain: testnetBradbury, account, provider: tracked });
+    walletEstimate = writer.estimateTransactionGas.bind(writer);
     notify('Wallet connected. An attestation spends Bradbury testnet fees; review the transaction in your wallet.');
   } catch (error) { notify(error.shortMessage || error.message); }
   controls();
@@ -164,6 +168,8 @@ async function send() {
     const countBefore = Number(await read('attestation_count'));
     pending = { expected: envelope, account, countBefore, status: 'AWAITING_WALLET', deadline: Date.now() + 30 * 60 * 1000 };
     walletOperation = 'attest';
+    submissionGasGuard = createGasGuard({estimate: walletEstimate, readRpc: operation => operation()});
+    writer.estimateTransactionGas = submissionGasGuard.estimate;
     notify('Confirm the attestation in your wallet. Keep this page open until you copy the transaction hash.');
     const hash = await writer.writeContract({ address: deployment.contract, functionName: 'request_attestation', args: [deployment.policy_id, envelope.body.package, envelope.body.from_version, envelope.body.to_version, 1, envelope.hash, envelope.evidence], value: 0n });
     pending.hash = hash; pending.status = 'SUBMITTED'; renderTransaction();

@@ -52,9 +52,9 @@ guaranteed by this verification path.
 
 ## Supporting evidence to attach
 
-- Source archive containing the readable contract, generated Bradbury artifact,
-  pinned minifier and public ABI verifier, tests and setup docs. A public repository link remains
-  pending; do not claim one exists until it can be opened.
+- [Public repository](https://github.com/Zhekinmaksim/attaint) and
+  [source archive](https://attaint.vercel.app/source.zip), containing the readable
+  contract, generated artifact, pinned minifier/ABI verifier, tests and setup docs.
 - Hosted website with the working contract interface.
 - Exact Bradbury contract explorer URL.
 - Deployment, policy registration and first attestation receipts, plus current
@@ -67,19 +67,28 @@ The historical 57.8% rate is a mechanical candidate baseline. Do not label it a
 consensus block rate or claim a measured improvement without the completed results.
 
 
-## Current links and provisional status
+## Current links and verified status
 
 Website: [attaint.vercel.app](https://attaint.vercel.app).
-New release contract, policy ID/hash and successful attestation: pending verified
-fresh deployment. The corrected candidate artifact is 20,100 bytes with SHA-256
-`80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa`.
-Two [read-only GenVM validator replays](https://attaint.vercel.app/diagnostics/locator-enum-simulation/report.json) passed without reported disagreement
-(`null`, `null`). The simulation leader returned `RISK` / `MAINTAINER_SHIFT`
-at `publisher` for the event-stream case. Initial findings use class-specific
-field/name/path locators, excluding prose and JSON fragments. Source and artifact
-offline tests pass. These diagnostics are not an actual receipt or finalized
-gate; fresh deployment is still unconfirmed on chain.
-The 45-pair consensus scan has not started; 0 of 45 corpus gates are finalized.
+Repository: [Zhekinmaksim/attaint](https://github.com/Zhekinmaksim/attaint).
+Contract: [`0x686C79234138FBF1734C8457c917acD9A6C3Fa7a`](https://explorer-bradbury.genlayer.com/contracts/0x686C79234138FBF1734C8457c917acD9A6C3Fa7a).
+Policy: ID `0`, hash `ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1`.
+Deployed source SHA-256: `80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa`.
+
+The [first live attestation](https://explorer-bradbury.genlayer.com/transactions/0xe53abde17154cbf3cbb41ced701fa8a42e1c327beb1ded40e351b31ebe4cbe18)
+is `FINALIZED` (confirmed 1 October 2026 at 13:59 UTC). Its current gate for
+`event-stream 3.3.4 → 3.3.5` is `CLEAN`, with registry metadata `VERIFIED`, six
+class judgments, no findings and no inconclusive classes. A fresh finalized-state
+CLI check returned exit `0`; the local proof is `runs/first-attestation-gate.json`
+and the release bindings are in `runs/deployment.json`.
+
+Two read-only GenVM validator replays passed with a simulated leader verdict
+`RISK / MAINTAINER_SHIFT` at `publisher`. The live transaction performed fresh
+judgments and returned `CLEAN` for the same pinned envelope and policy parameters.
+A diagnostic replay is not network consensus. Do not advertise that simulated
+risk finding as a live detection; the finalized live result missed the historical
+handover risk. The full 45-pair comparison remains incomplete; measured consensus
+metrics remain pending.
 
 The prior contract
 [`0x74407aE5e92002F4F0E1A912C7e785837a67F3C8`](https://explorer-bradbury.genlayer.com/contracts/0x74407aE5e92002F4F0E1A912C7e785837a67F3C8)

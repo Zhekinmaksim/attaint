@@ -1,90 +1,116 @@
 {
-  "schema": "attaint-attempt-history/1",
-  "network": "bradbury",
-  "chain_id": 4221,
-  "scope": "Failed historical attempts only. No entry is proof of a successful current release.",
-  "status_basis": "Statuses are the observations in archived transaction journals, not a live query of current chain state.",
-  "diagnostic_basis": "Read-only GenVM simulations are diagnostics, not consensus receipts. No private credentials or raw LLM logs are included.",
   "attempts": [
     {
       "attempt": "attempt-01-registry-api",
-      "release_status": "FAILED_ARCHIVED",
-      "current_release": false,
       "contract": "0x2BdFEfE1Bac7767caFa769b9b09EFe682887C853",
       "contract_explorer_url": "https://explorer-bradbury.genlayer.com/contracts/0x2BdFEfE1Bac7767caFa769b9b09EFe682887C853",
-      "source_sha256": "8dcd597cc9fe2c6643d7f269a3e000369da894cfa7ee5f9a4bcecd7619bd2eb4",
-      "policy_id": 0,
+      "current_release": false,
+      "diagnostic": {
+        "class_judgments": 0,
+        "classification": "REGISTRY_RESPONSE_API_MISMATCH",
+        "measurement_status": "INVALIDATED; all submitted corpus transactions are excluded from the final benchmark.",
+        "provisional_gate": "INCONCLUSIVE",
+        "summary": "The contract accessed Response.status_code; GenVM exposes Response.status. Registry verification failed closed before any class judgment."
+      },
       "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "policy_id": 0,
+      "release_status": "FAILED_ARCHIVED",
+      "source_sha256": "8dcd597cc9fe2c6643d7f269a3e000369da894cfa7ee5f9a4bcecd7619bd2eb4",
       "transactions": {
         "deployment": {
-          "hash": "0xc4f131b145b10a767c7dda0070715a6400f4f8d787e80318a64d35445045ca08",
           "archived_status": "ACCEPTED",
           "execution_result": "FINISHED_WITH_RETURN",
-          "explorer_url": "https://explorer-bradbury.genlayer.com/transactions/0xc4f131b145b10a767c7dda0070715a6400f4f8d787e80318a64d35445045ca08"
+          "explorer_url": "https://explorer-bradbury.genlayer.com/transactions/0xc4f131b145b10a767c7dda0070715a6400f4f8d787e80318a64d35445045ca08",
+          "hash": "0xc4f131b145b10a767c7dda0070715a6400f4f8d787e80318a64d35445045ca08"
         },
         "policy": {
-          "hash": "0x04cddf0922e48a0defbb09b8cfd3823e81a48d2492876f765d32b78a62b046fb",
           "archived_status": "ACCEPTED",
           "execution_result": "FINISHED_WITH_RETURN",
-          "explorer_url": "https://explorer-bradbury.genlayer.com/transactions/0x04cddf0922e48a0defbb09b8cfd3823e81a48d2492876f765d32b78a62b046fb"
+          "explorer_url": "https://explorer-bradbury.genlayer.com/transactions/0x04cddf0922e48a0defbb09b8cfd3823e81a48d2492876f765d32b78a62b046fb",
+          "hash": "0x04cddf0922e48a0defbb09b8cfd3823e81a48d2492876f765d32b78a62b046fb"
         },
         "smoke": {
-          "hash": "0x757d6ce526e411b109146df72a2717df739505be015ca95daf7941209199c20d",
           "archived_status": "ACCEPTED",
           "execution_result": "FINISHED_WITH_RETURN",
-          "explorer_url": "https://explorer-bradbury.genlayer.com/transactions/0x757d6ce526e411b109146df72a2717df739505be015ca95daf7941209199c20d"
+          "explorer_url": "https://explorer-bradbury.genlayer.com/transactions/0x757d6ce526e411b109146df72a2717df739505be015ca95daf7941209199c20d",
+          "hash": "0x757d6ce526e411b109146df72a2717df739505be015ca95daf7941209199c20d"
         }
-      },
-      "diagnostic": {
-        "classification": "REGISTRY_RESPONSE_API_MISMATCH",
-        "summary": "The contract accessed Response.status_code; GenVM exposes Response.status. Registry verification failed closed before any class judgment.",
-        "provisional_gate": "INCONCLUSIVE",
-        "class_judgments": 0,
-        "measurement_status": "INVALIDATED; all submitted corpus transactions are excluded from the final benchmark."
       }
     },
     {
       "attempt": "attempt-02-question-polarity",
-      "release_status": "FAILED_ARCHIVED",
-      "current_release": false,
       "contract": "0x74407aE5e92002F4F0E1A912C7e785837a67F3C8",
       "contract_explorer_url": "https://explorer-bradbury.genlayer.com/contracts/0x74407aE5e92002F4F0E1A912C7e785837a67F3C8",
-      "source_sha256": "256f2887e02bcd2ea2a575ed62dedd54151ecfec39cc426552565b28f2ec6fe2",
-      "policy_id": 0,
+      "current_release": false,
+      "diagnostic": {
+        "additional_review": "OPAQUE and DEP_ADDED had reversed question polarity; install scope also needed clarification. These were separate code-review findings, not a claim that all caused the observed vote.",
+        "classification": "nondet_disagree",
+        "measurement_status": "NOT_STARTED; no 45-pair corpus scan was started on this attempt.",
+        "stale_sdk_vote_label": {
+          "interpretation": "The stale label does not prove a deterministic replay fault; simulation diagnostics identify nondet_disagree.",
+          "numeric_value": 4,
+          "reported_label": "DETERMINISTIC_VIOLATION"
+        },
+        "summary": "Deployment and policy finalized successfully. The smoke ended UNDETERMINED and produced no accepted attestation. Read-only validator simulations reproduced INSTALL_HOOK disagreement about inconclusive, at nondeterministic call 3."
+      },
       "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "policy_id": 0,
+      "release_status": "FAILED_ARCHIVED",
+      "source_sha256": "256f2887e02bcd2ea2a575ed62dedd54151ecfec39cc426552565b28f2ec6fe2",
       "transactions": {
         "deployment": {
-          "hash": "0x89b590db98851fd2afbe559dae98143c4f73443b718413d9dc22578a8a70d2b3",
           "archived_status": "FINALIZED",
           "execution_result": "FINISHED_WITH_RETURN",
+          "execution_trace_result_code": 0,
           "explorer_url": "https://explorer-bradbury.genlayer.com/transactions/0x89b590db98851fd2afbe559dae98143c4f73443b718413d9dc22578a8a70d2b3",
-          "execution_trace_result_code": 0
+          "hash": "0x89b590db98851fd2afbe559dae98143c4f73443b718413d9dc22578a8a70d2b3"
         },
         "policy": {
-          "hash": "0x0ff8f2c7c829171ff4c17a3653d0581125fc49efc00ebfe972f027d4e45e1c7d",
           "archived_status": "FINALIZED",
           "execution_result": "FINISHED_WITH_RETURN",
+          "execution_trace_result_code": 0,
           "explorer_url": "https://explorer-bradbury.genlayer.com/transactions/0x0ff8f2c7c829171ff4c17a3653d0581125fc49efc00ebfe972f027d4e45e1c7d",
-          "execution_trace_result_code": 0
+          "hash": "0x0ff8f2c7c829171ff4c17a3653d0581125fc49efc00ebfe972f027d4e45e1c7d"
         },
         "smoke": {
-          "hash": "0x73a16013b755850a3c399b8955ca4564f22f29a996cea7bac769ebcf0a5ce393",
           "archived_status": "UNDETERMINED",
           "execution_result": "FINISHED_WITH_RETURN",
-          "explorer_url": "https://explorer-bradbury.genlayer.com/transactions/0x73a16013b755850a3c399b8955ca4564f22f29a996cea7bac769ebcf0a5ce393"
+          "explorer_url": "https://explorer-bradbury.genlayer.com/transactions/0x73a16013b755850a3c399b8955ca4564f22f29a996cea7bac769ebcf0a5ce393",
+          "hash": "0x73a16013b755850a3c399b8955ca4564f22f29a996cea7bac769ebcf0a5ce393"
         }
-      },
-      "diagnostic": {
-        "classification": "nondet_disagree",
-        "summary": "Deployment and policy finalized successfully. The smoke ended UNDETERMINED and produced no accepted attestation. Read-only validator simulations reproduced INSTALL_HOOK disagreement about inconclusive, at nondeterministic call 3.",
-        "stale_sdk_vote_label": {
-          "numeric_value": 4,
-          "reported_label": "DETERMINISTIC_VIOLATION",
-          "interpretation": "The stale label does not prove a deterministic replay fault; simulation diagnostics identify nondet_disagree."
-        },
-        "additional_review": "OPAQUE and DEP_ADDED had reversed question polarity; install scope also needed clarification. These were separate code-review findings, not a claim that all caused the observed vote.",
-        "measurement_status": "NOT_STARTED; no 45-pair corpus scan was started on this attempt."
       }
     }
-  ]
+  ],
+  "chain_id": 4221,
+  "diagnostic_basis": "Read-only GenVM simulations are diagnostics, not consensus receipts. No private credentials or raw LLM logs are included.",
+  "evm_submission_failures": [
+    {
+      "consensus_transaction_created": false,
+      "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "error": "PendingQueueFull(address,uint256)",
+      "evm_hash": "0xbec843e882ed7feeec01fa85e80a041ffae6d96b0d467492ab4788213a2bd2ca",
+      "from": "14.0.1",
+      "kind": "PENDING_QUEUE_REVERT",
+      "maximum": 20,
+      "nonce": "469",
+      "package": "commander",
+      "receipt": {
+        "blockHash": "0x4c4d533aea6e99186f6a2f0d6055c2806c87a45c5a2b7266c0129dcc1004e88f",
+        "blockNumber": "23274910",
+        "from": "0x771388495f34d21c5574fefc04cd1d5811e00ada",
+        "gasUsed": "168468",
+        "status": "reverted",
+        "to": "0x0112bf6e83497965a5fdd6dad1e447a6e004271d",
+        "transactionHash": "0xbec843e882ed7feeec01fa85e80a041ffae6d96b0d467492ab4788213a2bd2ca"
+      },
+      "receipt_sha256": "13323f641cbcd6fcaed21f5bb6dfc381438e53be4c672e0b0a9ff372c9841da7",
+      "retry_basis": "Confirmed EVM revert; original intent/nonce preserved in archive before replacement scheduling.",
+      "selector": "0xd48a82a3",
+      "to": "14.0.2"
+    }
+  ],
+  "network": "bradbury",
+  "schema": "attaint-attempt-history/1",
+  "scope": "Failed historical attempts only. No entry is proof of a successful current release.",
+  "status_basis": "Statuses are the observations in archived transaction journals, not a live query of current chain state."
 }

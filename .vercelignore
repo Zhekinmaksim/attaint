@@ -1,6 +1,8 @@
 node_modules
 .git
 .git-local
+/.attaint-writer.lock
+/.attaint-scan.lock
 runs/*
 !runs/deployment.json
 !runs/consensus-report.json

@@ -1,0 +1,32 @@
+{
+  "network": "bradbury",
+  "chainId": 4221,
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "address": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+  "method": "get_policy",
+  "result": {
+    "allowed_licenses": [
+      "apache-2.0",
+      "bsd-2-clause",
+      "bsd-3-clause",
+      "isc",
+      "mit"
+    ],
+    "attestations": 0,
+    "blocking": [
+      "DEP_ADDED",
+      "EGRESS",
+      "INSTALL_HOOK",
+      "LICENSE_SHIFT",
+      "MAINTAINER_SHIFT",
+      "OPAQUE"
+    ],
+    "challenge_bond": 1000000000000000,
+    "min_level": 1,
+    "min_rounds": 6,
+    "owner": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+    "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+    "policy_id": 0,
+    "pool": 0
+  }
+}

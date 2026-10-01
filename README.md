@@ -5,9 +5,9 @@ from version A to version B under an immutable consumer policy, then exposes a
 CI decision: `CLEAN` → 0, `RISK` → 1, `INCONCLUSIVE` → 2.
 
 Hosted application: [attaint.vercel.app](https://attaint.vercel.app).
-A successful live release of the corrected contract is pending. The previous
-smoke run ended `UNDETERMINED`; see release status before using a result as CI
-evidence.
+The corrected contract has a `FINALIZED` attestation and a live CLI exit code `0`.
+The current gate is `CLEAN`, while the earlier diagnostic returned `RISK`. Read
+the release status before using either result as CI evidence.
 
 The six judgment classes are licence incompatibility (`LICENSE_SHIFT`), unexplained
 transfer of publisher trust (`MAINTAINER_SHIFT`), new or changed install behaviour
@@ -186,28 +186,43 @@ when present; `--code-hash` pins an explicitly reviewed alternative.
 
 ## Release status
 
-As of 1 October 2026, the Vercel application and source archive are published. A
-corrected candidate passed two read-only GenVM validator replays, with no
-reported disagreement (`null`, `null`). The simulation leader returned
-`RISK` / `MAINTAINER_SHIFT` at `publisher` for the event-stream case. The report
-is [published as a read-only diagnostic](https://attaint.vercel.app/diagnostics/locator-enum-simulation/report.json). Readable-source and
-generated-artifact offline suites also pass. These results are diagnostics, not
-an actual attestation receipt or finalized chain gate. A fresh deployment has not
-been confirmed on chain; the new contract address, registered policy and
-successful attestation remain pending.
-No 45-pair consensus scan has started; there are 0 of 45 finalized corpus gates.
+As of 1 October 2026 at 13:59 UTC, the corrected contract, policy registration and
+first live attestation have reached `FINALIZED`. The current gate for
+`event-stream 3.3.4 → 3.3.5` is `CLEAN`: registry metadata `VERIFIED`, six class
+judgments, no findings and no inconclusive classes. A fresh read of finalized
+state passed the CLI's code, policy, envelope and requester checks with exit `0`.
+The local proof is in `runs/deployment.json`, the three transaction journals and
+`runs/first-attestation-gate.json`.
 
-- Intended network: Bradbury, chain ID 4221.
-- Corrected candidate artifact SHA-256: `80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa` (20,100 UTF-8 bytes). This is not a verified new deployed-code hash.
-- New release contract address: pending.
-- New release policy ID and hash: pending verified registration.
-- First successful new-release attestation: pending.
+- Network: Bradbury, chain ID 4221.
+- Contract: [`0x686C79234138FBF1734C8457c917acD9A6C3Fa7a`](https://explorer-bradbury.genlayer.com/contracts/0x686C79234138FBF1734C8457c917acD9A6C3Fa7a).
+- Deployed source SHA-256: `80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa` (20,100 UTF-8 bytes), verified against the fetched contract code.
+- Immutable policy ID: `0`; hash: `ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1`.
+- Attestation ID: `0`; envelope SHA-256: `49e222e812104fc865421eb55f886bc378a60c87889b125dc73fc2a08e529042`.
+- [Deployment transaction](https://explorer-bradbury.genlayer.com/transactions/0x6b0c6281bc6f4ac7103290238ee2cae89fa5a3de10c54e16f4de7c5400929b68).
+- [Policy transaction](https://explorer-bradbury.genlayer.com/transactions/0x0eba23ed228cb6d0803a4d17efe671d9f0bdcbd21aa1bbd1cedf4e526e3f2549).
+- [First live attestation transaction](https://explorer-bradbury.genlayer.com/transactions/0xe53abde17154cbf3cbb41ced701fa8a42e1c327beb1ded40e351b31ebe4cbe18).
+
+The earlier [read-only GenVM diagnostic](https://attaint.vercel.app/diagnostics/locator-enum-simulation/report.json)
+returned `RISK / MAINTAINER_SHIFT` at `publisher`, and two validator replays
+reported no disagreement. It used the same pinned envelope and policy parameters
+in a diagnostic wrapper. The live transaction ran fresh nondeterministic
+judgments and returned `CLEAN`. Agreement with a recorded simulation trace does
+not force the network to reproduce that classification. The finalized live run did
+not confirm the publisher handover as a risk; do not count the simulated result
+as a live detection. The finalized clean outcome is a miss for this historical
+handover case. Offline tests and simulations establish different things
+from a receipt-backed consensus judgment.
+
+The full 45-pair comparison remains incomplete. Finalized corpus outcomes and measured
+risk/block-rate differences remain pending; no completed comparison or improvement
+is claimed.
 
 The previous attempt at
 [`0x74407aE5e92002F4F0E1A912C7e785837a67F3C8`](https://explorer-bradbury.genlayer.com/contracts/0x74407aE5e92002F4F0E1A912C7e785837a67F3C8)
 had finalized deployment and policy registration. An earlier registry-API
 attempt failed closed before any class judgments; its corpus submissions are
-excluded from the final measurement. Its smoke transaction
+excluded from the final measurement. The question-polarity attempt's smoke transaction
 [`0x73a16013b755850a3c399b8955ca4564f22f29a996cea7bac769ebcf0a5ce393`](https://explorer-bradbury.genlayer.com/transactions/0x73a16013b755850a3c399b8955ca4564f22f29a996cea7bac769ebcf0a5ce393)
 ended `UNDETERMINED`, producing no accepted attestation. Validator simulations
 reproduced `nondet_disagree` at `INSTALL_HOOK`: the leader and validator disagreed
@@ -219,8 +234,8 @@ findings are summarized in the public
 [failed-attempt history](https://attaint.vercel.app/attempt-history.json).
 That contract is failed-attempt evidence, not the current release.
 
-Keep the application and CLI fail closed until the corrected release has a
-finalized successful transaction and matching current gate state. The consensus
+The application and CLI continue to fail closed for unconfirmed transactions,
+incomplete evidence or mismatched current gate state. The consensus
 report must retain failures and inconclusive rows; no improvement is claimed
 before a completed confirmed run.
 

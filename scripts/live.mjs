@@ -3,13 +3,16 @@
 import {execFileSync} from 'node:child_process';
 import {dirname, join, resolve} from 'node:path';
 import {realpathSync, readFileSync, writeFileSync, renameSync, mkdirSync, existsSync} from 'node:fs';
-import {pathToFileURL} from 'node:url';
+import {pathToFileURL,fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 import {retryRpcRead} from './rpc_retry.mjs';
 import {createFinalizationChecker} from './finalization.mjs';
 import {recordSigningIntent,recoverSigningIntent} from './write_journal.mjs';
 import {selectFinalizedRound,decodeFinalizedTrace} from './settled_trace.mjs';
 import {prepareSignedIntentRetry,assertUnusedIntentNonce,submissionOperationHash,submissionFieldsHash,validateRetryTransaction} from './signed_retry.mjs';
+import {createGasGuard} from './gas_guard.mjs';
+import {readPendingQueue} from './queues.mjs';
+import {acquireWriterLock} from './writer_lock.mjs';
 
 const options = process.argv.slice(3);
 const option = (name, fallback = '') => {
@@ -38,6 +41,12 @@ try {
   const command = process.argv[2];
   if (options.includes('--retry-signed-intent') && !['deploy','write'].includes(command)) throw new Error('--retry-signed-intent is limited to unresolved deploy/write submissions');
   const writes = ['deploy','write','settle','recover'].includes(command);
+  if (writes) {
+    const release = acquireWriterLock(fileURLToPath(new URL('../.attaint-writer.lock',import.meta.url)));
+    process.once('exit',release);
+    process.once('SIGINT',() => {release();process.exit(130);});
+    process.once('SIGTERM',() => {release();process.exit(143);});
+  }
   let account;
   if (writes) {
     const configPath = process.env.GENLAYER_CONFIG || join(process.env.HOME,'.genlayer/genlayer-config.json');
@@ -67,12 +76,15 @@ try {
   let expectedOperationHash = null;
   let retryConsumed = false;
   if (writes) {
+    const gasGuard = createGasGuard({estimate:client.estimateTransactionGas.bind(client),readRpc});
+    client.estimateTransactionGas = gasGuard.estimate;
     const block = await readRpc(() => client.request({method:'eth_getBlockByNumber',params:['latest',false]}));
     const blockCap = BigInt(block.gasLimit) * 95n / 100n;
     const requestedCap = BigInt(option('--gas-limit','16777216'));
     if (requestedCap <= 0n || requestedCap > blockCap) throw new Error('--gas-limit exceeds available block gas');
     const sign = account.signTransaction.bind(account);
     account.signTransaction = async (transaction, signingOptions) => {
+      gasGuard.assertCanSign();
       let operationHash;
       if (signingKind === 'submission') operationHash = submissionOperationHash(transaction.data,viem.decodeFunctionData);
       if (retryPlan && signingKind === 'submission') {
@@ -113,6 +125,38 @@ try {
     result = {...meta,address,code_sha256:createHash('sha256').update(code).digest('hex'),code};
   } else if (command === 'receipt') {
     result = {...meta,hash:required('--hash'),receipt:await readRpc(() => client.getTransaction({hash:required('--hash')}))};
+  } else if (command === 'evm-receipt') {
+    const hash = required('--hash');
+    const [receipt,transaction] = await Promise.all([
+      readRpc(() => publicClient.getTransactionReceipt({hash})),
+      readRpc(() => publicClient.getTransaction({hash})),
+    ]);
+    result = {...meta,hash,receipt,transaction};
+  } else if (command === 'poll') {
+    if (!args.every(hash => /^0x[0-9a-f]{64}$/i.test(hash))) throw new Error('poll requires an array of transaction hashes');
+    const queue = await readRpc(() => readPendingQueue({publicClient,recipient:required('--address')}));
+    const states = [];
+    for (let index=0;index<args.length;index+=4) {
+      const batch = await Promise.all(args.slice(index,index+4).map(async hash => {
+        const receipt = await readRpc(() => client.getTransaction({hash}));
+        const status = receipt.statusName;
+        const capability = ['ACCEPTED','READY_TO_FINALIZE'].includes(status) ? await readRpc(() => finalizationCapability(hash)) : null;
+        return {hash,status,recipient:receipt.recipient,execution:receipt.txExecutionResultName,
+          round:receipt.numOfRounds,capability};
+      }));
+      states.push(...batch);
+    }
+    result = {...meta,observed_at:new Date().toISOString(),queue,states};
+  } else if (command === 'gates') {
+    const getCount = () => client.readContract({address:required('--address'),functionName:'attestation_count',args:[],transactionHashVariant:'latest-nonfinal'});
+    const before = Number(await readRpc(getCount));
+    if (!Number.isSafeInteger(before) || before < 0 || before > 2000) throw new Error('attestation count is outside bounded audit range');
+    const gates = [];
+    for (let index=0;index<before;index+=4) gates.push(...await Promise.all(Array.from({length:Math.min(4,before-index)},(_,offset)=>
+      readRpc(() => client.readContract({address:required('--address'),functionName:'gate',args:[index+offset],transactionHashVariant:'latest-nonfinal'})))));
+    const after = Number(await readRpc(getCount));
+    if (before !== after || gates.some((gate,index)=>Number(gate.att_id) !== index)) throw new Error('attestation set changed during audit; retry read-only proof');
+    result = {...meta,address:required('--address'),variant:'latest-nonfinal',observed_at:new Date().toISOString(),count:before,gates};
   } else if (command === 'recover') {
     const hash = required('--hash');
     const out = required('--out');
@@ -215,6 +259,6 @@ try {
       result.trace_verified = true;
       save(result);
     }
-  } else throw new Error('command must be deploy, write, settle, read, code or receipt');
+  } else throw new Error('command must be deploy, write, settle, read, code, receipt or evm-receipt');
   save(result); console.log(stringify(result));
 } catch (error) {console.error('live: '+(error.shortMessage || error.message)); process.exitCode=2;}

@@ -27,6 +27,8 @@ const receipt={txId:hash,status:7,statusName:'FINALIZED',txExecutionResult:1,res
 const args={hash,receipt,roundNumber:2n,lastRoundData:[2n,lastRound]};
 const identity=selectFinalizedRound(args);
 assert.equal(identity.round,2);assert.equal(identity.leader,leader);
+const rotated=selectFinalizedRound({...args,receipt:{...receipt,numOfRounds:'4'},roundNumber:4n,lastRoundData:[4n,lastRound]});
+assert.equal(rotated.round,4);assert.equal(rotated.round_data_round,2);
 const traces=[{transaction_id:hash,result_code:2,return_data:'0xff'},null,{transaction_id:hash,result_code:0,return_data:'0xff'}];
 const decoded=new Map([['kind','Return'],['data',17n]]);
 assert.equal(decodeFinalizedTrace({hash,trace:traces[identity.round],identity,decode:()=>decoded}),17n);
@@ -61,7 +63,9 @@ assert.equal(decodeFinalizedTrace({hash,trace:traces[2],identity,decode:()=>new 
             import attaint_gate
             with patch.object(attaint_gate, "bridge", side_effect=ValueError("RPC unavailable")):
                 with self.assertRaisesRegex(ValueError, "RPC unavailable"):
-                    scan.consensus_main(args)
+                    # This unit owns a temporary report; scanner-lock exclusion
+                    # is covered separately without claiming the live writer's lock.
+                    scan._consensus_main(args)
             report = json.loads(out.read_text())
             self.assertFalse(report["completed"])
             self.assertNotIn("consensus_counts", report)
@@ -74,8 +78,8 @@ assert.equal(decodeFinalizedTrace({hash,trace:traces[2],identity,decode:()=>new 
         leader = "0x" + "3" * 40
         document = {"chainId":4221, "hash":tx, "trace_verified":True, "return_value":"17",
             "receipt":{"txId":tx, "recipient":contract, "sender":leader, "status":7, "statusName":"FINALIZED",
-                       "txExecutionResult":1, "result":1, "numOfRounds":"2", "lastLeader":leader},
-            "trace_identity":{"round":2, "leader":leader, "binding":"finalized-round-and-leader"},
+                       "txExecutionResult":1, "result":1, "numOfRounds":"4", "lastRound":{"round":"2"}, "lastLeader":leader},
+            "trace_identity":{"round":4, "round_data_round":2, "leader":leader, "binding":"finalized-round-and-leader"},
             "trace":{"result_code":0}}
         self.assertEqual(scan.settled_attestation(document, tx, contract), 17)
         for field, value in [("trace_verified",False), ("return_value",None), ("return_value",-1), ("return_value",True)]:

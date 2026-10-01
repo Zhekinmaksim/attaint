@@ -83,6 +83,7 @@ These are prefilter results, not consensus verdicts or measured false positives.
 A consensus comparison must retain the same package/version pairs, publish the
 policy and evidence hashes, and preserve risk, clean, inconclusive and transaction
 failure counts. A run using all six classes differs in scope from the four-class
-baseline and must say so. `event-stream 3.3.4 → 3.3.5` is a proposed live case,
-not a guaranteed expected verdict. Report the actual outcome, including a miss
-or an inconclusive result.
+baseline and must say so. `event-stream 3.3.4 → 3.3.5` probes a historical
+publisher handover; a risk verdict is not guaranteed. Report the actual final
+network outcome, including a miss or an inconclusive result. A simulated risk
+finding cannot be counted as a live detection.

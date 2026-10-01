@@ -96,6 +96,7 @@
   .cls i.unk{border-color:var(--unknown);color:var(--unknown);background:var(--unknown-wash)}
 
   section{padding:52px 0;border-top:1px solid var(--rule)}
+  section[id], #gate{scroll-margin-top:86px}
   h2{font-size:clamp(24px,2.8vw,33px);letter-spacing:-.035em;line-height:1.1;margin-bottom:14px;max-width:22ch}
   .sub{font-size:17px;color:var(--dim);max-width:60ch;margin-bottom:30px}
   p.body{font-size:16px;color:var(--dim);max-width:62ch;margin-bottom:14px}
@@ -203,7 +204,7 @@
 <div class="rail">
   <div class="rail-in">
     <span class="mark">Attaint</span>
-    <span class="chip">Not yet deployed</span>
+    <span class="chip" id="deployment-status">Deployed on Bradbury</span>
     <nav class="nav" id="nav">
       <a href="#live">Live gate</a>
       <a href="#gate">Examples</a>
@@ -296,7 +297,7 @@
       </div>
     </div>
     <p id="live-notice" role="status">Reading deployment manifest…</p>
-    <p class="note" style="margin-top:20px"><a href="/attaint.py">Contract source</a> · <a href="/envelope.py">Evidence builder</a> · <a href="/attaint_gate.py">CLI gate</a> · <a href="/source.zip">Complete source archive</a> · <a href="/mechanical-report.json">45-pair baseline</a> · <a href="/consensus-report.json">Consensus report</a></p>
+    <p class="note" style="margin-top:20px"><a href="https://github.com/Zhekinmaksim/attaint">GitHub repository</a> · <a href="/attaint.py">Contract source</a> · <a href="/envelope.py">Evidence builder</a> · <a href="/attaint_gate.py">CLI gate</a> · <a href="/source.zip">Complete source archive</a> · <a href="/mechanical-report.json">45-pair baseline</a> · <a href="/consensus-report.json">Consensus report</a></p>
   </section>
 
   <section id="levels">
@@ -412,7 +413,7 @@
     <a href="https://github.com/Zhekinmaksim/jastrow">Jastrow</a>
     <a href="https://github.com/Zhekinmaksim/suborn">Suborn</a>
     <span>GenLayer · Bradbury</span>
-    <span class="status">Contract not yet deployed — no receipts published</span>
+    <span class="status" id="receipt-status">First attestation finalized · receipts published</span>
   </footer>
 
 </div>
@@ -655,7 +656,7 @@ function renderCell(){
     return;
   }
   $("cellSay").textContent = state.mode === "cons"
-    ? "The consensus pass over the control sample has not been run yet. Until it is, this cell has no verdict — and that is honest rather than flattering."
+    ? "The finalized consensus comparison is pending. This cell has no published chain verdict yet."
     : (cell.hits.length
         ? "Blocked by a mechanical reading. None of it is a detection of anything: a minified dist directory and a second maintainer are ordinary npm practice."
         : "Passed untouched. Nineteen of forty-five releases give a deterministic linter nothing to say.");
@@ -698,7 +699,7 @@ function renderTally(){
   $("tallyBig").textContent = mech ? (BLOCKED / 45 * 100).toFixed(1) + "%" : "not measured";
   $("tallySay").textContent = mech
     ? BLOCKED + " of 45 consecutive releases of fifteen popular packages. A gate that blocks three updates in five is switched off on its first day."
-    : "The second pass, judged by consensus rather than mechanically, is still to run. The gap between the two tables is the contribution, expressed as a number.";
+    : "The finalized consensus comparison is pending. It will use the same 45 pinned release pairs.";
   if(!mech && CONSENSUS){
     var counts = CONSENSUS.consensus_counts;
     var blocked = counts.RISK + counts.INCONCLUSIVE;

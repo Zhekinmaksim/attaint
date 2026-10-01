@@ -1,0 +1,17 @@
+{
+  "chain_id": 4221,
+  "code_sha256": "80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa",
+  "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+  "first_attestation_id": 0,
+  "first_envelope_hash": "49e222e812104fc865421eb55f886bc378a60c87889b125dc73fc2a08e529042",
+  "network": "bradbury",
+  "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+  "policy_id": 0,
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "status": "FINALIZED",
+  "transactions": {
+    "deploy": "0x6b0c6281bc6f4ac7103290238ee2cae89fa5a3de10c54e16f4de7c5400929b68",
+    "first-attestation": "0xe53abde17154cbf3cbb41ced701fa8a42e1c327beb1ded40e351b31ebe4cbe18",
+    "policy": "0x0eba23ed228cb6d0803a4d17efe671d9f0bdcbd21aa1bbd1cedf4e526e3f2549"
+  }
+}
