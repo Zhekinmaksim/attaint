@@ -1,0 +1,29 @@
+{
+  "network": "bradbury",
+  "chainId": 4221,
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "command": "write",
+  "address": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+  "method": "request_attestation",
+  "args": [
+    0,
+    "rimraf",
+    "6.1.0",
+    "6.1.1",
+    1,
+    "0cecc128103a0e075c94aca407f585f8a7668817d6dff52208ffe8a058a3369f",
+    "{\"facts\":{\"dependencies\":{\"added\":{},\"changed\":{\"glob\":[\"^11.0.3\",\"^12.0.0\"]},\"removed\":[]},\"egress\":{\"candidate_count\":0,\"candidates\":[],\"complete\":true,\"scope\":\"static changed-source network patterns; not a whole-program proof\",\"skipped_files\":[]},\"files\":{\"added\":[],\"changed_source_count\":1,\"changed_sources\":[\"package.json\"],\"count_from\":137,\"count_to\":137,\"removed\":[]},\"install_hooks\":{\"from\":{\"prepare\":\"tshy\"},\"to\":{\"prepare\":\"tshy\"}},\"license\":{\"from\":\"BlueOak-1.0.0\",\"to\":\"BlueOak-1.0.0\"},\"maintainers\":{\"from\":[\"isaacs\"],\"to\":[\"isaacs\"]},\"opaque_candidates\":[],\"opaque_coverage\":{\"candidate_count\":0,\"complete\":true},\"publisher\":{\"from\":\"isaacs\",\"to\":\"isaacs\"},\"purpose\":{\"description\":\"A deep deletion module for node (like `rm -rf`)\",\"keywords\":[\"rm\",\"rm -rf\",\"rm -fr\",\"remove\",\"directory\",\"cli\",\"rmdir\",\"recursive\"]}},\"fetched_from\":[\"https://registry.npmjs.org/rimraf\",\"https://registry.npmjs.org/rimraf/-/rimraf-6.1.0.tgz\",\"https://registry.npmjs.org/rimraf/-/rimraf-6.1.1.tgz\"],\"from_version\":\"6.1.0\",\"package\":\"rimraf\",\"pin\":{\"from\":{\"integrity\":\"sha512-DxdlA1bdNzkZK7JiNWH+BAx1x4tEJWoTofIopFo6qWUU94jYrFZ0ubY05TqH3nWPJ1nKa1JWVFDINZ3fnrle/A==\",\"published_at\":\"2025-10-30T21:37:20.798Z\",\"registry_integrity\":\"sha512-DxdlA1bdNzkZK7JiNWH+BAx1x4tEJWoTofIopFo6qWUU94jYrFZ0ubY05TqH3nWPJ1nKa1JWVFDINZ3fnrle/A==\",\"registry_shasum\":\"b9168360a26e10ffaca0c8b803f47069f99ca47e\",\"tarball_bytes\":39406,\"tarball_sha256\":\"ef227fe070cf0563de1f286fcedd4f6a8acb6906d5994e173b7c44f6358f4648\"},\"to\":{\"integrity\":\"sha512-aSeDGyL93+CQ/Mn5p8/+dIPSADLLUVxDE2pcrTqEEKMRdwfneUqOcsAOlJmL9OpSUCerImb56WiYE/xbPhyueA==\",\"published_at\":\"2025-11-19T15:43:54.126Z\",\"registry_integrity\":\"sha512-aSeDGyL93+CQ/Mn5p8/+dIPSADLLUVxDE2pcrTqEEKMRdwfneUqOcsAOlJmL9OpSUCerImb56WiYE/xbPhyueA==\",\"registry_shasum\":\"d185cbbfbdb278fd01a5e269bbe857b6db48522a\",\"tarball_bytes\":39407,\"tarball_sha256\":\"33e63e9622a152b5bb42a22695b2390deac45af14321008434d7f6f58233c3dc\"}},\"registry\":\"npm\",\"to_version\":\"6.1.1\",\"version\":\"attaint/1\"}"
+  ],
+  "hash": "0xa0193a511b9e81fa106ab89ff23d67f8cd5a0b7e582105292325f3b2232b1e24",
+  "value_wei": "0",
+  "submission_intent": {
+    "evm_hash": "0x6a66b2ef4421c675b90cb158dc457a4d9d6bed8374f78f59a18342716cce78e7",
+    "state": "SIGNED",
+    "nonce": "477",
+    "to": "0x0112Bf6e83497965A5fdD6Dad1E447a6E004271D",
+    "chainId": 4221,
+    "from": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+    "value_wei": "0",
+    "operation_sha256": "4b5960b3f10ba6fa4602ef98cb0a315df0715ffb3eb8f0ac6c4b4541cb5ab5ab"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "network": "bradbury",
+  "chainId": 4221,
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "command": "write",
+  "address": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+  "method": "request_attestation",
+  "args": [
+    0,
+    "dotenv",
+    "17.4.1",
+    "17.4.2",
+    1,
+    "18b66d41b593813d8c242b8017a936bdfe43d2dacb4222e8ee89a462d3298dac",
+    "{\"facts\":{\"dependencies\":{\"added\":{},\"changed\":{},\"removed\":[]},\"egress\":{\"candidate_count\":0,\"candidates\":[],\"complete\":true,\"scope\":\"static changed-source network patterns; not a whole-program proof\",\"skipped_files\":[]},\"files\":{\"added\":[],\"changed_source_count\":1,\"changed_sources\":[\"package.json\"],\"count_from\":14,\"count_to\":14,\"removed\":[]},\"install_hooks\":{\"from\":{},\"to\":{}},\"license\":{\"from\":\"BSD-2-Clause\",\"to\":\"BSD-2-Clause\"},\"maintainers\":{\"from\":[\"motdotenv\",\"motdotla\",\"scottmotte\",\"~jcblw\"],\"to\":[\"motdotenv\",\"motdotla\",\"scottmotte\"]},\"opaque_candidates\":[],\"opaque_coverage\":{\"candidate_count\":0,\"complete\":true},\"publisher\":{\"from\":\"motdotla\",\"to\":\"motdotla\"},\"purpose\":{\"description\":\"Loads environment variables from .env file\",\"keywords\":[\"dotenv\",\"env\",\".env\",\"environment\",\"variables\",\"config\",\"settings\"]}},\"fetched_from\":[\"https://registry.npmjs.org/dotenv\",\"https://registry.npmjs.org/dotenv/-/dotenv-17.4.1.tgz\",\"https://registry.npmjs.org/dotenv/-/dotenv-17.4.2.tgz\"],\"from_version\":\"17.4.1\",\"package\":\"dotenv\",\"pin\":{\"from\":{\"integrity\":\"sha512-k8DaKGP6r1G30Lx8V4+pCsLzKr8vLmV2paqEj1Y55GdAgJuIqpRp5FfajGF8KtwMxCz9qJc6wUIJnm053d/WCw==\",\"published_at\":\"2026-04-05T18:42:46.310Z\",\"registry_integrity\":\"sha512-k8DaKGP6r1G30Lx8V4+pCsLzKr8vLmV2paqEj1Y55GdAgJuIqpRp5FfajGF8KtwMxCz9qJc6wUIJnm053d/WCw==\",\"registry_shasum\":\"d8e2179fe287365ef3aecb9459668454168eda88\",\"tarball_bytes\":26257,\"tarball_sha256\":\"6d711e87864d196e655fb21e16b599664fbfc95e8c07a5884504023d20ce88f3\"},\"to\":{\"integrity\":\"sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw==\",\"published_at\":\"2026-04-12T16:41:11.574Z\",\"registry_integrity\":\"sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw==\",\"registry_shasum\":\"c07e54a746e11eba021dd9e1047ced5afdc1c034\",\"tarball_bytes\":28377,\"tarball_sha256\":\"8648852be8209110b34dca75dcc3ed12ce7fae9fcc8edd1ef9e180e708af1398\"}},\"registry\":\"npm\",\"to_version\":\"17.4.2\",\"version\":\"attaint/1\"}"
+  ],
+  "hash": "0xe572a8451f783c3d1f81fdae953ab6b098df1962e207eb982bf7a37dbcfdb97b",
+  "value_wei": "0",
+  "submission_intent": {
+    "evm_hash": "0x5f5b0a0390ec2482210b04e3d43a514ea69b6fed57ac7df5632939ae5ce14ee2",
+    "state": "SIGNED",
+    "nonce": "484",
+    "to": "0x0112Bf6e83497965A5fdD6Dad1E447a6E004271D",
+    "chainId": 4221,
+    "from": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+    "value_wei": "0",
+    "operation_sha256": "b71d8717e5a66536f8c84a47dff0cc088c757cb47f1384ccc0834e9be8afdaf6"
+  }
+}

@@ -291,19 +291,18 @@ def archive_reverted_submission(journal_path, row, read_evm, persist=lambda:None
     journal_path.unlink()
 
 
-def archive_uncommitted_consensus(journal_path,row,read_receipt,read_gates,persist=lambda:None):
-    """Explicit rescheduling requires both an unresolved consensus receipt and no committed identity."""
-    journal = json.loads(journal_path.read_text())
+def prove_uncommitted_consensus(journal,read_receipt,read_gates):
+    """Recheck final nonagreement and the entire current attestation set."""
     hash = journal.get("hash")
     if not hash:
         raise ValueError("rescheduling requires the original consensus transaction hash")
     receipt_proof = read_receipt(hash)
     receipt = receipt_proof.get("receipt",{})
     if (receipt_proof.get("chainId") != 4221 or receipt_proof.get("hash") != hash
-            or receipt.get("txId") != hash or receipt.get("status") != 6
-            or receipt.get("statusName") != "UNDETERMINED"
+            or receipt.get("txId") != hash or receipt.get("result") != 5
+            or (receipt.get("status"),receipt.get("statusName")) != (7,"FINALIZED")
             or receipt.get("recipient") != journal["address"]):
-        raise ValueError("only a live confirmed UNDETERMINED consensus transaction can be rescheduled")
+        raise ValueError("rescheduling requires live FINALIZED nonagreement (UNDETERMINED result 5)")
     state = read_gates()
     if (state.get("chainId") != 4221 or state.get("address") != journal["address"]
             or state.get("variant") != "latest-nonfinal" or state.get("count") != len(state.get("gates",[]))):
@@ -315,6 +314,13 @@ def archive_uncommitted_consensus(journal_path,row,read_receipt,read_gates,persi
         raise ValueError("failed consensus transaction has no requester identity")
     if any(all(gate.get(key)==value for key,value in expected.items()) and str(gate.get("requester","")).lower()==requester for gate in state["gates"]):
         raise ValueError("release already has a committed attestation; refusing duplicate submission")
+    return receipt,state,expected,requester
+
+
+def archive_uncommitted_consensus(journal_path,row,read_receipt,read_gates,persist=lambda:None):
+    """Explicit rescheduling requires finalized nonagreement and no committed identity."""
+    journal=json.loads(journal_path.read_text());hash=journal.get("hash")
+    receipt,state,expected,requester=prove_uncommitted_consensus(journal,read_receipt,read_gates)
     archive = journal_path.parent/"failed-submissions"
     archive.mkdir(exist_ok=True)
     archived_journal = archive/(journal_path.stem+"-"+hash+".json")
@@ -332,7 +338,8 @@ def archive_uncommitted_consensus(journal_path,row,read_receipt,read_gates,persi
     _save(archived_proof,proof)
     records=row.setdefault("failed_consensus_attempts",[])
     if not any(record["hash"]==hash for record in records):
-        records.append({"hash":hash,"status":"UNDETERMINED","consensus_commit":False,
+        records.append({"hash":hash,"status":receipt["statusName"],"result":receipt["result"],
+            "result_name":receipt.get("resultName"),"consensus_commit":False,
             "requester":requester,"observed_at":state["observed_at"],"attestation_count":state["count"],
             "matching_attestation_ids":[],"proof_sha256":hashlib.sha256(archived_proof.read_bytes()).hexdigest(),
             "journal":str(archived_journal),"proof":str(archived_proof)})
@@ -485,6 +492,10 @@ def _consensus_main(arguments) -> int:
             report["controls"].append(row)
             _save(arguments.out, report)
         row = report["controls"][index]
+        if index in getattr(arguments,"defer_pair",[]):
+            row.update(status="RETRY_APPROVAL_PENDING",reason="operator deferred this pair; no resubmission authorized")
+            _save(arguments.out,report)
+            continue
         if journal_path.exists():
             journal = json.loads(journal_path.read_text())
             if (journal.get("chainId") != 4221 or journal.get("address") != arguments.contract
@@ -558,6 +569,13 @@ def _consensus_main(arguments) -> int:
 
     def submit_row(index):
         row = report["controls"][index]
+        if row.get("failed_consensus_attempts"):
+            if index not in arguments.reschedule_undetermined:
+                raise ValueError("replacement requires explicit --reschedule-undetermined authorization")
+            prior=json.loads(pathlib.Path(row["failed_consensus_attempts"][-1]["journal"]).read_text())
+            prove_uncommitted_consensus(prior,
+                lambda hash:gate_cli.bridge("receipt",rpc=arguments.rpc,hash=hash),
+                lambda:gate_cli.bridge("gates",rpc=arguments.rpc,address=arguments.contract))
         journal = gate_cli.bridge("write", rpc=arguments.rpc, address=arguments.contract,
             method="request_attestation", args=prepared_args[index],
             account=arguments.account, out=pathlib.Path(row["journal"]))
@@ -632,7 +650,7 @@ def _consensus_main(arguments) -> int:
         if time.monotonic() >= deadline:
             raise ValueError("paced scan timeout; resume the same report/journals")
         releases = release_journals()
-        unfinished = [r for r in report["controls"] if r.get("transaction_hash") and r["status"] != "FINALIZED"]
+        unfinished = [r for r in report["controls"] if r.get("transaction_hash") and r["status"] not in {"FINALIZED","RETRY_APPROVAL_PENDING"}]
         hashes = [r["transaction_hash"] for r in unfinished]
         hashes += [j["hash"] for j in releases.values() if not j.get("trace_verified")]
         observation = gate_cli.bridge("poll",rpc=arguments.rpc,address=arguments.contract,args=hashes)
@@ -662,13 +680,13 @@ def _consensus_main(arguments) -> int:
                 acted = True
         if failures:
             break
-        if all(row["status"] == "FINALIZED" for row in report["controls"]):
+        if all(row["status"] in {"FINALIZED","RETRY_APPROVAL_PENDING"} for row in report["controls"]):
             break
         # Refresh authoritative capacity before each paid write, including
         # pending submissions made by other wallets or a browser.
         submitted = 0
         for index,row in enumerate(report["controls"]):
-            if row.get("transaction_hash") or submitted >= arguments.batch_size:
+            if row["status"] == "RETRY_APPROVAL_PENDING" or row.get("transaction_hash") or submitted >= arguments.batch_size:
                 continue
             queue = gate_cli.bridge("poll",rpc=arguments.rpc,address=arguments.contract,args=[])["queue"]
             report["queue"] = queue
@@ -729,6 +747,7 @@ def main() -> int:
     parser.add_argument("--queue-paced", action="store_true", help="pace writes by authoritative queue capacity with two free slots, finalizing eligible receipts serially")
     parser.add_argument("--finalize-release", action="store_true", help="prioritize existing runs deploy/policy/first-attestation journals in the single-writer paced loop")
     parser.add_argument("--reschedule-undetermined",type=int,action="append",default=[],metavar="INDEX",help="explicitly reschedule this pair only after live no-commit proof; preserve failed consensus hash and journal")
+    parser.add_argument("--defer-pair",type=int,action="append",default=[],metavar="INDEX",help="leave this pair awaiting operator approval while completing others; report stays incomplete")
     root = pathlib.Path(__file__).resolve().parents[1]
     parser.add_argument("--baseline", type=pathlib.Path, default=root / "corpus/scan-report.json")
     parser.add_argument("--out", type=pathlib.Path, default=root / "runs/consensus-report.json")
@@ -737,8 +756,12 @@ def main() -> int:
         parser.error("--batch-size must be between 1 and 20")
     if args.finalize_release and not args.queue_paced:
         parser.error("--finalize-release requires --queue-paced")
-    if any(index < 0 or index >= 45 for index in args.reschedule_undetermined):
-        parser.error("--reschedule-undetermined index must be between 0 and 44")
+    if any(index < 0 or index >= 45 for index in args.reschedule_undetermined+args.defer_pair):
+        parser.error("pair index must be between 0 and 44")
+    if args.defer_pair and not args.queue_paced:
+        parser.error("--defer-pair requires --queue-paced")
+    if set(args.defer_pair)&set(args.reschedule_undetermined):
+        parser.error("a pair cannot be both deferred and rescheduled")
     if not args.consensus:
         return mechanical_main()
     if not args.contract or args.policy is None or not args.policy_hash:

@@ -18,9 +18,11 @@ runs/*
 !runs/deployed-code.json
 !runs/smoke-recovery.json
 !runs/attempt-history.json
+!runs/ci-verification.json
 # CLI traversal checks directory paths without a trailing slash.
 !runs/diagnostics
 runs/diagnostics/*
+!runs/diagnostics/express-finalized-no-commit.json
 !runs/diagnostics/locator-enum-simulation
 runs/diagnostics/locator-enum-simulation/*
 !runs/diagnostics/locator-enum-simulation/manifest.json
@@ -49,6 +51,8 @@ runs/consensus-report-runs/*
 **/*keystore*
 web/*.png
 web/*.webm
+web/runs
+web/diagnostics
 **/__pycache__
 **/*.pyc
 

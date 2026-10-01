@@ -82,13 +82,31 @@ class judgments, no findings and no inconclusive classes. A fresh finalized-stat
 CLI check returned exit `0`; the local proof is `runs/first-attestation-gate.json`
 and the release bindings are in `runs/deployment.json`.
 
+The production browser read verified `CLEAN`, registry metadata `VERIFIED` and
+six judgments; the manual transaction-hash check verified `FINALIZED`.
+The [GitHub Actions run](https://github.com/Zhekinmaksim/attaint/actions/runs/36879515907)
+passed offline tests and the live gate for attestation `0` on commit
+`c27f67f9af8ae74034630cbaef8d839b57c09e9f`. The CI record is
+`runs/ci-verification.json`.
+
 Two read-only GenVM validator replays passed with a simulated leader verdict
 `RISK / MAINTAINER_SHIFT` at `publisher`. The live transaction performed fresh
 judgments and returned `CLEAN` for the same pinned envelope and policy parameters.
 A diagnostic replay is not network consensus. Do not advertise that simulated
 risk finding as a live detection; the finalized live result missed the historical
-handover risk. The full 45-pair comparison remains incomplete; measured consensus
-metrics remain pending.
+handover risk. At the verified checkpoint, 19/45 original corpus pairs had finalized
+gates: 13 `CLEAN`, six `INCONCLUSIVE`, zero `RISK`. Express index 13 ended
+`FINALIZED / NO_MAJORITY` without a committed attestation. Its original hash and
+no-commit proof are preserved. After automatic approval review rejected
+resubmission, the user explicitly approved exactly one fresh Express request;
+the sole writer is executing that guarded retry. The scheduler resumes with
+`--queue-paced --reschedule-undetermined 13 --defer-pair 21`. Yargs index 21 has
+a provisional `UNDETERMINED` transaction under read-only diagnosis; no retry or
+recovery is authorized for it. This grants no authorization for further Express
+retries. The counts above remain a verified checkpoint; a 44-pair run is incomplete.
+The full 45-pair comparison and measured consensus metrics remain pending;
+no full-sample percentages or improvement are claimed. See the README for
+queue pacing, resume behavior and the guarded operator-authorized retry.
 
 The prior contract
 [`0x74407aE5e92002F4F0E1A912C7e785837a67F3C8`](https://explorer-bradbury.genlayer.com/contracts/0x74407aE5e92002F4F0E1A912C7e785837a67F3C8)

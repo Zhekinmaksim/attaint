@@ -1,0 +1,52 @@
+{
+  "chainId": 4221,
+  "code_sha256": "80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa",
+  "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+  "exit_code": 0,
+  "gate": {
+    "att_id": 9,
+    "challenges": 0,
+    "envelope_hash": "32d0972d42762dbdc0d8ae0e7e3dd55a485b65386b139950ab2394a64f1e140b",
+    "findings": [],
+    "from_version": "4.3.7",
+    "gate": "CLEAN",
+    "inconclusive_classes": [],
+    "level": 1,
+    "package": "debug",
+    "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+    "policy_id": 0,
+    "provenance": "registry-checked metadata; client-built file excerpts",
+    "registry_verification": "VERIFIED",
+    "requester": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+    "rounds": 6,
+    "to_version": "4.4.0",
+    "verdict": "CLEAN"
+  },
+  "policy": {
+    "allowed_licenses": [
+      "apache-2.0",
+      "bsd-2-clause",
+      "bsd-3-clause",
+      "isc",
+      "mit"
+    ],
+    "attestations": 21,
+    "blocking": [
+      "DEP_ADDED",
+      "EGRESS",
+      "INSTALL_HOOK",
+      "LICENSE_SHIFT",
+      "MAINTAINER_SHIFT",
+      "OPAQUE"
+    ],
+    "challenge_bond": 1000000000000000,
+    "min_level": 1,
+    "min_rounds": 6,
+    "owner": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+    "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+    "policy_id": 0,
+    "pool": 0
+  },
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "source": "live-finalized-bradbury"
+}

@@ -1,0 +1,29 @@
+{
+  "network": "bradbury",
+  "chainId": 4221,
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "command": "write",
+  "address": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+  "method": "request_attestation",
+  "args": [
+    0,
+    "esbuild",
+    "0.28.1",
+    "0.28.2",
+    1,
+    "149425104625ec70661c9501055b56a933a2354c67b0ea48a4701dc35500a619",
+    "{\"facts\":{\"dependencies\":{\"added\":{},\"changed\":{},\"removed\":[]},\"egress\":{\"candidate_count\":1,\"candidates\":[{\"excerpt\":\"  /** Documentation: https://esbuild.github.io/api/#log-style */\",\"line\":90,\"line_bytes\":64,\"path\":\"lib/main.d.ts\"}],\"complete\":true,\"scope\":\"static changed-source network patterns; not a whole-program proof\",\"skipped_files\":[]},\"files\":{\"added\":[],\"changed_source_count\":3,\"changed_sources\":[\"lib/main.d.ts\",\"lib/main.js\",\"package.json\"],\"count_from\":7,\"count_to\":7,\"removed\":[]},\"install_hooks\":{\"from\":{\"postinstall\":\"node install.js\"},\"to\":{\"postinstall\":\"node install.js\"}},\"license\":{\"from\":\"MIT\",\"to\":\"MIT\"},\"maintainers\":{\"from\":[\"esbuild\"],\"to\":[\"esbuild\"]},\"opaque_candidates\":[{\"head\":\"\\\"use strict\\\";\\nvar __create = Object.create;\\nvar __defProp = Object.defineProperty;\\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\\nvar __getOwnPropNames = Object.getOwnPropertyNames;\\nvar __getProtoOf = Object.getPrototypeOf;\\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\\nvar __export = (target, all) => {\\n  for (var name in all)\\n    __defProp(target, name, { get: all[name], enumerable: true });\\n};\\nvar __copyProps = (to, from, except, desc) => {\\n  if (from && typeof from === \\\"object\\\" || typeof from === \\\"function\\\") {\\n    for (let key of __getOwnPropNames(from))\\n      if (!__hasOwnProp.call(to, key) && key !== except)\\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\\n  }\\n  return to;\\n};\\nvar __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(\\n  // If the importer is in node compatibility mode or this is not an ESM\\n  // file that has been converted to a CommonJS file using a Babel-\\n  // compatible transform (i.e. \\\"__esModule\\\" has not been set), then set\\n  // \\\"default\\\" to the CommonJS \\\"module.exports\\\" for node compatibility.\\n  isNodeMode || !mod \",\"path\":\"lib/main.js\",\"signals\":{\"base64_runs\":0,\"bytes\":97463,\"hex_escape_runs\":0,\"lines\":2537,\"longest_line\":515,\"nonprintable_milli\":0},\"status\":\"changed\"}],\"opaque_coverage\":{\"candidate_count\":1,\"complete\":true},\"publisher\":{\"from\":\"GitHub Actions\",\"to\":\"GitHub Actions\"},\"purpose\":{\"description\":\"An extremely fast JavaScript and CSS bundler and minifier.\",\"keywords\":[]}},\"fetched_from\":[\"https://registry.npmjs.org/esbuild\",\"https://registry.npmjs.org/esbuild/-/esbuild-0.28.1.tgz\",\"https://registry.npmjs.org/esbuild/-/esbuild-0.28.2.tgz\"],\"from_version\":\"0.28.1\",\"package\":\"esbuild\",\"pin\":{\"from\":{\"integrity\":\"sha512-HrJrvZv5ayxBzPfwphOoNzkzOIIlifzk0KJrGK2c8R4+LKpMtpYLQeUdjnwjWv/LZlkH2laZk+4w78pi99D4Vw==\",\"published_at\":\"2026-06-11T22:47:05.085Z\",\"registry_integrity\":\"sha512-HrJrvZv5ayxBzPfwphOoNzkzOIIlifzk0KJrGK2c8R4+LKpMtpYLQeUdjnwjWv/LZlkH2laZk+4w78pi99D4Vw==\",\"registry_shasum\":\"ef45b4634c9c9d97a296aea4114a5f9840f95578\",\"tarball_bytes\":34131,\"tarball_sha256\":\"eb8ef756f8299d16d5c8b35678606d715ba29923f500db7b37c181310eed40a5\"},\"to\":{\"integrity\":\"sha512-HKVLS8dvII+xoKW9kmqxbRKrnWEXfJJr/FZhhJmiqIB0e053QNYFqOBouTMO/k5sID4MvCiUCvv8b9M4h32wIA==\",\"published_at\":\"2026-08-08T20:00:55.454Z\",\"registry_integrity\":\"sha512-HKVLS8dvII+xoKW9kmqxbRKrnWEXfJJr/FZhhJmiqIB0e053QNYFqOBouTMO/k5sID4MvCiUCvv8b9M4h32wIA==\",\"registry_shasum\":\"0f43bd1bad955b72d24e2261e3abe5957ccf0816\",\"tarball_bytes\":34207,\"tarball_sha256\":\"e045f94c235c7adc50e77ba2a579c7bec41b496b6b47c3a7845f7c1e19959a88\"}},\"registry\":\"npm\",\"to_version\":\"0.28.2\",\"version\":\"attaint/1\"}"
+  ],
+  "hash": "0x528c2c8bd17930dfe89fca8c5b315425ea2410162d938bb66dbaa8071f9d77b5",
+  "value_wei": "0",
+  "submission_intent": {
+    "evm_hash": "0xab38fe7ef1d2e1c86886c854c9f72959be62831bd54380cb9a29cef6d964037d",
+    "state": "SIGNED",
+    "nonce": "490",
+    "to": "0x0112Bf6e83497965A5fdD6Dad1E447a6E004271D",
+    "chainId": 4221,
+    "from": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+    "value_wei": "0",
+    "operation_sha256": "b1a27913ca4d2b61ee3021ca041f79bdb078434bfd08fb04b957c93d0c59adf1"
+  }
+}

@@ -34,6 +34,8 @@ RELEASE_FILES = (
     "runs/first-attestation-readback.json", "runs/deployed-code.json",
     "runs/smoke-recovery.json",
     "runs/attempt-history.json",
+    "runs/ci-verification.json",
+    "runs/diagnostics/express-finalized-no-commit.json",
     "runs/diagnostics/locator-enum-simulation/manifest.json",
     "runs/diagnostics/locator-enum-simulation/report.json",
     "runs/diagnostics/locator-enum-simulation/leader-summary.json",

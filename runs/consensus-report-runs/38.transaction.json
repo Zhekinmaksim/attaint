@@ -1,0 +1,29 @@
+{
+  "network": "bradbury",
+  "chainId": 4221,
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "command": "write",
+  "address": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+  "method": "request_attestation",
+  "args": [
+    0,
+    "cross-env",
+    "7.0.2",
+    "7.0.3",
+    1,
+    "c83bf0cb9b42c55dc8e037d25d3381cc482a546a067b5ae41bb924ceb0f5ad1e",
+    "{\"facts\":{\"dependencies\":{\"added\":{},\"changed\":{},\"removed\":[]},\"egress\":{\"candidate_count\":0,\"candidates\":[],\"complete\":true,\"scope\":\"static changed-source network patterns; not a whole-program proof\",\"skipped_files\":[]},\"files\":{\"added\":[],\"changed_source_count\":1,\"changed_sources\":[\"package.json\"],\"count_from\":10,\"count_to\":10,\"removed\":[]},\"install_hooks\":{\"from\":{},\"to\":{}},\"license\":{\"from\":\"MIT\",\"to\":\"MIT\"},\"maintainers\":{\"from\":[\"kentcdodds\"],\"to\":[\"kentcdodds\"]},\"opaque_candidates\":[],\"opaque_coverage\":{\"candidate_count\":0,\"complete\":true},\"publisher\":{\"from\":\"kentcdodds\",\"to\":\"kentcdodds\"},\"purpose\":{\"description\":\"Run scripts that set and use environment variables across platforms\",\"keywords\":[\"cross-environment\",\"environment variable\",\"windows\"]}},\"fetched_from\":[\"https://registry.npmjs.org/cross-env\",\"https://registry.npmjs.org/cross-env/-/cross-env-7.0.2.tgz\",\"https://registry.npmjs.org/cross-env/-/cross-env-7.0.3.tgz\"],\"from_version\":\"7.0.2\",\"package\":\"cross-env\",\"pin\":{\"from\":{\"integrity\":\"sha512-KZP/bMEOJEDCkDQAyRhu3RL2ZO/SUVrxQVI0G3YEQ+OLbRA3c6zgixe8Mq8a/z7+HKlNEjo8oiLUs8iRijY2Rw==\",\"published_at\":\"2020-03-05T20:32:09.373Z\",\"registry_integrity\":\"sha512-KZP/bMEOJEDCkDQAyRhu3RL2ZO/SUVrxQVI0G3YEQ+OLbRA3c6zgixe8Mq8a/z7+HKlNEjo8oiLUs8iRijY2Rw==\",\"registry_shasum\":\"bd5ed31339a93a3418ac4f3ca9ca3403082ae5f9\",\"tarball_bytes\":8822,\"tarball_sha256\":\"4125a577708291e3dcad46724650d9b534bd3cd229038038c48ea88135d3c9f4\"},\"to\":{\"integrity\":\"sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==\",\"published_at\":\"2020-12-01T20:25:26.541Z\",\"registry_integrity\":\"sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==\",\"registry_shasum\":\"865264b29677dc015ba8418918965dd232fc54cf\",\"tarball_bytes\":9301,\"tarball_sha256\":\"d44ad3b6925ff024f64fc4eec88a7da8b8291dd66de858c34866be611ad3c5de\"}},\"registry\":\"npm\",\"to_version\":\"7.0.3\",\"version\":\"attaint/1\"}"
+  ],
+  "hash": "0x9b698e21c461bd2f847805742619affd74b71424d171de696ce34a851f01c860",
+  "value_wei": "0",
+  "submission_intent": {
+    "evm_hash": "0xe33858ff5d76fc0695bc976b17b816d455310a22495b2b3576e4b7616f36c514",
+    "state": "SIGNED",
+    "nonce": "489",
+    "to": "0x0112Bf6e83497965A5fdD6Dad1E447a6E004271D",
+    "chainId": 4221,
+    "from": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+    "value_wei": "0",
+    "operation_sha256": "401ad34eaf69d27a08bba80e0678f9773427586428d3e95fece02beecbf17cf8"
+  }
+}

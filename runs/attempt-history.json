@@ -112,5 +112,26 @@
   "network": "bradbury",
   "schema": "attaint-attempt-history/1",
   "scope": "Failed historical attempts only. No entry is proof of a successful current release.",
-  "status_basis": "Statuses are the observations in archived transaction journals, not a live query of current chain state."
+  "status_basis": "Statuses are the observations in archived transaction journals, not a live query of current chain state.",
+  "uncommitted_consensus_failures": [
+    {
+      "attestation_count": 21,
+      "consensus_commit": false,
+      "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "from": "5.2.1",
+      "hash": "0xc39b960519c59f3dbac254ad722a68d145daaa932a381344a59c7a6f50e55707",
+      "journal": "runs/consensus-report-runs/failed-submissions/13.transaction-0xc39b960519c59f3dbac254ad722a68d145daaa932a381344a59c7a6f50e55707.json",
+      "matching_attestation_ids": [],
+      "observed_at": "2026-10-01T15:06:08.113Z",
+      "package": "express",
+      "proof": "runs/consensus-report-runs/failed-submissions/13.transaction-0xc39b960519c59f3dbac254ad722a68d145daaa932a381344a59c7a6f50e55707.no-commit-proof.json",
+      "proof_sha256": "2284dcec10033f73323432787d9427c99901dbf5d1b1318256bbe11003e8bc46",
+      "requester": "0x771388495f34d21c5574fefc04cd1d5811e00ada",
+      "result": 5,
+      "result_name": "NO_MAJORITY",
+      "retry_basis": "Explicit reschedule after live UNDETERMINED receipt and complete latest-nonfinal attestation audit proved no committed release identity.",
+      "status": "FINALIZED",
+      "to": "4.22.1"
+    }
+  ]
 }

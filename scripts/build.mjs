@@ -1,6 +1,7 @@
 import { build } from 'esbuild';
 import { readFile, writeFile, copyFile, mkdir, cp, rm } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { copyCorpusEvidence } from './public_evidence.mjs';
 
 await build({ entryPoints: ['web/app.js'], bundle: true, format: 'esm', platform: 'browser', target: 'es2022', minify: true, outfile: 'web/app.bundle.js' });
 await copyFile('corpus/scan-report.json', 'web/mechanical-report.json');
@@ -27,7 +28,7 @@ let html = await readFile('web/index.html', 'utf8');
 const grid = baseline.controls.map(row => ({ name: `${row.package} ${row.from} → ${row.to}`, hits: row.classes }));
 html = html.replace(/\/\* BEGIN REAL GRID \*\/[\s\S]*?\/\* END REAL GRID \*\//, `/* BEGIN REAL GRID */\nvar GRID = ${JSON.stringify(grid)};\n/* END REAL GRID */`);
 await writeFile('web/index.html', html);
-for (const path of ['web/deployment.json', 'web/consensus-report.json', 'web/receipts', 'web/runs', 'web/diagnostics']) {
+for (const path of ['web/deployment.json', 'web/consensus-report.json', 'web/ci-verification.json', 'web/receipts', 'web/runs', 'web/diagnostics']) {
   await rm(path, {recursive: true, force: true});
 }
 let deployment;
@@ -56,6 +57,8 @@ html = html.replace(/(<span class="chip" id="deployment-status">)[^<]*(<\/span>)
 html = html.replace(/(<span class="status" id="receipt-status">)[^<]*(<\/span>)/, `$1${deployment ? 'First attestation finalized · receipts published' : 'Contract not yet deployed — no receipts published'}$2`);
 await writeFile('web/index.html', html);
 try { await copyFile('runs/attempt-history.json', 'web/attempt-history.json'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
+try { await copyFile('runs/ci-verification.json', 'web/ci-verification.json'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
+try { await mkdir('web/diagnostics', {recursive:true}); await copyFile('runs/diagnostics/express-finalized-no-commit.json', 'web/diagnostics/express-finalized-no-commit.json'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 for (const name of ['manifest.json', 'report.json', 'leader-summary.json', 'validator-1-summary.json', 'validator-2-summary.json', 'diagnostic-code.py']) {
   const directory = 'diagnostics/locator-enum-simulation';
   try { await mkdir(`web/${directory}`, {recursive:true}); await copyFile(`runs/${directory}/${name}`, `web/${directory}/${name}`); } catch (error) { if (error.code !== 'ENOENT') throw error; }
@@ -66,6 +69,6 @@ for (const name of ['deploy', 'policy', 'first-attestation', 'smoke-recovery']) 
   try { await copyFile(`runs/${name}.json`, `web/receipts/${name}.json`); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 }
 try {
-  await cp('runs/consensus-report-runs', 'web/runs/consensus-report-runs', {recursive: true, filter: source => !source.endsWith('.tmp')});
+  await copyCorpusEvidence('runs/consensus-report-runs', 'web/runs/consensus-report-runs');
 } catch (error) { if (error.code !== 'ENOENT') throw error; }
 console.log('Built browser app and public evidence.');

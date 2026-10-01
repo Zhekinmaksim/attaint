@@ -26,7 +26,7 @@
   },
   "trace_verified": true,
   "receipt": {
-    "currentTimestamp": "1790862981",
+    "currentTimestamp": "1790866136",
     "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
     "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
     "initialRotations": "3",
@@ -135,13 +135,6 @@
       "1790862917"
     ]
   },
-  "trace_identity": {
-    "round": 0,
-    "leader": "0x3B940A5b4A762583453D9e9Cf0981BE0426A8e79",
-    "receipt_execution_hash": "0xc642bc37394a0b917221886a5299b9e5783dc6e28d7405f5816d4b8ed83ea85b",
-    "binding": "finalized-round-and-leader",
-    "cryptographic_trace_binding": false
-  },
   "trace": {
     "transaction_id": "0x0eba23ed228cb6d0803a4d17efe671d9f0bdcbd21aa1bbd1cedf4e526e3f2549",
     "result_code": 0,
@@ -213,6 +206,14 @@
     "storage_proof": "0x0000000000000000000000000000000000000000000000000000000000000000",
     "run_time": "0s",
     "eq_outputs": []
+  },
+  "trace_identity": {
+    "round": 0,
+    "round_data_round": 0,
+    "leader": "0x3B940A5b4A762583453D9e9Cf0981BE0426A8e79",
+    "receipt_execution_hash": "0xc642bc37394a0b917221886a5299b9e5783dc6e28d7405f5816d4b8ed83ea85b",
+    "binding": "finalized-round-and-leader",
+    "cryptographic_trace_binding": false
   },
   "return_value": "0"
 }

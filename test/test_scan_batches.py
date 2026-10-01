@@ -17,7 +17,7 @@ class ScanBatchTests(unittest.TestCase):
     def test_undetermined_reschedule_requires_fresh_no_commit_proof(self):
         tx,contract,sender="0x"+"1"*64,"0x"+"2"*40,"0x"+"3"*40
         journal={"hash":tx,"address":contract,"args":[0,"express","5.2.1","4.22.1",1,"envelope","{}"]}
-        receipt={"chainId":4221,"hash":tx,"receipt":{"txId":tx,"status":6,"statusName":"UNDETERMINED","recipient":contract,"sender":sender}}
+        receipt={"chainId":4221,"hash":tx,"receipt":{"txId":tx,"status":7,"statusName":"FINALIZED","result":5,"recipient":contract,"sender":sender}}
         state={"chainId":4221,"address":contract,"variant":"latest-nonfinal","count":0,"gates":[],"observed_at":"today"}
         with tempfile.TemporaryDirectory() as directory:
             path=pathlib.Path(directory)/"13.transaction.json";path.write_text(json.dumps(journal));original=path.read_bytes()
@@ -29,15 +29,23 @@ class ScanBatchTests(unittest.TestCase):
             accepted=copy.deepcopy(receipt);accepted["receipt"].update(status=5,statusName="ACCEPTED")
             with self.assertRaisesRegex(ValueError,"UNDETERMINED"):
                 scan.archive_uncommitted_consensus(path,row,lambda _:accepted,lambda:state)
+            provisional=copy.deepcopy(receipt);provisional["receipt"].update(status=6,statusName="UNDETERMINED")
+            with self.assertRaisesRegex(ValueError,"UNDETERMINED"):
+                scan.archive_uncommitted_consensus(path,row,lambda _:provisional,lambda:state)
+            agreed=copy.deepcopy(receipt);agreed["receipt"].update(status=7,statusName="FINALIZED",result=1)
+            with self.assertRaisesRegex(ValueError,"UNDETERMINED"):
+                scan.archive_uncommitted_consensus(path,row,lambda _:agreed,lambda:state)
             def fail():raise OSError("failed checkpoint")
             with self.assertRaises(OSError):
                 scan.archive_uncommitted_consensus(path,row,lambda _:receipt,lambda:state,fail)
             self.assertTrue(path.exists())
+            receipt["receipt"].update(status=7,statusName="FINALIZED")
             scan.archive_uncommitted_consensus(path,row,lambda _:receipt,lambda:state)
             self.assertFalse(path.exists());self.assertNotIn("transaction_hash",row)
             self.assertEqual(len(row["failed_consensus_attempts"]),1)
             entry=row["failed_consensus_attempts"][0]
             self.assertEqual(entry["hash"],tx);self.assertFalse(entry["consensus_commit"])
+            self.assertEqual((entry["status"],entry["result"]),("FINALIZED",5))
             self.assertEqual(pathlib.Path(entry["journal"]).read_bytes(),original)
 
     def test_process_scan_lock_covers_all_report_paths(self):

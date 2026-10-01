@@ -155,7 +155,8 @@ Repeat the exact saved 45-pair control sample through live consensus:
 python3 probes/scan.py --consensus \
   --contract "$ATTAINT_CONTRACT" --policy "$ATTAINT_POLICY_ID" \
   --policy-hash "$ATTAINT_POLICY_HASH" \
-  --out runs/consensus-report.json --account "$GENLAYER_ACCOUNT" --timeout 3600
+  --out runs/consensus-report.json --account "$GENLAYER_ACCOUNT" \
+  --queue-paced --finalize-release --timeout 3600
 ```
 
 Resume with the same command and output path. The saved mechanical baseline
@@ -166,6 +167,24 @@ in blocked updates. The report's sibling
 journals. The CLI checks deployed code against the generated Bradbury artifact
 when present; `--code-hash` pins an explicitly reviewed alternative.
 `--expected-requester` can additionally pin the attestation requester.
+
+The paced scheduler reads the authoritative pending queue before each new write
+and keeps two places free; the current queue limit is 20. It settles eligible
+initial-release transactions first. One process lock protects the entire scan,
+and a separate canonical lock serializes local signed writes. Existing accepted
+transaction hashes are resumed and reread, never automatically resubmitted.
+
+`--defer-pair INDEX` uses a zero-based corpus index, preserves its journal and
+failed hash, and leaves it `RETRY_APPROVAL_PENDING` while the other pairs proceed.
+The current run uses `--defer-pair 21` for the unapproved Yargs retry and
+`--reschedule-undetermined 13` for the single explicitly approved Express retry.
+A 44-pair run remains `completed: false`, exits `2`, and publishes no full-sample
+comparison percentages. `--reschedule-undetermined INDEX` authorizes a fresh
+paid request and requires explicit operator approval. It proceeds only after a
+live `FINALIZED / NO_MAJORITY` receipt (result 5) and a complete latest-nonfinal
+attestation audit prove that this requester/update/policy identity never committed.
+The original journal, hash and proof remain archived. An unresolved transaction
+or a matching committed attestation cannot use this retry path.
 
 ## Repository
 
@@ -194,6 +213,14 @@ state passed the CLI's code, policy, envelope and requester checks with exit `0`
 The local proof is in `runs/deployment.json`, the three transaction journals and
 `runs/first-attestation-gate.json`.
 
+The published Vercel application was verified in a real browser: its Bradbury
+read returned `CLEAN`, registry metadata `VERIFIED` and six judgments, and its
+manual transaction-hash check returned `FINALIZED`.
+The [GitHub Actions run](https://github.com/Zhekinmaksim/attaint/actions/runs/36879515907)
+passed both the offline tests and the live gate for attestation `0`, on commit
+`c27f67f9af8ae74034630cbaef8d839b57c09e9f`; the live gate exited `0`.
+The record is in `runs/ci-verification.json`.
+
 - Network: Bradbury, chain ID 4221.
 - Contract: [`0x686C79234138FBF1734C8457c917acD9A6C3Fa7a`](https://explorer-bradbury.genlayer.com/contracts/0x686C79234138FBF1734C8457c917acD9A6C3Fa7a).
 - Deployed source SHA-256: `80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa` (20,100 UTF-8 bytes), verified against the fetched contract code.
@@ -214,9 +241,20 @@ as a live detection. The finalized clean outcome is a miss for this historical
 handover case. Offline tests and simulations establish different things
 from a receipt-backed consensus judgment.
 
-The full 45-pair comparison remains incomplete. Finalized corpus outcomes and measured
-risk/block-rate differences remain pending; no completed comparison or improvement
-is claimed.
+At the verified checkpoint, 19 of the original 45 corpus pairs had finalized
+gates: 13 `CLEAN`, six `INCONCLUSIVE` and zero `RISK`. The Express pair at index 13
+(`5.2.1 → 4.22.1`) ended `FINALIZED / NO_MAJORITY`, with no matching committed
+attestation; its original journal and hash are archived. After automatic approval
+review rejected resubmission, the user explicitly approved exactly one fresh
+Express request. The sole writer is executing that guarded retry, with no
+authorization for further retries. The no-commit audit is
+`runs/diagnostics/express-finalized-no-commit.json`. The scheduler resumes with
+`--reschedule-undetermined 13 --defer-pair 21`: Yargs index 21 has a provisional
+`UNDETERMINED` transaction under read-only diagnosis, with no retry or recovery
+authorized. The other original requests continue through the paced scheduler.
+The counts above are a verified checkpoint, not an updated live total. This is partial progress;
+the full 45-pair comparison and measured risk/block-rate differences remain
+pending, with no full-sample percentages or improvement claimed.
 
 The previous attempt at
 [`0x74407aE5e92002F4F0E1A912C7e785837a67F3C8`](https://explorer-bradbury.genlayer.com/contracts/0x74407aE5e92002F4F0E1A912C7e785837a67F3C8)

@@ -9,7 +9,7 @@
   "hash": "0x0897a4629c0019812faca2025a6b04b8105ed208c0618cc93ad75ccae7ee27a4",
   "trace_verified": true,
   "receipt": {
-    "currentTimestamp": "1790863726",
+    "currentTimestamp": "1790867707",
     "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
     "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
     "initialRotations": "3",
@@ -109,13 +109,6 @@
     "resultName": "AGREE",
     "txExecutionResultName": "FINISHED_WITH_RETURN"
   },
-  "trace_identity": {
-    "round": 0,
-    "leader": "0x58a7b7ac6Cb01843e4e5af117C551E59449E0F49",
-    "receipt_execution_hash": "0xd5aac63e38be8a8c76272dd37851fbc0353794a7bac98e83ce14b1bc3b81593d",
-    "binding": "finalized-round-and-leader",
-    "cryptographic_trace_binding": false
-  },
   "trace": {
     "transaction_id": "0x0897a4629c0019812faca2025a6b04b8105ed208c0618cc93ad75ccae7ee27a4",
     "result_code": 0,
@@ -180,6 +173,14 @@
     "storage_proof": "0x0000000000000000000000000000000000000000000000000000000000000000",
     "run_time": "0s",
     "eq_outputs": []
+  },
+  "trace_identity": {
+    "round": 0,
+    "round_data_round": 0,
+    "leader": "0x58a7b7ac6Cb01843e4e5af117C551E59449E0F49",
+    "receipt_execution_hash": "0xd5aac63e38be8a8c76272dd37851fbc0353794a7bac98e83ce14b1bc3b81593d",
+    "binding": "finalized-round-and-leader",
+    "cryptographic_trace_binding": false
   },
   "return_value": "1"
 }
