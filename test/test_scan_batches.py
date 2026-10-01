@@ -14,14 +14,28 @@ spec.loader.exec_module(scan)
 
 
 class ScanBatchTests(unittest.TestCase):
+    def test_one_reschedule_flag_never_replaces_a_failed_replacement(self):
+        self.assertTrue(scan.reschedule_matches_initial_failure({}, {"hash":"original"}))
+        row={"failed_consensus_attempts":[{"hash":"original"}]}
+        self.assertTrue(scan.reschedule_matches_initial_failure(row,{"hash":"original"}))
+        self.assertFalse(scan.reschedule_matches_initial_failure(row,{"hash":"replacement"}))
+        row["failed_consensus_attempts"].append({"hash":"replacement"})
+        self.assertFalse(scan.reschedule_matches_initial_failure(row,{"hash":"original"}))
+
     def test_undetermined_reschedule_requires_fresh_no_commit_proof(self):
         tx,contract,sender="0x"+"1"*64,"0x"+"2"*40,"0x"+"3"*40
         journal={"hash":tx,"address":contract,"args":[0,"express","5.2.1","4.22.1",1,"envelope","{}"]}
         receipt={"chainId":4221,"hash":tx,"receipt":{"txId":tx,"status":7,"statusName":"FINALIZED","result":5,"recipient":contract,"sender":sender}}
         state={"chainId":4221,"address":contract,"variant":"latest-nonfinal","count":0,"gates":[],"observed_at":"today"}
+        disagree=copy.deepcopy(receipt);disagree["receipt"]["result"]=2
+        with self.assertRaisesRegex(ValueError,"explicitly authorized"):
+            scan.prove_uncommitted_consensus(journal,lambda _:disagree,lambda:state)
+        scan.prove_uncommitted_consensus(journal,lambda _:disagree,lambda:state,allowed_results=(2,))
+        with self.assertRaisesRegex(ValueError,"explicitly authorized"):
+            scan.prove_uncommitted_consensus(journal,lambda _:receipt,lambda:state,allowed_results=(2,))
         with tempfile.TemporaryDirectory() as directory:
             path=pathlib.Path(directory)/"13.transaction.json";path.write_text(json.dumps(journal));original=path.read_bytes()
-            row={"transaction_hash":tx}
+            row={"transaction_hash":tx,"failure_finalized":True,"failure_receipt":"old-receipt","consensus_result":5}
             committed=copy.deepcopy(state);committed.update(count=1,gates=[{"att_id":0,"policy_id":0,"package":"express","from_version":"5.2.1","to_version":"4.22.1","requester":sender,"envelope_hash":"different"}])
             with self.assertRaisesRegex(ValueError,"committed attestation"):
                 scan.archive_uncommitted_consensus(path,row,lambda _:receipt,lambda:committed)
@@ -42,6 +56,7 @@ class ScanBatchTests(unittest.TestCase):
             receipt["receipt"].update(status=7,statusName="FINALIZED")
             scan.archive_uncommitted_consensus(path,row,lambda _:receipt,lambda:state)
             self.assertFalse(path.exists());self.assertNotIn("transaction_hash",row)
+            self.assertNotIn("failure_finalized",row);self.assertNotIn("failure_receipt",row)
             self.assertEqual(len(row["failed_consensus_attempts"]),1)
             entry=row["failed_consensus_attempts"][0]
             self.assertEqual(entry["hash"],tx);self.assertFalse(entry["consensus_commit"])

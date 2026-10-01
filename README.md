@@ -176,8 +176,8 @@ transaction hashes are resumed and reread, never automatically resubmitted.
 
 `--defer-pair INDEX` uses a zero-based corpus index, preserves its journal and
 failed hash, and leaves it `RETRY_APPROVAL_PENDING` while the other pairs proceed.
-The current run uses `--defer-pair 21` for the unapproved Yargs retry and
-`--reschedule-undetermined 13` for the single explicitly approved Express retry.
+The approved retries use `--reschedule-undetermined 13` for Express and
+`--reschedule-disagree 21` for Yargs, with one fresh request authorized per pair.
 A 44-pair run remains `completed: false`, exits `2`, and publishes no full-sample
 comparison percentages. `--reschedule-undetermined INDEX` authorizes a fresh
 paid request and requires explicit operator approval. It proceeds only after a
@@ -185,6 +185,9 @@ live `FINALIZED / NO_MAJORITY` receipt (result 5) and a complete latest-nonfinal
 attestation audit prove that this requester/update/policy identity never committed.
 The original journal, hash and proof remain archived. An unresolved transaction
 or a matching committed attestation cannot use this retry path.
+`--reschedule-disagree INDEX` applies the same fresh no-commit checks to an
+explicitly approved `FINALIZED / MajorityDisagree` result (2). Neither flag
+grants authorization for further retries after its one approved request.
 
 ## Repository
 
@@ -222,13 +225,13 @@ passed both the offline tests and the live gate for attestation `0`, on commit
 The record is in `runs/ci-verification.json`.
 
 - Network: Bradbury, chain ID 4221.
-- Contract: [`0x686C79234138FBF1734C8457c917acD9A6C3Fa7a`](https://explorer-bradbury.genlayer.com/contracts/0x686C79234138FBF1734C8457c917acD9A6C3Fa7a).
+- Contract: [`0x686C79234138FBF1734C8457c917acD9A6C3Fa7a`](https://explorer-bradbury.genlayer.com/address/0x686C79234138FBF1734C8457c917acD9A6C3Fa7a).
 - Deployed source SHA-256: `80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa` (20,100 UTF-8 bytes), verified against the fetched contract code.
 - Immutable policy ID: `0`; hash: `ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1`.
 - Attestation ID: `0`; envelope SHA-256: `49e222e812104fc865421eb55f886bc378a60c87889b125dc73fc2a08e529042`.
-- [Deployment transaction](https://explorer-bradbury.genlayer.com/transactions/0x6b0c6281bc6f4ac7103290238ee2cae89fa5a3de10c54e16f4de7c5400929b68).
-- [Policy transaction](https://explorer-bradbury.genlayer.com/transactions/0x0eba23ed228cb6d0803a4d17efe671d9f0bdcbd21aa1bbd1cedf4e526e3f2549).
-- [First live attestation transaction](https://explorer-bradbury.genlayer.com/transactions/0xe53abde17154cbf3cbb41ced701fa8a42e1c327beb1ded40e351b31ebe4cbe18).
+- [Deployment transaction](https://explorer-bradbury.genlayer.com/tx/0x6b0c6281bc6f4ac7103290238ee2cae89fa5a3de10c54e16f4de7c5400929b68).
+- [Policy transaction](https://explorer-bradbury.genlayer.com/tx/0x0eba23ed228cb6d0803a4d17efe671d9f0bdcbd21aa1bbd1cedf4e526e3f2549).
+- [First live attestation transaction](https://explorer-bradbury.genlayer.com/tx/0xe53abde17154cbf3cbb41ced701fa8a42e1c327beb1ded40e351b31ebe4cbe18).
 
 The earlier [read-only GenVM diagnostic](https://attaint.vercel.app/diagnostics/locator-enum-simulation/report.json)
 returned `RISK / MAINTAINER_SHIFT` at `publisher`, and two validator replays
@@ -241,27 +244,31 @@ as a live detection. The finalized clean outcome is a miss for this historical
 handover case. Offline tests and simulations establish different things
 from a receipt-backed consensus judgment.
 
-At the verified checkpoint, 19 of the original 45 corpus pairs had finalized
-gates: 13 `CLEAN`, six `INCONCLUSIVE` and zero `RISK`. The Express pair at index 13
+At the verified checkpoint, 20 of the original 45 corpus pairs had finalized
+gates: 14 `CLEAN`, six `INCONCLUSIVE` and zero `RISK`. The Express pair at index 13
 (`5.2.1 → 4.22.1`) ended `FINALIZED / NO_MAJORITY`, with no matching committed
 attestation; its original journal and hash are archived. After automatic approval
 review rejected resubmission, the user explicitly approved exactly one fresh
-Express request. The sole writer is executing that guarded retry, with no
-authorization for further retries. The no-commit audit is
-`runs/diagnostics/express-finalized-no-commit.json`. The scheduler resumes with
-`--reschedule-undetermined 13 --defer-pair 21`: Yargs index 21 has a provisional
-`UNDETERMINED` transaction under read-only diagnosis, with no retry or recovery
-authorized. The other original requests continue through the paced scheduler.
+Express request. The guarded replacement was
+[submitted](https://explorer-bradbury.genlayer.com/tx/0xc4a6b8a7f1488230da97ea26550985eb73585bc3ca8e8fee330ad58081e9084c),
+with finalization still pending at this checkpoint. The no-commit audit is
+`runs/diagnostics/express-finalized-no-commit.json`. Yargs index 21
+(`17.7.3 → 18.1.0`) ended `FINALIZED / MajorityDisagree` (result 2). Both state
+views contained 22 attestations and no matching Yargs identity; the sanitized
+audit is `runs/diagnostics/yargs-finalized-no-commit.json`. The user explicitly
+approved exactly one fresh Yargs request with the same policy and envelope.
+The sole writer schedules these guarded retries alongside the remaining
+original requests. No further Express or Yargs retries are authorized.
 The counts above are a verified checkpoint, not an updated live total. This is partial progress;
 the full 45-pair comparison and measured risk/block-rate differences remain
 pending, with no full-sample percentages or improvement claimed.
 
 The previous attempt at
-[`0x74407aE5e92002F4F0E1A912C7e785837a67F3C8`](https://explorer-bradbury.genlayer.com/contracts/0x74407aE5e92002F4F0E1A912C7e785837a67F3C8)
+[`0x74407aE5e92002F4F0E1A912C7e785837a67F3C8`](https://explorer-bradbury.genlayer.com/address/0x74407aE5e92002F4F0E1A912C7e785837a67F3C8)
 had finalized deployment and policy registration. An earlier registry-API
 attempt failed closed before any class judgments; its corpus submissions are
 excluded from the final measurement. The question-polarity attempt's smoke transaction
-[`0x73a16013b755850a3c399b8955ca4564f22f29a996cea7bac769ebcf0a5ce393`](https://explorer-bradbury.genlayer.com/transactions/0x73a16013b755850a3c399b8955ca4564f22f29a996cea7bac769ebcf0a5ce393)
+[`0x73a16013b755850a3c399b8955ca4564f22f29a996cea7bac769ebcf0a5ce393`](https://explorer-bradbury.genlayer.com/tx/0x73a16013b755850a3c399b8955ca4564f22f29a996cea7bac769ebcf0a5ce393)
 ended `UNDETERMINED`, producing no accepted attestation. Validator simulations
 reproduced `nondet_disagree` at `INSTALL_HOOK`: the leader and validator disagreed
 on whether the answer was inconclusive. The SDK incorrectly labelled numeric vote

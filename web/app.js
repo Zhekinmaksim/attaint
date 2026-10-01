@@ -109,7 +109,7 @@ async function connect() {
 function renderTransaction() {
   const box = $('live-transaction'); box.replaceChildren();
   if (!pending?.hash) return;
-  box.append(link(`${pending.status} · ${pending.hash}`, `transactions/${pending.hash}`));
+  box.append(link(`${pending.status} · ${pending.hash}`, `tx/${pending.hash}`));
   box.append(document.createElement('br'), document.createTextNode('Copy or download this record before closing. No browser storage is used.'));
   $('live-download').hidden = false;
 }
@@ -215,7 +215,7 @@ try {
   const response = await fetch('/deployment.json', { cache: 'no-store' }); if (!response.ok) throw new Error('The live gate awaits a verified Bradbury deployment and first finalized attestation. Source and pinned evidence remain available.');
   deployment = await response.json();
   if (deployment.chain_id !== 4221 || !/^0x[0-9a-f]{40}$/i.test(deployment.contract) || !Number.isSafeInteger(deployment.policy_id) || !/^[0-9a-f]{64}$/.test(deployment.policy_hash)) throw new Error('No verified Bradbury deployment is published yet.');
-  $('live-contract').replaceChildren(link(deployment.contract, `contracts/${deployment.contract}`));
+  $('live-contract').replaceChildren(link(deployment.contract, `address/${deployment.contract}`));
   $('live-attestation').value = deployment.first_attestation_id ?? 0;
   controls(); await inspect();
 } catch (error) { controls(); notify(error.message); }

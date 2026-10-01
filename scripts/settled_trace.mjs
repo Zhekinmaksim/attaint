@@ -15,6 +15,15 @@ const leaderOf = (round) => {
   return leader;
 };
 
+export function validateNonagreementReceipt({hash,receipt}) {
+  if (!sameHex(receipt?.txId,hash)) throw new Error('nonagreement receipt transaction identity mismatch');
+  const status=integer(receipt.status,'receipt status');
+  if (!([6,7].includes(status) &&
+      ['UNDETERMINED','FINALIZED'].includes(receipt.statusName) &&
+      [2,5].includes(integer(receipt.result,'consensus result')))) throw new Error('receipt is not a terminal nonagreement decision');
+  if (receipt.statusName !== (status===6 ? 'UNDETERMINED' : 'FINALIZED')) throw new Error('nonagreement receipt status mismatch');
+}
+
 export function selectFinalizedRound({hash, receipt, roundNumber, lastRoundData}) {
   if (!sameHex(receipt?.txId, hash)) throw new Error('finalized receipt transaction identity mismatch');
   if (integer(receipt.status, 'receipt status') !== 7 || receipt.statusName !== 'FINALIZED') throw new Error('receipt is not finalized');

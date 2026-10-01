@@ -23,6 +23,7 @@ runs/*
 !runs/diagnostics
 runs/diagnostics/*
 !runs/diagnostics/express-finalized-no-commit.json
+!runs/diagnostics/yargs-finalized-no-commit.json
 !runs/diagnostics/locator-enum-simulation
 runs/diagnostics/locator-enum-simulation/*
 !runs/diagnostics/locator-enum-simulation/manifest.json

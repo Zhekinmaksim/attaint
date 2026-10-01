@@ -58,7 +58,9 @@ html = html.replace(/(<span class="status" id="receipt-status">)[^<]*(<\/span>)/
 await writeFile('web/index.html', html);
 try { await copyFile('runs/attempt-history.json', 'web/attempt-history.json'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 try { await copyFile('runs/ci-verification.json', 'web/ci-verification.json'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
-try { await mkdir('web/diagnostics', {recursive:true}); await copyFile('runs/diagnostics/express-finalized-no-commit.json', 'web/diagnostics/express-finalized-no-commit.json'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
+for (const name of ['express-finalized-no-commit', 'yargs-finalized-no-commit']) {
+  try { await mkdir('web/diagnostics', {recursive:true}); await copyFile(`runs/diagnostics/${name}.json`, `web/diagnostics/${name}.json`); } catch (error) { if (error.code !== 'ENOENT') throw error; }
+}
 for (const name of ['manifest.json', 'report.json', 'leader-summary.json', 'validator-1-summary.json', 'validator-2-summary.json', 'diagnostic-code.py']) {
   const directory = 'diagnostics/locator-enum-simulation';
   try { await mkdir(`web/${directory}`, {recursive:true}); await copyFile(`runs/${directory}/${name}`, `web/${directory}/${name}`); } catch (error) { if (error.code !== 'ENOENT') throw error; }

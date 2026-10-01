@@ -71,11 +71,11 @@ consensus block rate or claim a measured improvement without the completed resul
 
 Website: [attaint.vercel.app](https://attaint.vercel.app).
 Repository: [Zhekinmaksim/attaint](https://github.com/Zhekinmaksim/attaint).
-Contract: [`0x686C79234138FBF1734C8457c917acD9A6C3Fa7a`](https://explorer-bradbury.genlayer.com/contracts/0x686C79234138FBF1734C8457c917acD9A6C3Fa7a).
+Contract: [`0x686C79234138FBF1734C8457c917acD9A6C3Fa7a`](https://explorer-bradbury.genlayer.com/address/0x686C79234138FBF1734C8457c917acD9A6C3Fa7a).
 Policy: ID `0`, hash `ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1`.
 Deployed source SHA-256: `80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa`.
 
-The [first live attestation](https://explorer-bradbury.genlayer.com/transactions/0xe53abde17154cbf3cbb41ced701fa8a42e1c327beb1ded40e351b31ebe4cbe18)
+The [first live attestation](https://explorer-bradbury.genlayer.com/tx/0xe53abde17154cbf3cbb41ced701fa8a42e1c327beb1ded40e351b31ebe4cbe18)
 is `FINALIZED` (confirmed 1 October 2026 at 13:59 UTC). Its current gate for
 `event-stream 3.3.4 → 3.3.5` is `CLEAN`, with registry metadata `VERIFIED`, six
 class judgments, no findings and no inconclusive classes. A fresh finalized-state
@@ -94,22 +94,26 @@ Two read-only GenVM validator replays passed with a simulated leader verdict
 judgments and returned `CLEAN` for the same pinned envelope and policy parameters.
 A diagnostic replay is not network consensus. Do not advertise that simulated
 risk finding as a live detection; the finalized live result missed the historical
-handover risk. At the verified checkpoint, 19/45 original corpus pairs had finalized
-gates: 13 `CLEAN`, six `INCONCLUSIVE`, zero `RISK`. Express index 13 ended
+handover risk. At the verified checkpoint, 20/45 original corpus pairs had finalized
+gates: 14 `CLEAN`, six `INCONCLUSIVE`, zero `RISK`. Express index 13 ended
 `FINALIZED / NO_MAJORITY` without a committed attestation. Its original hash and
 no-commit proof are preserved. After automatic approval review rejected
-resubmission, the user explicitly approved exactly one fresh Express request;
-the sole writer is executing that guarded retry. The scheduler resumes with
-`--queue-paced --reschedule-undetermined 13 --defer-pair 21`. Yargs index 21 has
-a provisional `UNDETERMINED` transaction under read-only diagnosis; no retry or
-recovery is authorized for it. This grants no authorization for further Express
-retries. The counts above remain a verified checkpoint; a 44-pair run is incomplete.
+resubmission, the user explicitly approved exactly one fresh Express request.
+Its [replacement transaction](https://explorer-bradbury.genlayer.com/tx/0xc4a6b8a7f1488230da97ea26550985eb73585bc3ca8e8fee330ad58081e9084c)
+was submitted and awaits finalization at this checkpoint. Yargs index 21 ended
+`FINALIZED / MajorityDisagree` (result 2), without a committed attestation in
+either state view. The sanitized proof is
+`runs/diagnostics/yargs-finalized-no-commit.json`. The user explicitly approved
+exactly one fresh Yargs request with the same policy and envelope; the sole
+writer schedules it through the guarded `--reschedule-disagree 21` path.
+Neither approval authorizes further retries. The counts above remain a verified
+checkpoint, not a live total.
 The full 45-pair comparison and measured consensus metrics remain pending;
 no full-sample percentages or improvement are claimed. See the README for
 queue pacing, resume behavior and the guarded operator-authorized retry.
 
 The prior contract
-[`0x74407aE5e92002F4F0E1A912C7e785837a67F3C8`](https://explorer-bradbury.genlayer.com/contracts/0x74407aE5e92002F4F0E1A912C7e785837a67F3C8)
+[`0x74407aE5e92002F4F0E1A912C7e785837a67F3C8`](https://explorer-bradbury.genlayer.com/address/0x74407aE5e92002F4F0E1A912C7e785837a67F3C8)
 is failed-attempt evidence. Its deployment and policy finalized, but the smoke
 transaction ended `UNDETERMINED` after validator disagreement at `INSTALL_HOOK`.
 It produced no accepted attestation. The diagnostic was `nondet_disagree`; a

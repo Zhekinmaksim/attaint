@@ -20,11 +20,16 @@ class SettledTraceTests(unittest.TestCase):
     def test_latest_round_and_execution_checks(self):
         code = r"""
 import assert from 'node:assert/strict';
-import {selectFinalizedRound,decodeFinalizedTrace} from './scripts/settled_trace.mjs';
+import {selectFinalizedRound,decodeFinalizedTrace,validateNonagreementReceipt} from './scripts/settled_trace.mjs';
 const hash='0x'+'1'.repeat(64),leader='0x'+'2'.repeat(40);
 const lastRound={round:'2',leaderIndex:'0',roundValidators:[leader],result:1};
 const receipt={txId:hash,status:7,statusName:'FINALIZED',txExecutionResult:1,result:1,numOfRounds:'2',lastLeader:leader,lastRound};
 const args={hash,receipt,roundNumber:2n,lastRoundData:[2n,lastRound]};
+validateNonagreementReceipt({hash,receipt:{...receipt,result:2}});
+validateNonagreementReceipt({hash,receipt:{...receipt,status:6,statusName:'UNDETERMINED',result:5}});
+assert.throws(()=>validateNonagreementReceipt({hash,receipt}),/nonagreement/);
+assert.throws(()=>validateNonagreementReceipt({hash,receipt:{...receipt,status:4,statusName:'PENDING',result:2}}),/nonagreement/);
+assert.throws(()=>validateNonagreementReceipt({hash:'0x'+'9'.repeat(64),receipt:{...receipt,result:2}}),/identity/);
 const identity=selectFinalizedRound(args);
 assert.equal(identity.round,2);assert.equal(identity.leader,leader);
 const rotated=selectFinalizedRound({...args,receipt:{...receipt,numOfRounds:'4'},roundNumber:4n,lastRoundData:[4n,lastRound]});
@@ -82,6 +87,11 @@ assert.equal(decodeFinalizedTrace({hash,trace:traces[2],identity,decode:()=>new 
             "trace_identity":{"round":4, "round_data_round":2, "leader":leader, "binding":"finalized-round-and-leader"},
             "trace":{"result_code":0}}
         self.assertEqual(scan.settled_attestation(document, tx, contract), 17)
+        failed=copy.deepcopy(document)
+        failed.update(failure_finalized=True,trace_verified=False)
+        failed["receipt"]["result"]=2
+        with self.assertRaisesRegex(ValueError,"verified successful"):
+            scan.settled_attestation(failed,tx,contract)
         for field, value in [("trace_verified",False), ("return_value",None), ("return_value",-1), ("return_value",True)]:
             broken = copy.deepcopy(document)
             broken[field] = value

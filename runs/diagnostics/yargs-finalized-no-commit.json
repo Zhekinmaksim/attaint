@@ -1,0 +1,32 @@
+{
+  "kind": "sanitized finalized failed-consensus audit",
+  "network": "GenLayer Bradbury",
+  "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+  "transaction": "0xad5b56d76ad7629715906e5d7d920987b3d7ea2ba1c37f1b38b8f058e5bd61b8",
+  "release": {
+    "package": "yargs",
+    "from": "17.7.3",
+    "to": "18.1.0"
+  },
+  "status": "FINALIZED",
+  "status_code": 7,
+  "consensus_result": "MajorityDisagree",
+  "consensus_result_code": 2,
+  "last_round": 2,
+  "votes": {
+    "agree": 1,
+    "nondeterministic_disagreement": 3,
+    "timeout": 1
+  },
+  "contract_error": false,
+  "attestation_committed": false,
+  "identity_checks": {
+    "latest_final_count": 22,
+    "latest_final_release_found": false,
+    "latest_nonfinal_count": 22,
+    "latest_nonfinal_release_found": false
+  },
+  "dedup_assessment": "No dedup reservation was committed: the only assignment to the seen map occurs after appending an attestation in the same atomic execution, and this identity is absent in both state views. There is no separate public dedup view.",
+  "retry_assessment": "A fresh request for the same pinned envelope can be considered without duplicate attestation state. It remains subject to explicit retry authorization; no retry was submitted by this audit.",
+  "observed_at": "2026-10-01T15:42:14.332Z"
+}

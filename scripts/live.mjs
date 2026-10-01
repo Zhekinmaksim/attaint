@@ -8,7 +8,7 @@ import {createHash} from 'node:crypto';
 import {retryRpcRead} from './rpc_retry.mjs';
 import {createFinalizationChecker} from './finalization.mjs';
 import {recordSigningIntent,recoverSigningIntent} from './write_journal.mjs';
-import {selectFinalizedRound,decodeFinalizedTrace} from './settled_trace.mjs';
+import {selectFinalizedRound,decodeFinalizedTrace,validateNonagreementReceipt} from './settled_trace.mjs';
 import {prepareSignedIntentRetry,assertUnusedIntentNonce,submissionOperationHash,submissionFieldsHash,validateRetryTransaction} from './signed_retry.mjs';
 import {createGasGuard} from './gas_guard.mjs';
 import {readPendingQueue} from './queues.mjs';
@@ -39,6 +39,8 @@ try {
   try {sdk = await import('genlayer-js'); chains = await import('genlayer-js/chains');}
   catch {sdk = await import(pathToFileURL(join(cliRoot,'node_modules/genlayer-js/dist/index.js'))); chains = await import(pathToFileURL(join(cliRoot,'node_modules/genlayer-js/dist/chains/index.js')));}
   const command = process.argv[2];
+  const finalizeNonagreement = options.includes('--finalize-nonagreement');
+  if (finalizeNonagreement && command !== 'settle') throw new Error('--finalize-nonagreement is limited to settlement of an existing transaction');
   if (options.includes('--retry-signed-intent') && !['deploy','write'].includes(command)) throw new Error('--retry-signed-intent is limited to unresolved deploy/write submissions');
   const writes = ['deploy','write','settle','recover'].includes(command);
   if (writes) {
@@ -139,10 +141,12 @@ try {
     for (let index=0;index<args.length;index+=4) {
       const batch = await Promise.all(args.slice(index,index+4).map(async hash => {
         const receipt = await readRpc(() => client.getTransaction({hash}));
-        const status = receipt.statusName;
-        const capability = ['ACCEPTED','READY_TO_FINALIZE'].includes(status) ? await readRpc(() => finalizationCapability(hash)) : null;
-        return {hash,status,recipient:receipt.recipient,execution:receipt.txExecutionResultName,
-          round:receipt.numOfRounds,capability};
+        const statusCode=Number(receipt.status);
+        if (!Number.isSafeInteger(statusCode) || statusCode<0) throw new Error('consensus receipt has no valid numeric status');
+        const status = receipt.statusName || `UNKNOWN_STATUS_${statusCode}`;
+        const capability = ['ACCEPTED','READY_TO_FINALIZE','UNDETERMINED'].includes(status) ? await readRpc(() => finalizationCapability(hash)) : null;
+        return {hash,status,status_code:statusCode,recipient:receipt.recipient,execution:receipt.txExecutionResultName,
+          result:Number(receipt.result),round:receipt.numOfRounds,capability};
       }));
       states.push(...batch);
     }
@@ -232,9 +236,10 @@ try {
         const status = String(receipt.statusName || receipt.status).toUpperCase();
         result.receipt = receipt; save(result);
         if (status !== last) {console.error(`Status: ${status}`); last = status;}
+        if (finalizeNonagreement) validateNonagreementReceipt({hash,receipt});
         if (status === 'FINALIZED') break;
-        if (['CANCELED','UNDETERMINED','VALIDATORS_TIMEOUT','LEADER_TIMEOUT'].includes(status)) throw new Error(`transaction ${status}`);
-        if (['ACCEPTED', 'READY_TO_FINALIZE'].includes(status)) {
+        if (['CANCELED','VALIDATORS_TIMEOUT','LEADER_TIMEOUT'].includes(status) || (status === 'UNDETERMINED' && !finalizeNonagreement)) throw new Error(`transaction ${status}`);
+        if (['ACCEPTED', 'READY_TO_FINALIZE'].includes(status) || (status === 'UNDETERMINED' && finalizeNonagreement)) {
           result.finalization_capability = await retryRead(() => finalizationCapability(hash)); save(result);
           if (!result.finalize_hash && result.finalize_intent) await recoverIntent('finalize');
           if (result.finalization_capability.eligible && !result.finalize_hash) {
@@ -249,6 +254,12 @@ try {
         await new Promise(r=>setTimeout(r,5000));
       }
       if (String(result.receipt?.statusName || result.receipt?.status).toUpperCase() !== 'FINALIZED') throw new Error('finalization timeout; rerun with the same journal to resume');
+      if (finalizeNonagreement) {
+        validateNonagreementReceipt({hash,receipt:result.receipt});
+        result.failure_finalized = true;
+        delete result.trace;
+        save(result); console.log(stringify(result)); process.exit(0);
+      }
       const [roundNumber,lastRoundData] = await Promise.all([
         retryRead(() => client.getRoundNumber({txId:hash})),
         retryRead(() => client.getLastRoundData({txId:hash})),

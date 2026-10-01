@@ -649,7 +649,7 @@ function renderCell(){
     gate.inconclusive_classes.forEach(function(n){ cls.appendChild(el("i","unk",n)); });
     $("cellSay").textContent = gate.gate + " · attestation #" + gate.att_id + " · " + gate.rounds + " class rounds. Published from finalized receipts; select the ID in the live gate to reread chain state.";
     var receipt = el("a",null,"Consensus transaction");
-    receipt.href = "https://explorer-bradbury.genlayer.com/transactions/" + row.transaction_hash;
+    receipt.href = "https://explorer-bradbury.genlayer.com/tx/" + row.transaction_hash;
     receipt.target = "_blank"; receipt.rel = "noopener";
     $("cellSay").appendChild(document.createTextNode(" "));
     $("cellSay").appendChild(receipt);

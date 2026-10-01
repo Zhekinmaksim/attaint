@@ -36,6 +36,7 @@ RELEASE_FILES = (
     "runs/attempt-history.json",
     "runs/ci-verification.json",
     "runs/diagnostics/express-finalized-no-commit.json",
+    "runs/diagnostics/yargs-finalized-no-commit.json",
     "runs/diagnostics/locator-enum-simulation/manifest.json",
     "runs/diagnostics/locator-enum-simulation/report.json",
     "runs/diagnostics/locator-enum-simulation/leader-summary.json",

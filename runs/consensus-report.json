@@ -539,7 +539,7 @@
       "transaction_hash": "0x127d106b3bf610fb8efe300d07f30e0c66a7b13c38bc891d4dd78fc9cb014067"
     },
     {
-      "consensus_status": "FINALIZED",
+      "consensus_status": "PENDING",
       "envelope": "runs/consensus-report-runs/13.envelope.json",
       "envelope_hash": "cf65e0906a1ab6c479c4a55104928095f4b92d1b5973727238c25ab63f04d7a7",
       "failed_consensus_attempts": [
@@ -562,14 +562,15 @@
       "journal": "runs/consensus-report-runs/13.transaction.json",
       "mechanical_classes": [],
       "package": "express",
-      "status": "PINNED",
+      "status": "SUBMITTED",
       "status_observations": [
         {
           "observed_at": "2026-10-01T14:52:27.444Z",
           "status": "FINALIZED"
         }
       ],
-      "to": "4.22.1"
+      "to": "4.22.1",
+      "transaction_hash": "0xc4a6b8a7f1488230da97ea26550985eb73585bc3ca8e8fee330ad58081e9084c"
     },
     {
       "attestation_id": 14,
@@ -852,9 +853,11 @@
       "transaction_hash": "0xa1e96bbcfce7e086cc5db25f21b39cb49f669e7f57a99cb80a392d0f5f55f9a7"
     },
     {
-      "consensus_status": "ACCEPTED",
+      "attestation_id": 20,
+      "consensus_status": "FINALIZED",
       "envelope": "runs/consensus-report-runs/20.envelope.json",
       "envelope_hash": "8584399633ccf2e788051956acd87dbe7fee01c95c1d2116b37deef8ccae0df3",
+      "exit_code": 0,
       "failed_submissions": [
         {
           "consensus_transaction_created": false,
@@ -876,30 +879,63 @@
         }
       ],
       "from": "14.0.1",
+      "gate": {
+        "att_id": 20,
+        "challenges": 0,
+        "envelope_hash": "8584399633ccf2e788051956acd87dbe7fee01c95c1d2116b37deef8ccae0df3",
+        "findings": [],
+        "from_version": "14.0.1",
+        "gate": "CLEAN",
+        "inconclusive_classes": [],
+        "level": 1,
+        "package": "commander",
+        "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+        "policy_id": 0,
+        "provenance": "registry-checked metadata; client-built file excerpts",
+        "registry_verification": "VERIFIED",
+        "requester": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+        "rounds": 6,
+        "to_version": "14.0.2",
+        "verdict": "CLEAN"
+      },
       "journal": "runs/consensus-report-runs/20.transaction.json",
       "mechanical_classes": [],
       "package": "commander",
-      "status": "SUBMITTED",
+      "receipt": "runs/consensus-report-runs/20.receipt.json",
+      "status": "FINALIZED",
       "to": "14.0.2",
       "transaction_hash": "0x5ab2ab9925727b0d6beaa7bb7708fb44bd3178be9f6c0bbecdb1a84da72b056a"
     },
     {
-      "consensus_status": "UNDETERMINED",
       "envelope": "runs/consensus-report-runs/21.envelope.json",
       "envelope_hash": "0d152e1f80ab2ff55de5e6d8f242bf10a6418acdcee156c236b60accd2abc0e5",
+      "failed_consensus_attempts": [
+        {
+          "attestation_count": 22,
+          "consensus_commit": false,
+          "hash": "0xad5b56d76ad7629715906e5d7d920987b3d7ea2ba1c37f1b38b8f058e5bd61b8",
+          "journal": "runs/consensus-report-runs/failed-submissions/21.transaction-0xad5b56d76ad7629715906e5d7d920987b3d7ea2ba1c37f1b38b8f058e5bd61b8.json",
+          "matching_attestation_ids": [],
+          "observed_at": "2026-10-01T15:47:26.491Z",
+          "proof": "runs/consensus-report-runs/failed-submissions/21.transaction-0xad5b56d76ad7629715906e5d7d920987b3d7ea2ba1c37f1b38b8f058e5bd61b8.no-commit-proof.json",
+          "proof_sha256": "30864460baf6d5a5d73f3b9692aa8677b02f889fed0a01c0a0fda22eceeb7656",
+          "requester": "0x771388495f34d21c5574fefc04cd1d5811e00ada",
+          "result": 2,
+          "result_name": "DISAGREE",
+          "status": "FINALIZED"
+        }
+      ],
       "from": "17.7.3",
       "journal": "runs/consensus-report-runs/21.transaction.json",
       "mechanical_classes": [
         "OPAQUE"
       ],
       "package": "yargs",
-      "reason": "operator deferred this pair; no resubmission authorized",
-      "status": "RETRY_APPROVAL_PENDING",
-      "to": "18.1.0",
-      "transaction_hash": "0xad5b56d76ad7629715906e5d7d920987b3d7ea2ba1c37f1b38b8f058e5bd61b8"
+      "status": "PINNED",
+      "to": "18.1.0"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "ACCEPTED",
       "envelope": "runs/consensus-report-runs/22.envelope.json",
       "envelope_hash": "71846a5dfecc935efe70aabb96b3085c2d934191e2b605960415359fd92608bf",
       "from": "16.2.2",
@@ -908,12 +944,13 @@
         "OPAQUE"
       ],
       "package": "yargs",
-      "status": "SUBMITTED",
+      "reason": "operator deferred this pair; no resubmission authorized",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "17.7.3",
       "transaction_hash": "0xee632d9b78d0a79c33c6e8cf059c6581685b4554119a7695cf2ec088d87450a8"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "UNDETERMINED",
       "envelope": "runs/consensus-report-runs/23.envelope.json",
       "envelope_hash": "c3ac9ac91911d72a61ffc4e583b0c07d54afedc0a8666b82d61d4ba323f04169",
       "from": "18.0.0",
@@ -923,12 +960,13 @@
         "OPAQUE"
       ],
       "package": "yargs",
-      "status": "SUBMITTED",
+      "reason": "operator deferred this pair; no resubmission authorized",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "16.2.2",
       "transaction_hash": "0x73eaa46b05374cfd571e52dda0d28a6812b191816ba0e6095841d828e0818ec6"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "UNDETERMINED",
       "envelope": "runs/consensus-report-runs/24.envelope.json",
       "envelope_hash": "28ffb2bece9ce452d247a2e830b9bd7c4d310f9de2814f130c932ccd2c0f2487",
       "from": "6.1.2",
@@ -937,36 +975,39 @@
         "OPAQUE"
       ],
       "package": "rimraf",
-      "status": "SUBMITTED",
+      "reason": "operator deferred this pair; no resubmission authorized",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "6.1.3",
       "transaction_hash": "0x0b8df2ba1d7a8180d60fa29377e077246f2f28ae4c6bd980b2464c9aec49a788"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "CANCELED",
       "envelope": "runs/consensus-report-runs/25.envelope.json",
       "envelope_hash": "c5d2737b55990f4c842c3cba473c6382b075f7f4648b9caa409ca330cd81495f",
       "from": "6.1.1",
       "journal": "runs/consensus-report-runs/25.transaction.json",
       "mechanical_classes": [],
       "package": "rimraf",
-      "status": "SUBMITTED",
+      "reason": "awaiting final consensus outcome: CANCELED",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "6.1.2",
       "transaction_hash": "0x718a05863886c59bf61f35ab2fe1194076d27663d8da6cc195adf6dca6439a95"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "CANCELED",
       "envelope": "runs/consensus-report-runs/26.envelope.json",
       "envelope_hash": "0cecc128103a0e075c94aca407f585f8a7668817d6dff52208ffe8a058a3369f",
       "from": "6.1.0",
       "journal": "runs/consensus-report-runs/26.transaction.json",
       "mechanical_classes": [],
       "package": "rimraf",
-      "status": "SUBMITTED",
+      "reason": "awaiting final consensus outcome: CANCELED",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "6.1.1",
       "transaction_hash": "0xa0193a511b9e81fa106ab89ff23d67f8cd5a0b7e582105292325f3b2232b1e24"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "CANCELED",
       "envelope": "runs/consensus-report-runs/27.envelope.json",
       "envelope_hash": "9da7aee965ba2628a1a7064111b87c6d81c15f77da00282cb642d75adc7f5e2c",
       "from": "13.0.5",
@@ -975,12 +1016,13 @@
         "OPAQUE"
       ],
       "package": "glob",
-      "status": "SUBMITTED",
+      "reason": "awaiting final consensus outcome: CANCELED",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "13.0.6",
       "transaction_hash": "0xe2e596ddb0b5430363b0e334273913c8c7729b47d1402bbbc051f585a0560866"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "CANCELED",
       "envelope": "runs/consensus-report-runs/28.envelope.json",
       "envelope_hash": "b11f77fd4fa7cc78288a1217ee8d45db98269f5827d14e9dd4187c726d04069a",
       "from": "13.0.4",
@@ -989,12 +1031,13 @@
         "OPAQUE"
       ],
       "package": "glob",
-      "status": "SUBMITTED",
+      "reason": "awaiting final consensus outcome: CANCELED",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "13.0.5",
       "transaction_hash": "0x4cce7ccd84bb39908593c45f5ce3c126db729cb8f1b8118e7d0636883f6187a5"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "CANCELED",
       "envelope": "runs/consensus-report-runs/29.envelope.json",
       "envelope_hash": "aac98e0f7a72b881cca1e9afd820b4505b4c74c205f7852650699b73227bdf91",
       "from": "13.0.3",
@@ -1003,24 +1046,26 @@
         "OPAQUE"
       ],
       "package": "glob",
-      "status": "SUBMITTED",
+      "reason": "awaiting final consensus outcome: CANCELED",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "13.0.4",
       "transaction_hash": "0xfaae215edbd658d78c41d91a881dd5ca9cd5ad1da63faaa94630088dea23b44b"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "CANCELED",
       "envelope": "runs/consensus-report-runs/30.envelope.json",
       "envelope_hash": "981644261ed155d155774f6ffe43270d5428be772fd70a7a19f5e30d9720ef72",
       "from": "14.0.1",
       "journal": "runs/consensus-report-runs/30.transaction.json",
       "mechanical_classes": [],
       "package": "uuid",
-      "status": "SUBMITTED",
+      "reason": "awaiting final consensus outcome: CANCELED",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "14.0.2",
       "transaction_hash": "0xda624d2a03155e453df3e3373f2ce391b8db88056f0225b117b48a66c1cc3626"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "CANCELED",
       "envelope": "runs/consensus-report-runs/31.envelope.json",
       "envelope_hash": "2da9dcb02975b9705400038c7a718a88256035f68d4327656dcdc309be21791c",
       "from": "13.0.2",
@@ -1029,12 +1074,13 @@
         "INSTALL_HOOK"
       ],
       "package": "uuid",
-      "status": "SUBMITTED",
+      "reason": "awaiting final consensus outcome: CANCELED",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "14.0.1",
       "transaction_hash": "0x1c91b53f8c22ffae3ca02039f5423f2a2542ff6fc1176640620ea33672be60d6"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "CANCELED",
       "envelope": "runs/consensus-report-runs/32.envelope.json",
       "envelope_hash": "0128f0256716c3e2d451506896fb6dcfa367f1caf6e3f14ff0722f8f3c37c07d",
       "from": "11.1.1",
@@ -1043,12 +1089,13 @@
         "OPAQUE"
       ],
       "package": "uuid",
-      "status": "SUBMITTED",
+      "reason": "awaiting final consensus outcome: CANCELED",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "13.0.2",
       "transaction_hash": "0x1b3951ffbecc5f149bfae764ee02ab2911b206d15ca3832650567a4ad4b29cc3"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "CANCELED",
       "envelope": "runs/consensus-report-runs/33.envelope.json",
       "envelope_hash": "18b66d41b593813d8c242b8017a936bdfe43d2dacb4222e8ee89a462d3298dac",
       "from": "17.4.1",
@@ -1057,72 +1104,78 @@
         "MAINTAINER_SHIFT"
       ],
       "package": "dotenv",
-      "status": "SUBMITTED",
+      "reason": "awaiting final consensus outcome: CANCELED",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "17.4.2",
       "transaction_hash": "0xe572a8451f783c3d1f81fdae953ab6b098df1962e207eb982bf7a37dbcfdb97b"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "CANCELED",
       "envelope": "runs/consensus-report-runs/34.envelope.json",
       "envelope_hash": "38929f3763c12e9ebe035b9493fff40e8cd8d09a92f7c40d32980b9f52e437d5",
       "from": "17.4.0",
       "journal": "runs/consensus-report-runs/34.transaction.json",
       "mechanical_classes": [],
       "package": "dotenv",
-      "status": "SUBMITTED",
+      "reason": "awaiting final consensus outcome: CANCELED",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "17.4.1",
       "transaction_hash": "0xc16e5890e905e4e55f35d4fe50623d806abb57ee774094ccfc57f5240364c6a3"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "CANCELED",
       "envelope": "runs/consensus-report-runs/35.envelope.json",
       "envelope_hash": "8155d46bce72284b483f369b48b3d31d286d2dc745fab2c93d154da393849f65",
       "from": "17.3.1",
       "journal": "runs/consensus-report-runs/35.transaction.json",
       "mechanical_classes": [],
       "package": "dotenv",
-      "status": "SUBMITTED",
+      "reason": "awaiting final consensus outcome: CANCELED",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "17.4.0",
       "transaction_hash": "0xd18d94028848e501fd074d3e9e4761040669eaa04315f8b3c63da9e822b49863"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "CANCELED",
       "envelope": "runs/consensus-report-runs/36.envelope.json",
       "envelope_hash": "03ff3645fc74301f7d43af122c35f62950bb6de112af74b67c81e9f4860567f2",
       "from": "10.0.0",
       "journal": "runs/consensus-report-runs/36.transaction.json",
       "mechanical_classes": [],
       "package": "cross-env",
-      "status": "SUBMITTED",
+      "reason": "awaiting final consensus outcome: CANCELED",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "10.1.0",
       "transaction_hash": "0x9bf1572cead3fd2dc3dda2c5d6d99e831f9cbc13e8bc05664fe4e49d1a4c5e8d"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "CANCELED",
       "envelope": "runs/consensus-report-runs/37.envelope.json",
       "envelope_hash": "2da04c519c68cae371f0031058a80317a72a32d473989163305ab868961f173f",
       "from": "7.0.3",
       "journal": "runs/consensus-report-runs/37.transaction.json",
       "mechanical_classes": [],
       "package": "cross-env",
-      "status": "SUBMITTED",
+      "reason": "awaiting final consensus outcome: CANCELED",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "10.0.0",
       "transaction_hash": "0xb3e46ab3d4af136e6d0ab38807834e75a6c160fce8d7caa7d5b0aaecb3c2a599"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "CANCELED",
       "envelope": "runs/consensus-report-runs/38.envelope.json",
       "envelope_hash": "c83bf0cb9b42c55dc8e037d25d3381cc482a546a067b5ae41bb924ceb0f5ad1e",
       "from": "7.0.2",
       "journal": "runs/consensus-report-runs/38.transaction.json",
       "mechanical_classes": [],
       "package": "cross-env",
-      "status": "SUBMITTED",
+      "reason": "awaiting final consensus outcome: CANCELED",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "7.0.3",
       "transaction_hash": "0x9b698e21c461bd2f847805742619affd74b71424d171de696ce34a851f01c860"
     },
     {
-      "consensus_status": "PENDING",
+      "consensus_status": "CANCELED",
       "envelope": "runs/consensus-report-runs/39.envelope.json",
       "envelope_hash": "149425104625ec70661c9501055b56a933a2354c67b0ea48a4701dc35500a619",
       "from": "0.28.1",
@@ -1131,11 +1184,13 @@
         "OPAQUE"
       ],
       "package": "esbuild",
-      "status": "SUBMITTED",
+      "reason": "awaiting final consensus outcome: CANCELED",
+      "status": "RETRY_APPROVAL_PENDING",
       "to": "0.28.2",
       "transaction_hash": "0x528c2c8bd17930dfe89fca8c5b315425ea2410162d938bb66dbaa8071f9d77b5"
     },
     {
+      "consensus_status": "PENDING",
       "envelope": "runs/consensus-report-runs/40.envelope.json",
       "envelope_hash": "f6111a289569905ac8d9ecc0359744bd81bc1e9dc90d1cf7feff2efaf65240d0",
       "from": "0.28.0",
@@ -1144,10 +1199,12 @@
         "OPAQUE"
       ],
       "package": "esbuild",
-      "status": "PINNED",
-      "to": "0.28.1"
+      "status": "SUBMITTED",
+      "to": "0.28.1",
+      "transaction_hash": "0xaf92f5644c769552a5359a04f4669d49ffe33b1282263d39462402bbd907e0df"
     },
     {
+      "consensus_status": "PENDING",
       "envelope": "runs/consensus-report-runs/41.envelope.json",
       "envelope_hash": "bbe2675f758d2362f9c0ee67500e8ae5c61c1bd005bef9469a3d18135b011362",
       "from": "0.27.7",
@@ -1156,8 +1213,9 @@
         "OPAQUE"
       ],
       "package": "esbuild",
-      "status": "PINNED",
-      "to": "0.28.0"
+      "status": "SUBMITTED",
+      "to": "0.28.0",
+      "transaction_hash": "0xd36755344c95025bcb8381d76ee151d2bbb264cba0b125f399f22ca5a6f9cd3b"
     },
     {
       "envelope": "runs/consensus-report-runs/42.envelope.json",
@@ -1200,7 +1258,7 @@
   "policy_id": 0,
   "queue": {
     "address": "0x56a05a9bB7B261ad720020a08B9Fd5A13177b949",
-    "block": "23276530",
+    "block": "23277120",
     "maximum": 20,
     "pending": 18,
     "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
