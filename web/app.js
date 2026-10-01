@@ -1,8 +1,10 @@
 import { createClient } from 'genlayer-js';
 import { testnetBradbury } from 'genlayer-js/chains';
 import { TransactionHashVariant } from 'genlayer-js/types';
-import { parseEventLogs, createPublicClient, http } from 'viem';
+import { parseEventLogs, createPublicClient, http, decodeFunctionData, encodeFunctionData } from 'viem';
 import { createGasGuard } from '../scripts/gas_guard.mjs';
+import { assertFinalizedConsensusReceipt } from '../scripts/finalized_receipt.mjs';
+import { createSubmissionTTL } from '../scripts/submission_ttl.mjs';
 
 const EXPLORER = 'https://explorer-bradbury.genlayer.com';
 const reader = createClient({ chain: testnetBradbury });
@@ -11,7 +13,7 @@ const $ = id => document.getElementById(id);
 const json = value => JSON.stringify(value, (_, v) => typeof v === 'bigint' ? v.toString() : v, 2);
 const link = (label, path) => { const a = document.createElement('a'); a.textContent = label; a.href = `${EXPLORER}/${path}`; a.target = '_blank'; a.rel = 'noopener'; return a; };
 let deployment, account, writer, envelope, pending, busy = false, pollTimer, generation = 0, walletOperation = '';
-let walletEstimate, submissionGasGuard;
+let walletEstimate, submissionGasGuard, submissionTTL;
 const read = (method, args = []) => reader.readContract({ address: deployment.contract, functionName: method, args, jsonSafeReturn: true, transactionHashVariant: TransactionHashVariant.LATEST_FINAL });
 const notify = message => { $('live-notice').textContent = message; };
 function controls() {
@@ -88,7 +90,15 @@ async function connect() {
     if (Number(await provider.request({ method: 'eth_chainId' })) !== 4221 || !accounts[0]) throw new Error('Select an account on Bradbury chain 4221.');
     account = accounts[0];
     const tracked = { request: async request => {
-      if (request.method === 'eth_sendTransaction' && walletOperation === 'attest') submissionGasGuard?.assertCanSign();
+      if (request.method === 'eth_sendTransaction' && walletOperation === 'attest') {
+        if (!account || !writer || Number(await provider.request({ method: 'eth_chainId' })) !== 4221) throw new Error('Wallet account or network changed; no transaction was sent.');
+        submissionGasGuard?.assertCanSign();
+        if (!submissionTTL || !request.params?.[0]?.data) throw new Error('Missing estimated submission deadline; no transaction was sent.');
+        const tx = request.params[0], data = submissionTTL.rewrite(tx.data);
+        await evmReader.call({ account, to: tx.to, data, value: BigInt(tx.value || 0), blockTag: 'pending' });
+        pending.submission_ttl = submissionTTL.metadata();
+        request = { ...request, params: [{ ...tx, data }, ...request.params.slice(1)] };
+      }
       if (request.method === 'eth_sendTransaction' && request.params?.[0]?.gas) {
         const tx = request.params[0], cap = 16777216n, estimate = BigInt(tx.gas);
         if (estimate > cap) throw new Error('Transaction exceeds the Bradbury gas cap. No transaction was sent.');
@@ -113,7 +123,6 @@ function renderTransaction() {
   box.append(document.createElement('br'), document.createTextNode('Copy or download this record before closing. No browser storage is used.'));
   $('live-download').hidden = false;
 }
-function execution(receipt) { return receipt.txExecutionResultName || ({ 1: 'FINISHED_WITH_RETURN', 2: 'FINISHED_WITH_ERROR' }[receipt.txExecutionResult]); }
 async function poll() {
   if (!pending || !pending.hash) return;
   try {
@@ -135,7 +144,7 @@ async function poll() {
       controls();
     }
     if (pending.status === 'FINALIZED') {
-      if (execution(receipt) !== 'FINISHED_WITH_RETURN') throw new Error('Finalized transaction did not execute successfully.');
+      assertFinalizedConsensusReceipt(receipt, {hash: pending.hash, recipient: deployment.contract, method: 'request_attestation'});
       if (!pending.expected) { notify('Consensus transaction finalized successfully. Enter its attestation ID and use Read chain gate to inspect the update.'); return; }
       // Match the update and sender, rather than guessing the ID from a global counter.
       const count = Number(await read('attestation_count'));
@@ -168,7 +177,12 @@ async function send() {
     const countBefore = Number(await read('attestation_count'));
     pending = { expected: envelope, account, countBefore, status: 'AWAITING_WALLET', deadline: Date.now() + 30 * 60 * 1000 };
     walletOperation = 'attest';
-    submissionGasGuard = createGasGuard({estimate: walletEstimate, readRpc: operation => operation()});
+    submissionTTL = createSubmissionTTL({ seconds: 21600, decodeFunctionData, encodeFunctionData });
+    submissionGasGuard = createGasGuard({estimate: async request => {
+      const data = submissionTTL.rewrite(request.data);
+      await evmReader.call({ account, to: request.to, data, value: BigInt(request.value || 0), blockTag: 'pending' });
+      return walletEstimate({ ...request, data });
+    }, readRpc: operation => operation()});
     writer.estimateTransactionGas = submissionGasGuard.estimate;
     notify('Confirm the attestation in your wallet. Keep this page open until you copy the transaction hash.');
     const hash = await writer.writeContract({ address: deployment.contract, functionName: 'request_attestation', args: [deployment.policy_id, envelope.body.package, envelope.body.from_version, envelope.body.to_version, 1, envelope.hash, envelope.evidence], value: 0n });
@@ -177,7 +191,7 @@ async function send() {
   } catch (error) {
     notify(`${error.shortMessage || error.message}. No automatic retry was sent.`);
     if (pending?.hash) { clearTimeout(pollTimer); pollTimer = setTimeout(poll, 12000); } else pending = null;
-  } finally { walletOperation = ''; busy = false; controls(); }
+  } finally { walletOperation = ''; if (writer) writer.estimateTransactionGas = walletEstimate; busy = false; controls(); }
 }
 $('live-connect').onclick = connect;
 $('live-send').onclick = send;

@@ -69,7 +69,10 @@ reported as missing evidence, never converted into a clean result.
 A consensus comparison must reuse those same 45 package/version pairs and report
 its policy, receipts, failures and inconclusive rows. A six-class policy has a
 different scope from the four-class baseline. No consensus improvement is claimed
-until the actual run is complete.
+until the actual run is complete. The final report's `comparison_scope` records
+these class counts, the same 45 pinned pairs and that inconclusive results block
+CI. Its rate differences describe these two policies; without ground truth they
+do not measure accuracy or a reduction in false positives.
 
 ## Build evidence and run checks
 
@@ -176,8 +179,17 @@ transaction hashes are resumed and reread, never automatically resubmitted.
 
 `--defer-pair INDEX` uses a zero-based corpus index, preserves its journal and
 failed hash, and leaves it `RETRY_APPROVAL_PENDING` while the other pairs proceed.
-The approved retries use `--reschedule-undetermined 13` for Express and
-`--reschedule-disagree 21` for Yargs, with one fresh request authorized per pair.
+Each approved retry is limited to one fresh request for its exact pair. Once
+submitted, resume its saved hash; reusing a retry flag cannot authorize another
+replacement. Pairs 13 and 21 have already used their approved requests.
+The current authorized retries are `--reschedule-disagree 23` and
+`--reschedule-disagree 24`, one request each.
+The new submissions use a six-hour submission deadline
+(`--submission-ttl 21600`) for new writes. The runner changes only the V6
+`validUntil` argument, simulates the exact calldata before estimation and signing,
+preserving the first five arguments, and saves the deadline with the journal.
+A longer deadline does not restore any
+expired transaction or authorize another request.
 A 44-pair run remains `completed: false`, exits `2`, and publishes no full-sample
 comparison percentages. `--reschedule-undetermined INDEX` authorizes a fresh
 paid request and requires explicit operator approval. It proceeds only after a
@@ -219,6 +231,10 @@ The local proof is in `runs/deployment.json`, the three transaction journals and
 The published Vercel application was verified in a real browser: its Bradbury
 read returned `CLEAN`, registry metadata `VERIFIED` and six judgments, and its
 manual transaction-hash check returned `FINALIZED`.
+Manual success also requires consensus result `AGREE` (1), the finalized last
+round's result 1, a matching transaction/contract identity and a
+`request_attestation` method. Finalized failure decisions are not successful
+attestations.
 The [GitHub Actions run](https://github.com/Zhekinmaksim/attaint/actions/runs/36879515907)
 passed both the offline tests and the live gate for attestation `0`, on commit
 `c27f67f9af8ae74034630cbaef8d839b57c09e9f`; the live gate exited `0`.
@@ -244,24 +260,67 @@ as a live detection. The finalized clean outcome is a miss for this historical
 handover case. Offline tests and simulations establish different things
 from a receipt-backed consensus judgment.
 
-At the verified checkpoint, 20 of the original 45 corpus pairs had finalized
-gates: 14 `CLEAN`, six `INCONCLUSIVE` and zero `RISK`. The Express pair at index 13
+At the verified checkpoint (`observed_at: 2026-10-01T16:39:00Z`), 21 of the
+original 45 corpus pairs had finalized gates: 14 `CLEAN`, seven `INCONCLUSIVE`
+and zero `RISK`. The Express pair at index 13
 (`5.2.1 → 4.22.1`) ended `FINALIZED / NO_MAJORITY`, with no matching committed
-attestation; its original journal and hash are archived. After automatic approval
-review rejected resubmission, the user explicitly approved exactly one fresh
-Express request. The guarded replacement was
-[submitted](https://explorer-bradbury.genlayer.com/tx/0xc4a6b8a7f1488230da97ea26550985eb73585bc3ca8e8fee330ad58081e9084c),
-with finalization still pending at this checkpoint. The no-commit audit is
+attestation; its original journal and hash are archived. The user explicitly
+approved exactly one fresh Express request. Its
+[replacement](https://explorer-bradbury.genlayer.com/tx/0xc4a6b8a7f1488230da97ea26550985eb73585bc3ca8e8fee330ad58081e9084c)
+was projected as `CANCELED` at this checkpoint. The no-commit audit is
 `runs/diagnostics/express-finalized-no-commit.json`. Yargs index 21
 (`17.7.3 → 18.1.0`) ended `FINALIZED / MajorityDisagree` (result 2). Both state
 views contained 22 attestations and no matching Yargs identity; the sanitized
 audit is `runs/diagnostics/yargs-finalized-no-commit.json`. The user explicitly
 approved exactly one fresh Yargs request with the same policy and envelope.
-The sole writer schedules these guarded retries alongside the remaining
-original requests. No further Express or Yargs retries are authorized.
+Its [replacement](https://explorer-bradbury.genlayer.com/tx/0xc496de7de05cdb11dbce0c4fd606e2dc9d0b1c287c51fe3ce8e71dcf5a83b48f)
+was also projected as `CANCELED` at this checkpoint. Both one-request approvals have been
+used; their original failed-finalization audits remain preserved. The user has
+separately approved one retry each for indices 23 and 24. These retries and
+original index 44 have now been submitted with `--submission-ttl 21600`:
+
+- [Index 23](https://explorer-bradbury.genlayer.com/tx/0x64b675b6497880018d26281ed90614e69fc21f13adae86accb0018c853a0ce3d).
+- [Index 24](https://explorer-bradbury.genlayer.com/tx/0xe0d87e4fa0ce20e486572c0330a9c86a1d6951c6f2405cedab22493ace1017ae).
+- [Index 44](https://explorer-bradbury.genlayer.com/tx/0xfd481df56855efb35eb64cf903f42f2a5c2a9f1878941d063f4f9bcea5ff0491).
+
+The subsequent queue read showed six pending entries. Submission does not count
+as a finalized gate; no further retries of indices 13 or 21 are authorized.
 The counts above are a verified checkpoint, not an updated live total. This is partial progress;
 the full 45-pair comparison and measured risk/block-rate differences remain
 pending, with no full-sample percentages or improvement claimed.
+
+An expired or canceled observation, `READ_ERROR`, or a
+`ValidatorSelectionFailed` metadata fallback is not a verdict. If the full
+receipt read fails with that exact error, the observer may use the official
+minimal view only to report a matching transaction in `CANCELED` state; it marks
+execution unavailable, the receipt partial and finalization capability absent.
+This cannot certify acceptance, a finalized gate, or permission to resubmit.
+When a matching raw read confirms an expired `PENDING` entry, the observer reports
+`EXPIRED_PENDING_CLEANUP`, with no finalization capability or verdict.
+The historical queue audit at block `0x16333bd` (1 October 2026, 16:43:19 UTC)
+confirmed 15 exact entries whose raw transaction-manager state remained
+`PENDING` (1), while the projected status was `CANCELED` (8) because block time
+had passed `validUntil`. These expired raw entries still occupied the pending
+queue. The audit covers indices 28–39, the already-used replacement at index 13,
+and indices 40–41, with no matching committed attestations in either state view.
+The sanitized proof is `runs/diagnostics/expired-queue-no-commit.json`.
+The approved cleanup completed at 16:56 UTC: eight successful EVM cancellation
+calls removed those 15 expired slots and reduced pending entries from 18 to 3.
+Actual fees totalled 0.00136827391252365 test GEN. It stopped at the Yargs
+replacement at index 21, outside the fixed list, leaving indices 21, 42 and 43
+untouched. The receipt-backed
+[cleanup summary](https://attaint.vercel.app/diagnostics/expired-cleanup-summary.json)
+is also saved as `runs/diagnostics/expired-cleanup-summary.json`.
+This cleanup authorized no new retries and produced no consensus verdicts;
+the 21/45 gate checkpoint remains unchanged.
+
+The historical
+[post-cleanup no-commit audit](https://attaint.vercel.app/diagnostics/post-cleanup-unfinished-no-commit.json)
+identified 18 raw canceled releases without matching attestations: index 13 and
+indices 25–41. A separate batch of fresh requests is being prepared for explicit
+authorization; none of those 18 requests is approved or submitted. Existing
+active hashes are preserved. Audit conclusions must be rechecked against current
+state before any signature.
 
 The previous attempt at
 [`0x74407aE5e92002F4F0E1A912C7e785837a67F3C8`](https://explorer-bradbury.genlayer.com/address/0x74407aE5e92002F4F0E1A912C7e785837a67F3C8)

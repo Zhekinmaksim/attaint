@@ -151,6 +151,44 @@
       "retry_basis": "Explicit reschedule after live UNDETERMINED receipt and complete latest-nonfinal attestation audit proved no committed release identity.",
       "status": "FINALIZED",
       "to": "18.1.0"
+    },
+    {
+      "attestation_count": 22,
+      "consensus_commit": false,
+      "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "from": "18.0.0",
+      "hash": "0x73eaa46b05374cfd571e52dda0d28a6812b191816ba0e6095841d828e0818ec6",
+      "journal": "runs/consensus-report-runs/failed-submissions/23.transaction-0x73eaa46b05374cfd571e52dda0d28a6812b191816ba0e6095841d828e0818ec6.json",
+      "matching_attestation_ids": [],
+      "observed_at": "2026-10-01T16:30:16.138Z",
+      "package": "yargs",
+      "proof": "runs/consensus-report-runs/failed-submissions/23.transaction-0x73eaa46b05374cfd571e52dda0d28a6812b191816ba0e6095841d828e0818ec6.no-commit-proof.json",
+      "proof_sha256": "d2a5911ef755782f220d78060add27b4c58043e9c84dfd93a2c9ceedca38f3ee",
+      "requester": "0x771388495f34d21c5574fefc04cd1d5811e00ada",
+      "result": 2,
+      "result_name": "DISAGREE",
+      "retry_basis": "Explicit reschedule after live UNDETERMINED receipt and complete latest-nonfinal attestation audit proved no committed release identity.",
+      "status": "FINALIZED",
+      "to": "16.2.2"
+    },
+    {
+      "attestation_count": 22,
+      "consensus_commit": false,
+      "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "from": "6.1.2",
+      "hash": "0x0b8df2ba1d7a8180d60fa29377e077246f2f28ae4c6bd980b2464c9aec49a788",
+      "journal": "runs/consensus-report-runs/failed-submissions/24.transaction-0x0b8df2ba1d7a8180d60fa29377e077246f2f28ae4c6bd980b2464c9aec49a788.json",
+      "matching_attestation_ids": [],
+      "observed_at": "2026-10-01T16:30:29.322Z",
+      "package": "rimraf",
+      "proof": "runs/consensus-report-runs/failed-submissions/24.transaction-0x0b8df2ba1d7a8180d60fa29377e077246f2f28ae4c6bd980b2464c9aec49a788.no-commit-proof.json",
+      "proof_sha256": "19836bcfdaba17d0bb6fd517874b351142e31262e1343daf8395b62f02dd1bfd",
+      "requester": "0x771388495f34d21c5574fefc04cd1d5811e00ada",
+      "result": 2,
+      "result_name": "DISAGREE",
+      "retry_basis": "Explicit reschedule after live UNDETERMINED receipt and complete latest-nonfinal attestation audit proved no committed release identity.",
+      "status": "FINALIZED",
+      "to": "6.1.3"
     }
   ]
 }

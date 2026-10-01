@@ -13,6 +13,9 @@ import {prepareSignedIntentRetry,assertUnusedIntentNonce,submissionOperationHash
 import {createGasGuard} from './gas_guard.mjs';
 import {readPendingQueue} from './queues.mjs';
 import {acquireWriterLock} from './writer_lock.mjs';
+import {observeReceiptStates} from './receipt_observer.mjs';
+import {createSubmissionTTL} from './submission_ttl.mjs';
+import {inspectExpiredHead,cancelAbi,createRawStatusReader,readQueueHead,readCanceledProof} from './expired_head.mjs';
 
 const options = process.argv.slice(3);
 const option = (name, fallback = '') => {
@@ -42,7 +45,9 @@ try {
   const finalizeNonagreement = options.includes('--finalize-nonagreement');
   if (finalizeNonagreement && command !== 'settle') throw new Error('--finalize-nonagreement is limited to settlement of an existing transaction');
   if (options.includes('--retry-signed-intent') && !['deploy','write'].includes(command)) throw new Error('--retry-signed-intent is limited to unresolved deploy/write submissions');
-  const writes = ['deploy','write','settle','recover'].includes(command);
+  const writes = ['deploy','write','settle','recover','cancel-expired'].includes(command);
+  const ttlSeconds=option('--submission-ttl');
+  if(ttlSeconds&&!['deploy','write'].includes(command))throw Error('--submission-ttl applies only to new deploy/write submissions');
   if (writes) {
     const release = acquireWriterLock(fileURLToPath(new URL('../.attaint-writer.lock',import.meta.url)));
     process.once('exit',release);
@@ -61,6 +66,7 @@ try {
     }
     if (!secret) throw new Error('No unlocked account. Unlock the GenLayer CLI account first.');
     try {account = sdk.createAccount(secret);} catch {throw new Error("Invalid unlocked account credential");}
+    if(option('--expected-sender')&&account.address.toLowerCase()!==option('--expected-sender').toLowerCase())throw Error('unlocked account differs from pinned expected sender');
   }
   const rpc = option('--rpc','https://rpc-bradbury.genlayer.com');
   const client = sdk.createClient({chain:chains.testnetBradbury,endpoint:rpc,account});
@@ -77,8 +83,17 @@ try {
   let retryPlan = null;
   let expectedOperationHash = null;
   let retryConsumed = false;
+  const ttl=ttlSeconds?createSubmissionTTL({seconds:Number(ttlSeconds),decodeFunctionData:viem.decodeFunctionData,encodeFunctionData:viem.encodeFunctionData}):null;
   if (writes) {
-    const gasGuard = createGasGuard({estimate:client.estimateTransactionGas.bind(client),readRpc});
+    const originalEstimate=client.estimateTransactionGas.bind(client);
+    const gasGuard = createGasGuard({estimate:async request=>{
+      if(ttl&&signingKind==='submission') {
+        request={...request,data:ttl.rewrite(request.data)};
+        // Protocol deadline range and exact calldata must pass before SDK signing.
+        await publicClient.call({account:request.from,to:request.to,data:request.data,value:request.value,blockTag:'pending'});
+      }
+      return originalEstimate(request);
+    },readRpc});
     client.estimateTransactionGas = gasGuard.estimate;
     const block = await readRpc(() => client.request({method:'eth_getBlockByNumber',params:['latest',false]}));
     const blockCap = BigInt(block.gasLimit) * 95n / 100n;
@@ -87,6 +102,11 @@ try {
     const sign = account.signTransaction.bind(account);
     account.signTransaction = async (transaction, signingOptions) => {
       gasGuard.assertCanSign();
+      if(ttl&&signingKind==='submission') {
+        transaction={...transaction,data:ttl.rewrite(transaction.data)};
+        await readRpc(()=>publicClient.call({account:account.address,to:transaction.to,data:transaction.data,value:transaction.value,blockTag:'pending'}));
+        result.submission_ttl=ttl.metadata();
+      }
       let operationHash;
       if (signingKind === 'submission') operationHash = submissionOperationHash(transaction.data,viem.decodeFunctionData);
       if (retryPlan && signingKind === 'submission') {
@@ -98,6 +118,12 @@ try {
       if (estimate > requestedCap) throw new Error(`estimated gas ${estimate} exceeds transaction cap ${requestedCap}; compact the deployment source`);
       const withHeadroom = estimate + estimate / 10n;
       const gas = withHeadroom < requestedCap ? withHeadroom : requestedCap;
+      if(signingKind==='cleanup') {
+        const feeCap=BigInt(required('--max-cleanup-fee'));
+        const feeRate=BigInt(transaction.maxFeePerGas||transaction.gasPrice||0);
+        if(feeRate<=0n||gas*feeRate>feeCap)throw Error('cleanup maximum signed fee exceeds remaining approved budget');
+        result.maximum_signed_fee_wei=(gas*feeRate).toString();
+      }
       console.error(`Gas: estimate=${estimate} limit=${gas} block=${block.gasLimit}`);
       required('--out');
       const serialized = await sign({...transaction,gas}, signingOptions);
@@ -119,7 +145,47 @@ try {
   const recoverIntent = (kind) => readRpc(() => recoverSigningIntent({journal:result,kind,publicClient,
     consensusAddress:chains.testnetBradbury.consensusMainContract.address,
     abi:chains.testnetBradbury.consensusMainContract.abi,parseEventLogs:viem.parseEventLogs,save}));
-  if (command === 'read') {
+  if(command==='canceled-proof') {
+    const calldata=sdk.abi.calldata.encode(sdk.abi.calldata.makeCalldataObject(required('--method'),args));
+    const expectedCalldata=sdk.abi.transactions.serialize([calldata,false]);
+    result={...meta,...await readRpc(()=>readCanceledProof({publicClient,hash:required('--hash'),sender:required('--sender'),recipient:required('--address'),expectedCalldata}))};
+  } else if(command==='pending-head') {
+    result={...meta,...await readRpc(()=>readQueueHead({publicClient,recipient:required('--address')}))};
+  } else if(command==='expired-head'||command==='cancel-expired') {
+    const hash=required('--hash'),recipient=required('--address');
+    const sender=command==='cancel-expired'?account.address:required('--sender');
+    const out=option('--out');
+    result={...meta,command,hash,address:recipient,sender};
+    if(out&&existsSync(out)) {
+      const previous=JSON.parse(readFileSync(out,'utf8'));
+      if(previous.command!==command||previous.hash!==hash||previous.address!==recipient||previous.sender.toLowerCase()!==sender.toLowerCase()||previous.chainId!==4221)throw Error('expired cleanup journal identity mismatch');
+      result={...previous,...result};
+    }
+    if(command==='cancel-expired'&&!result.cleanup_hash&&result.cleanup_intent)await recoverIntent('cleanup');
+    if(!result.cleanup_hash) {
+      result.proof=await readRpc(()=>inspectExpiredHead({publicClient,hash,sender,recipient}));
+      const simulation=await readRpc(()=>publicClient.simulateContract({address:chains.testnetBradbury.consensusMainContract.address,abi:cancelAbi,functionName:'cancelTransaction',args:[hash],account:sender,blockTag:'pending'}));
+      const estimate=await readRpc(()=>publicClient.estimateContractGas({...simulation.request,account:sender}));
+      result.gas_estimate=estimate;
+      result.gas_price=await readRpc(()=>publicClient.getGasPrice());
+      result.estimated_fee_wei=estimate*result.gas_price;
+      if(command==='cancel-expired') {
+        required('--out');
+        // Reread authoritative head/expiry, then simulate again immediately before signing.
+        result.proof=await readRpc(()=>inspectExpiredHead({publicClient,hash,sender,recipient}));
+        const fresh=await readRpc(()=>publicClient.simulateContract({address:chains.testnetBradbury.consensusMainContract.address,abi:cancelAbi,functionName:'cancelTransaction',args:[hash],account:sender,blockTag:'pending'}));
+        const wallet=viem.createWalletClient({chain:chains.testnetBradbury,transport:viem.http(rpc),account});
+        signingKind='cleanup';
+        result.cleanup_hash=await wallet.writeContract({...fresh.request,account,gas:estimate,gasPrice:result.gas_price,type:'legacy'});
+        signingKind=null;save(result);
+      }
+    }
+    if(result.cleanup_hash) {
+      result.cleanup_receipt=await readRpc(()=>publicClient.waitForTransactionReceipt({hash:result.cleanup_hash}));save(result);
+      if(result.cleanup_receipt.status!=='success')throw Error('expired-head cancellation reverted; refusing retry');
+      result.queue_after=await readRpc(()=>readPendingQueue({publicClient,recipient}));
+    }
+  } else if (command === 'read') {
     result = {...meta,address,method:required('--method'),result:await readRpc(() => client.readContract({address:required('--address'),functionName:required('--method'),args,transactionHashVariant:option('--variant','latest-final')}))};
   } else if (command === 'code') {
     const code = await readRpc(() => client.getContractCode(required('--address')));
@@ -137,30 +203,28 @@ try {
   } else if (command === 'poll') {
     if (!args.every(hash => /^0x[0-9a-f]{64}$/i.test(hash))) throw new Error('poll requires an array of transaction hashes');
     const queue = await readRpc(() => readPendingQueue({publicClient,recipient:required('--address')}));
-    const states = [];
-    for (let index=0;index<args.length;index+=4) {
-      const batch = await Promise.all(args.slice(index,index+4).map(async hash => {
-        const receipt = await readRpc(() => client.getTransaction({hash}));
-        const statusCode=Number(receipt.status);
-        if (!Number.isSafeInteger(statusCode) || statusCode<0) throw new Error('consensus receipt has no valid numeric status');
-        const status = receipt.statusName || `UNKNOWN_STATUS_${statusCode}`;
-        const capability = ['ACCEPTED','READY_TO_FINALIZE','UNDETERMINED'].includes(status) ? await readRpc(() => finalizationCapability(hash)) : null;
-        return {hash,status,status_code:statusCode,recipient:receipt.recipient,execution:receipt.txExecutionResultName,
-          result:Number(receipt.result),round:receipt.numOfRounds,capability};
-      }));
-      states.push(...batch);
-    }
+    let rawReader;
+    const states = await observeReceiptStates({hashes:args,
+      getTransaction:hash=>readRpc(()=>client.getTransaction({hash})),
+      getRawTransaction:async hash=>{rawReader ||=readRpc(()=>createRawStatusReader(publicClient));return readRpc(async()=> (await rawReader)(hash));},
+      finalizationCapability:hash=>readRpc(()=>finalizationCapability(hash)),
+      getMinimalTransaction:hash=>readRpc(()=>publicClient.readContract({
+        address:chains.testnetBradbury.consensusDataContract.address,
+        abi:chains.testnetBradbury.consensusDataContract.abi,functionName:'getTransactionData',
+        args:[hash,BigInt(Math.round(Date.now()/1000))]}))});
     result = {...meta,observed_at:new Date().toISOString(),queue,states};
   } else if (command === 'gates') {
-    const getCount = () => client.readContract({address:required('--address'),functionName:'attestation_count',args:[],transactionHashVariant:'latest-nonfinal'});
+    const variant=option('--variant','latest-nonfinal');
+    if(!['latest-final','latest-nonfinal'].includes(variant))throw Error('gates audit requires a final/current state view');
+    const getCount = () => client.readContract({address:required('--address'),functionName:'attestation_count',args:[],transactionHashVariant:variant});
     const before = Number(await readRpc(getCount));
     if (!Number.isSafeInteger(before) || before < 0 || before > 2000) throw new Error('attestation count is outside bounded audit range');
     const gates = [];
     for (let index=0;index<before;index+=4) gates.push(...await Promise.all(Array.from({length:Math.min(4,before-index)},(_,offset)=>
-      readRpc(() => client.readContract({address:required('--address'),functionName:'gate',args:[index+offset],transactionHashVariant:'latest-nonfinal'})))));
+      readRpc(() => client.readContract({address:required('--address'),functionName:'gate',args:[index+offset],transactionHashVariant:variant})))));
     const after = Number(await readRpc(getCount));
     if (before !== after || gates.some((gate,index)=>Number(gate.att_id) !== index)) throw new Error('attestation set changed during audit; retry read-only proof');
-    result = {...meta,address:required('--address'),variant:'latest-nonfinal',observed_at:new Date().toISOString(),count:before,gates};
+    result = {...meta,address:required('--address'),variant,observed_at:new Date().toISOString(),count:before,gates};
   } else if (command === 'recover') {
     const hash = required('--hash');
     const out = required('--out');
@@ -199,6 +263,13 @@ try {
       if (!hash && !previous.submission_intent) throw new Error('existing journal has no transaction identity; refusing duplicate submission');
     }
     result = {...previous,...meta,command,address,method:option('--method'),args,hash};
+    if(option('--canceled-retry-anchor')) {
+      const anchor=option('--canceled-retry-anchor');
+      if(command!=='write'||!/^0x[0-9a-f]{64}$/i.test(anchor))throw Error('invalid canceled replacement anchor');
+      if(previous.canceled_retry_anchor&&previous.canceled_retry_anchor!==anchor)throw Error('canceled replacement journal anchor mismatch');
+      result.canceled_retry_anchor=anchor;
+    }
+    if(result.canceled_retry_anchor&&options.includes('--retry-signed-intent'))throw Error('a canceled replacement signing intent has consumed its one authorized attempt; manual resend is forbidden');
     if (!hash) {result.value_wei = valueWei; if (sourceHash) result.source_sha256 = sourceHash;}
     if (options.includes('--retry-signed-intent')) {
       if (hash) throw new Error('signed-intent retry cannot replace an existing consensus transaction');

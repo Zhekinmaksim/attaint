@@ -1,0 +1,971 @@
+{
+  "kind": "sanitized historical post-cleanup unfinished and no-commit review candidate",
+  "historical_observed_at": "2026-10-01T16:57:31.191Z",
+  "block_number": "0x16336cd",
+  "block_timestamp": 1790873857,
+  "block_timestamp_utc": "2026-10-01T16:57:37.000Z",
+  "state_started_at": "2026-10-01T16:58:02.578Z",
+  "state_finished_at": "2026-10-01T16:59:04.354Z",
+  "queue": {
+    "head": "46",
+    "tail": "49",
+    "count": "3",
+    "entries": [
+      {
+        "slot": "46",
+        "hash": "0xc496de7de05cdb11dbce0c4fd606e2dc9d0b1c287c51fe3ce8e71dcf5a83b48f"
+      },
+      {
+        "slot": "47",
+        "hash": "0xaa3cd3b21060c549a0a97cb152387a5a16f773970d7198ac1a046bc2c8b20294"
+      },
+      {
+        "slot": "48",
+        "hash": "0x9c4710610908c6a2321938232440e5d8a7852f41306a9f79df73820496a18870"
+      }
+    ]
+  },
+  "counts": {
+    "terminal_cancel_no_commit": 18,
+    "active_or_pending": 3
+  },
+  "rows": [
+    {
+      "row": 13,
+      "hash": "0xc4a6b8a7f1488230da97ea26550985eb73585bc3ca8e8fee330ad58081e9084c",
+      "pair": {
+        "package": "express",
+        "from": "5.2.1",
+        "to": "4.22.1"
+      },
+      "policy_id": 0,
+      "envelope_hash": "cf65e0906a1ab6c479c4a55104928095f4b92d1b5973727238c25ab63f04d7a7",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790872530",
+      "valid_until_utc": "2026-10-01T16:35:30.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": true,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "Previous one-repeat authorization has already been used; another Express request requires separate explicit approval."
+    },
+    {
+      "row": 21,
+      "hash": "0xc496de7de05cdb11dbce0c4fd606e2dc9d0b1c287c51fe3ce8e71dcf5a83b48f",
+      "pair": {
+        "package": "yargs",
+        "from": "17.7.3",
+        "to": "18.1.0"
+      },
+      "policy_id": 0,
+      "envelope_hash": "0d152e1f80ab2ff55de5e6d8f242bf10a6418acdcee156c236b60accd2abc0e5",
+      "raw_status": 3,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790874127",
+      "valid_until_utc": "2026-10-01T17:02:07.000Z",
+      "expired": false,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": {
+        "slot": "46",
+        "hash": "0xc496de7de05cdb11dbce0c4fd606e2dc9d0b1c287c51fe3ce8e71dcf5a83b48f"
+      },
+      "prior_single_repeat_used": true,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": false,
+      "additional_request_authorization_required": false,
+      "repeat_authorization_note": "Live replacement is active; no additional retry."
+    },
+    {
+      "row": 25,
+      "hash": "0x718a05863886c59bf61f35ab2fe1194076d27663d8da6cc195adf6dca6439a95",
+      "pair": {
+        "package": "rimraf",
+        "from": "6.1.1",
+        "to": "6.1.2"
+      },
+      "policy_id": 0,
+      "envelope_hash": "c5d2737b55990f4c842c3cba473c6382b075f7f4648b9caa409ca330cd81495f",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790870293",
+      "valid_until_utc": "2026-10-01T15:58:13.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 26,
+      "hash": "0xa0193a511b9e81fa106ab89ff23d67f8cd5a0b7e582105292325f3b2232b1e24",
+      "pair": {
+        "package": "rimraf",
+        "from": "6.1.0",
+        "to": "6.1.1"
+      },
+      "policy_id": 0,
+      "envelope_hash": "0cecc128103a0e075c94aca407f585f8a7668817d6dff52208ffe8a058a3369f",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790870301",
+      "valid_until_utc": "2026-10-01T15:58:21.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 27,
+      "hash": "0xe2e596ddb0b5430363b0e334273913c8c7729b47d1402bbbc051f585a0560866",
+      "pair": {
+        "package": "glob",
+        "from": "13.0.5",
+        "to": "13.0.6"
+      },
+      "policy_id": 0,
+      "envelope_hash": "9da7aee965ba2628a1a7064111b87c6d81c15f77da00282cb642d75adc7f5e2c",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790870308",
+      "valid_until_utc": "2026-10-01T15:58:28.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 28,
+      "hash": "0x4cce7ccd84bb39908593c45f5ce3c126db729cb8f1b8118e7d0636883f6187a5",
+      "pair": {
+        "package": "glob",
+        "from": "13.0.4",
+        "to": "13.0.5"
+      },
+      "policy_id": 0,
+      "envelope_hash": "b11f77fd4fa7cc78288a1217ee8d45db98269f5827d14e9dd4187c726d04069a",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790870315",
+      "valid_until_utc": "2026-10-01T15:58:35.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 29,
+      "hash": "0xfaae215edbd658d78c41d91a881dd5ca9cd5ad1da63faaa94630088dea23b44b",
+      "pair": {
+        "package": "glob",
+        "from": "13.0.3",
+        "to": "13.0.4"
+      },
+      "policy_id": 0,
+      "envelope_hash": "aac98e0f7a72b881cca1e9afd820b4505b4c74c205f7852650699b73227bdf91",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790870323",
+      "valid_until_utc": "2026-10-01T15:58:43.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 30,
+      "hash": "0xda624d2a03155e453df3e3373f2ce391b8db88056f0225b117b48a66c1cc3626",
+      "pair": {
+        "package": "uuid",
+        "from": "14.0.1",
+        "to": "14.0.2"
+      },
+      "policy_id": 0,
+      "envelope_hash": "981644261ed155d155774f6ffe43270d5428be772fd70a7a19f5e30d9720ef72",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790870332",
+      "valid_until_utc": "2026-10-01T15:58:52.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 31,
+      "hash": "0x1c91b53f8c22ffae3ca02039f5423f2a2542ff6fc1176640620ea33672be60d6",
+      "pair": {
+        "package": "uuid",
+        "from": "13.0.2",
+        "to": "14.0.1"
+      },
+      "policy_id": 0,
+      "envelope_hash": "2da9dcb02975b9705400038c7a718a88256035f68d4327656dcdc309be21791c",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790870340",
+      "valid_until_utc": "2026-10-01T15:59:00.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 32,
+      "hash": "0x1b3951ffbecc5f149bfae764ee02ab2911b206d15ca3832650567a4ad4b29cc3",
+      "pair": {
+        "package": "uuid",
+        "from": "11.1.1",
+        "to": "13.0.2"
+      },
+      "policy_id": 0,
+      "envelope_hash": "0128f0256716c3e2d451506896fb6dcfa367f1caf6e3f14ff0722f8f3c37c07d",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790870347",
+      "valid_until_utc": "2026-10-01T15:59:07.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 33,
+      "hash": "0xe572a8451f783c3d1f81fdae953ab6b098df1962e207eb982bf7a37dbcfdb97b",
+      "pair": {
+        "package": "dotenv",
+        "from": "17.4.1",
+        "to": "17.4.2"
+      },
+      "policy_id": 0,
+      "envelope_hash": "18b66d41b593813d8c242b8017a936bdfe43d2dacb4222e8ee89a462d3298dac",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790870355",
+      "valid_until_utc": "2026-10-01T15:59:15.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 34,
+      "hash": "0xc16e5890e905e4e55f35d4fe50623d806abb57ee774094ccfc57f5240364c6a3",
+      "pair": {
+        "package": "dotenv",
+        "from": "17.4.0",
+        "to": "17.4.1"
+      },
+      "policy_id": 0,
+      "envelope_hash": "38929f3763c12e9ebe035b9493fff40e8cd8d09a92f7c40d32980b9f52e437d5",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790870362",
+      "valid_until_utc": "2026-10-01T15:59:22.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 35,
+      "hash": "0xd18d94028848e501fd074d3e9e4761040669eaa04315f8b3c63da9e822b49863",
+      "pair": {
+        "package": "dotenv",
+        "from": "17.3.1",
+        "to": "17.4.0"
+      },
+      "policy_id": 0,
+      "envelope_hash": "8155d46bce72284b483f369b48b3d31d286d2dc745fab2c93d154da393849f65",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790870369",
+      "valid_until_utc": "2026-10-01T15:59:29.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 36,
+      "hash": "0x9bf1572cead3fd2dc3dda2c5d6d99e831f9cbc13e8bc05664fe4e49d1a4c5e8d",
+      "pair": {
+        "package": "cross-env",
+        "from": "10.0.0",
+        "to": "10.1.0"
+      },
+      "policy_id": 0,
+      "envelope_hash": "03ff3645fc74301f7d43af122c35f62950bb6de112af74b67c81e9f4860567f2",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790870376",
+      "valid_until_utc": "2026-10-01T15:59:36.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 37,
+      "hash": "0xb3e46ab3d4af136e6d0ab38807834e75a6c160fce8d7caa7d5b0aaecb3c2a599",
+      "pair": {
+        "package": "cross-env",
+        "from": "7.0.3",
+        "to": "10.0.0"
+      },
+      "policy_id": 0,
+      "envelope_hash": "2da04c519c68cae371f0031058a80317a72a32d473989163305ab868961f173f",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790870383",
+      "valid_until_utc": "2026-10-01T15:59:43.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 38,
+      "hash": "0x9b698e21c461bd2f847805742619affd74b71424d171de696ce34a851f01c860",
+      "pair": {
+        "package": "cross-env",
+        "from": "7.0.2",
+        "to": "7.0.3"
+      },
+      "policy_id": 0,
+      "envelope_hash": "c83bf0cb9b42c55dc8e037d25d3381cc482a546a067b5ae41bb924ceb0f5ad1e",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790870391",
+      "valid_until_utc": "2026-10-01T15:59:51.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 39,
+      "hash": "0x528c2c8bd17930dfe89fca8c5b315425ea2410162d938bb66dbaa8071f9d77b5",
+      "pair": {
+        "package": "esbuild",
+        "from": "0.28.1",
+        "to": "0.28.2"
+      },
+      "policy_id": 0,
+      "envelope_hash": "149425104625ec70661c9501055b56a933a2354c67b0ea48a4701dc35500a619",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790870507",
+      "valid_until_utc": "2026-10-01T16:01:47.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 40,
+      "hash": "0xaf92f5644c769552a5359a04f4669d49ffe33b1282263d39462402bbd907e0df",
+      "pair": {
+        "package": "esbuild",
+        "from": "0.28.0",
+        "to": "0.28.1"
+      },
+      "policy_id": 0,
+      "envelope_hash": "f6111a289569905ac8d9ecc0359744bd81bc1e9dc90d1cf7feff2efaf65240d0",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790872706",
+      "valid_until_utc": "2026-10-01T16:38:26.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 41,
+      "hash": "0xd36755344c95025bcb8381d76ee151d2bbb264cba0b125f399f22ca5a6f9cd3b",
+      "pair": {
+        "package": "esbuild",
+        "from": "0.27.7",
+        "to": "0.28.0"
+      },
+      "policy_id": 0,
+      "envelope_hash": "bbe2675f758d2362f9c0ee67500e8ae5c61c1bd005bef9469a3d18135b011362",
+      "raw_status": 8,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790872955",
+      "valid_until_utc": "2026-10-01T16:42:35.000Z",
+      "expired": true,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": null,
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": true,
+      "additional_request_authorization_required": true,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 42,
+      "hash": "0xaa3cd3b21060c549a0a97cb152387a5a16f773970d7198ac1a046bc2c8b20294",
+      "pair": {
+        "package": "prettier",
+        "from": "3.9.5",
+        "to": "3.9.6"
+      },
+      "policy_id": 0,
+      "envelope_hash": "d390e0d8506bf9b85e807d90e2740b0e4e92d0e4ee66a0e2eb27a53cf6617edd",
+      "raw_status": 1,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790874521",
+      "valid_until_utc": "2026-10-01T17:08:41.000Z",
+      "expired": false,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": {
+        "slot": "47",
+        "hash": "0xaa3cd3b21060c549a0a97cb152387a5a16f773970d7198ac1a046bc2c8b20294"
+      },
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": false,
+      "additional_request_authorization_required": false,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    },
+    {
+      "row": 43,
+      "hash": "0x9c4710610908c6a2321938232440e5d8a7852f41306a9f79df73820496a18870",
+      "pair": {
+        "package": "prettier",
+        "from": "3.9.4",
+        "to": "3.9.5"
+      },
+      "policy_id": 0,
+      "envelope_hash": "5b10344d5636df1acab0d2cc58363a3b8796d8579b7c701dd7f19546de7f52e8",
+      "raw_status": 1,
+      "raw_consensus_result": 0,
+      "execution_result": 0,
+      "valid_until": "1790874820",
+      "valid_until_utc": "2026-10-01T17:13:40.000Z",
+      "expired": false,
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "current_queue_entry": {
+        "slot": "48",
+        "hash": "0x9c4710610908c6a2321938232440e5d8a7852f41306a9f79df73820496a18870"
+      },
+      "prior_single_repeat_used": false,
+      "canonical_original_envelope_hash_valid": true,
+      "submitted_evidence_matches_original": true,
+      "state_checks": {
+        "latest-final": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        },
+        "latest-nonfinal": {
+          "count_start": 22,
+          "count_end": 22,
+          "stable": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_match_count": 0,
+          "envelope_match_count": 0
+        }
+      },
+      "terminal_canceled_no_commit_candidate": false,
+      "additional_request_authorization_required": false,
+      "repeat_authorization_note": "No new request authorized by this read-only audit."
+    }
+  ],
+  "dedup_proof_basis": "The only seen-map assignment occurs after appending an attestation in the same atomic execution. Full finalized and current identity lists contain no matching canceled releases for requester+policy. No independent public dedup getter.",
+  "next_action_candidate": "Review at most one new request per proven terminal canceled pair after explicit authorization; row13 would be a second repeat and requires separate explicit approval. Preserve the active row21 and pending42/43.",
+  "historical_warning": "Subsequent authorized consensus progression can change status, queue membership and identity counts. Re-check current state before any new signature.",
+  "writes_performed_by_audit": false
+}

@@ -24,6 +24,7 @@ import urllib.request
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "cli"))
 
 import envelope as env  # noqa: E402
+import canceled_retry  # noqa: E402
 
 INCIDENTS = [
     ("event-stream", "3.3.4", "3.3.5", "takeover: right9ctrl gains publish rights"),
@@ -59,7 +60,7 @@ CONTROLS = [
 
 
 def classes_visible(facts: dict) -> list:
-    """Mechanical reading of the four MVP classes. Deliberately dumb.
+    """Mechanical reading of the historical four-class signal baseline.
 
     This is what a twenty-line script sees. The point of measuring it is to show
     how much of the work is left over for judgement.
@@ -215,7 +216,8 @@ def invalidate_comparison(report: dict) -> None:
     for key in ("consensus_counts", "mechanical_blocked", "mechanical_blocked_percent",
                 "consensus_risk_percent", "risk_reduction_percentage_points",
                 "inconclusive_percent", "consensus_blocked_percent",
-                "blocked_reduction_percentage_points"):
+                "blocked_reduction_percentage_points","candidate_vs_risk_difference_percentage_points",
+                "blocked_rate_difference_percentage_points","comparison_scope"):
         report.pop(key, None)
     for row in report["controls"]:
         row["status"] = "RECHECK_PENDING"
@@ -366,6 +368,32 @@ def next_scan_batch(rows, batch_size):
     return [i for i, row in enumerate(rows) if not row.get("transaction_hash")][:batch_size], True
 
 
+DEFERRED_STATUSES={"RETRY_APPROVAL_PENDING","AWAITING_FINAL_CONSENSUS","EXPIRED_PENDING_CLEANUP","FINALIZED_NONAGREEMENT"}
+
+def prepare_settlement_path(run_dir,index,row,save_report,failure=False):
+    """A replacement never resumes the previous transaction's receipt journal."""
+    if failure:
+        directory=run_dir/"failed-submissions";directory.mkdir(exist_ok=True)
+        return directory/("%02d-%s.finalization.json" % (index,row["transaction_hash"]))
+    path=run_dir/("%02d.receipt.json" % index)
+    if path.exists():
+        previous=json.loads(path.read_text())
+        if previous.get("hash")!=row["transaction_hash"]:
+            old_hash=previous.get("hash")
+            if not isinstance(old_hash,str)or not old_hash.startswith("0x")or len(old_hash)!=66:
+                raise ValueError("existing settlement receipt has no transaction identity")
+            directory=run_dir/"failed-submissions";directory.mkdir(exist_ok=True)
+            archived=directory/("%02d-%s.previous-receipt.json" % (index,old_hash))
+            if archived.exists()and archived.read_bytes()!=path.read_bytes():raise ValueError("previous settlement receipt archive changed")
+            if not archived.exists():
+                temporary=archived.with_suffix(".tmp");temporary.write_bytes(path.read_bytes());temporary.replace(archived)
+            records=row.setdefault("prior_settlement_receipts",[])
+            if not any(r["hash"]==old_hash for r in records):
+                records.append({"hash":old_hash,"path":str(archived),"sha256":hashlib.sha256(archived.read_bytes()).hexdigest()})
+            save_report()  # Preserve bytes/reference before replacing the old slot.
+            path.unlink()
+    return path
+
 def queue_capacity(queue, margin=2):
     maximum, pending = queue.get("maximum"), queue.get("pending")
     if type(maximum) is not int or type(pending) is not int or not 0 <= pending <= maximum or maximum <= margin:
@@ -444,6 +472,28 @@ def _consensus_main(arguments) -> int:
                              method="get_policy", args=[arguments.policy], variant="latest-nonfinal")["result"]
     if policy["policy_hash"] != arguments.policy_hash or policy.get("policy_id") != arguments.policy:
         raise ValueError("consumer policy hash does not match live chain")
+    canceled_entries={}
+    if getattr(arguments,"reschedule_canceled",None):
+        canceled_entries=canceled_retry.load_manifest(json.loads(arguments.reschedule_canceled.read_text()),report)
+        if set(canceled_entries)&set(getattr(arguments,"defer_pair",[])):
+            raise ValueError("a canceled retry cannot also be deferred")
+    def read_canceled_raw(journal,sender):
+        return gate_cli.bridge("canceled-proof",rpc=arguments.rpc,address=arguments.contract,
+            hash=journal["hash"],sender=sender,method=journal["method"],args=journal["args"])
+    def read_canceled_gates(variant):
+        return gate_cli.bridge("gates",rpc=arguments.rpc,address=arguments.contract,variant=variant)
+    def persist_canceled_history(row):
+        _save(arguments.out,report)
+        path=root/"runs/attempt-history.json"
+        history=json.loads(path.read_text())if path.exists()else{}
+        records=history.setdefault("canceled_consensus_attempts",[])
+        for old in row.get("canceled_consensus_attempts",[]):
+            if not any(item["hash"]==old["hash"]for item in records):
+                records.append({"hash":old["hash"],"status":old["status"],"contract":arguments.contract,
+                    "package":row["package"],"from":row["from"],"to":row["to"],"envelope_hash":old["envelope_hash"],
+                    "requester":old["requester"],"proof_sha256":old["proof_sha256"],"consensus_commit":False,
+                    "retry_basis":"Explicit one replacement anchored to this raw CANCELED/outside-queue hash, exact unchanged calldata, and both state views without a matching attestation."})
+        _save(path,history)
 
     # Validate all exact pins first. Existing transactions drain before a new
     # bounded batch, so a per-contract pending queue cannot be filled blindly.
@@ -521,7 +571,10 @@ def _consensus_main(arguments) -> int:
             if journal.get("hash"):
                 if row.get("transaction_hash") and row["transaction_hash"] != journal["hash"]:
                     raise ValueError("report/journal transaction mismatch at pair %d" % index)
-                if reschedule_results(index) and reschedule_matches_initial_failure(row,journal):
+                if index in canceled_entries and canceled_retry.is_anchored_original(row,canceled_entries[index],journal):
+                    canceled_retry.archive_canceled(journal_path,row,canceled_entries[index],read_canceled_raw,
+                        read_canceled_gates,_save,persist_canceled_history)
+                elif reschedule_results(index) and reschedule_matches_initial_failure(row,journal):
                     archive_uncommitted_consensus(journal_path,row,
                         lambda hash:gate_cli.bridge("receipt",rpc=arguments.rpc,hash=hash),
                         lambda:gate_cli.bridge("gates",rpc=arguments.rpc,address=arguments.contract),
@@ -530,6 +583,7 @@ def _consensus_main(arguments) -> int:
                     row["transaction_hash"] = journal["hash"]
                     row["status"] = "SUBMITTED"
             elif journal.get("submission_intent") and arguments.archive_reverted_submissions:
+                canceled_retry.forbid_replacement_intent_archive(row,journal)
                 archive_reverted_submission(journal_path,row,lambda hash:gate_cli.bridge("evm-receipt",rpc=arguments.rpc,hash=hash),lambda:persist_failure_history(row))
             elif journal.get("submission_intent"):
                 # Resolve an uncertain receipt without authorizing a replacement.
@@ -543,8 +597,7 @@ def _consensus_main(arguments) -> int:
     failures = []
     def settle_row(index):
         row = report["controls"][index]
-        prefix = run_dir / ("%02d" % index)
-        receipt_path = prefix.with_suffix(".receipt.json")
+        receipt_path=prepare_settlement_path(run_dir,index,row,lambda:_save(arguments.out,report))
         command = ["node", str(root / "scripts/live.mjs"), "settle", "--hash", row["transaction_hash"],
                    "--out", str(receipt_path), "--rpc", arguments.rpc, "--account", arguments.account,
                    "--timeout", str(arguments.timeout)]
@@ -585,7 +638,14 @@ def _consensus_main(arguments) -> int:
 
     def submit_row(index):
         row = report["controls"][index]
-        if row.get("failed_consensus_attempts"):
+        canceled_retry.require_fresh_manifest(row,canceled_entries.get(index))
+        if index in canceled_entries:
+            entry=canceled_entries[index]
+            records=[r for r in row.get("canceled_consensus_attempts",[])if r["hash"]==entry["expected_old_hash"]]
+            if len(records)!=1:raise ValueError("no durable canceled retry anchor archive")
+            original=json.loads(pathlib.Path(records[0]["journal"]).read_text())
+            canceled_retry.prove_canceled(original,entry,read_canceled_raw,read_canceled_gates)
+        elif row.get("failed_consensus_attempts"):
             if not reschedule_results(index):
                 raise ValueError("replacement requires explicit reschedule authorization for this pair and result")
             prior=json.loads(pathlib.Path(row["failed_consensus_attempts"][-1]["journal"]).read_text())
@@ -594,7 +654,9 @@ def _consensus_main(arguments) -> int:
                 lambda:gate_cli.bridge("gates",rpc=arguments.rpc,address=arguments.contract),reschedule_results(index))
         journal = gate_cli.bridge("write", rpc=arguments.rpc, address=arguments.contract,
             method="request_attestation", args=prepared_args[index],
-            account=arguments.account, out=pathlib.Path(row["journal"]))
+            account=arguments.account, out=pathlib.Path(row["journal"]),
+            **({"submission_ttl":arguments.submission_ttl} if getattr(arguments,"submission_ttl",None) else {}),
+            **({"expected_sender":canceled_entries[index]["requester"],"canceled_retry_anchor":canceled_entries[index]["expected_old_hash"]} if index in canceled_entries else {}))
         row.update(transaction_hash=journal["hash"], status="SUBMITTED")
         _save(arguments.out, report)
         print("SUBMITTED %02d/45 %s %s → %s %s" %
@@ -602,7 +664,7 @@ def _consensus_main(arguments) -> int:
 
     def settle_deferred_failure(index):
         row=report["controls"][index]
-        receipt_path=run_dir/("%02d.receipt.json" % index)
+        receipt_path=prepare_settlement_path(run_dir,index,row,lambda:_save(arguments.out,report),failure=True)
         command=["node",str(root/"scripts/live.mjs"),"settle","--hash",row["transaction_hash"],
             "--out",str(receipt_path),"--account",arguments.account,"--rpc",arguments.rpc,
             "--timeout","180","--finalize-nonagreement"]
@@ -614,7 +676,7 @@ def _consensus_main(arguments) -> int:
                 or receipt.get("status")!=7 or receipt.get("result") not in {2,5}
                 or document.get("hash")!=row["transaction_hash"] or receipt.get("recipient")!=arguments.contract):
             raise ValueError("nonagreement finalization proof mismatch")
-        row.update(failure_finalized=True,failure_receipt=str(receipt_path),consensus_status="FINALIZED",consensus_result=receipt["result"])
+        row.update(status="FINALIZED_NONAGREEMENT",failure_finalized=True,failure_receipt=str(receipt_path),consensus_status="FINALIZED",consensus_result=receipt["result"])
         _save(arguments.out,report)
         print("FINALIZED nonagreement pair %d; no accepted gate, no resubmission" % index,flush=True)
 
@@ -685,7 +747,7 @@ def _consensus_main(arguments) -> int:
             raise ValueError("paced scan timeout; resume the same report/journals")
         releases = release_journals()
         unfinished = [r for r in report["controls"] if r.get("transaction_hash") and r["status"] != "FINALIZED"
-                      and not (r["status"]=="RETRY_APPROVAL_PENDING" and r.get("failure_finalized"))]
+                      and not (r["status"] in DEFERRED_STATUSES and r.get("failure_finalized"))]
         hashes = [r["transaction_hash"] for r in unfinished]
         hashes += [j["hash"] for j in releases.values() if not j.get("trace_verified")]
         observation = gate_cli.bridge("poll",rpc=arguments.rpc,address=arguments.contract,args=hashes)
@@ -696,13 +758,24 @@ def _consensus_main(arguments) -> int:
                 continue
             state = by_hash[row["transaction_hash"]]
             row["consensus_status"] = state["status"]
-            if row["status"]=="RETRY_APPROVAL_PENDING":
+            if "result" in state:
+                row["consensus_result"]=state["result"]
+            if state.get("raw_observation"):
+                row["raw_consensus_observation"]=state["raw_observation"]
+            if state["status"]=="EXPIRED_PENDING_CLEANUP":
+                row.update(status="EXPIRED_PENDING_CLEANUP",reason="raw PENDING with expired validUntil; timestamp view projects CANCELED; no retry authorized")
+            if state.get("error"):
+                row["consensus_read_error"]=state["error"]
+            else:
+                row.pop("consensus_read_error",None)
+            if row["status"] in DEFERRED_STATUSES:
                 continue
-            if state["status"] in {"CANCELED","UNDETERMINED","VALIDATORS_TIMEOUT","LEADER_TIMEOUT"}:
+            if (state["status"] in {"CANCELED","UNDETERMINED","VALIDATORS_TIMEOUT","LEADER_TIMEOUT","EXPIRED_PENDING_CLEANUP"}
+                    or (state["status"]=="FINALIZED" and state.get("result") in {2,5})):
                 # Nonfinal followers have demonstrably changed CANCELED to
                 # ACCEPTED. Preserve their hashes and await the final outcome;
                 # no replacement is allocated automatically.
-                row.update(status="RETRY_APPROVAL_PENDING",reason="awaiting final consensus outcome: "+state["status"])
+                row.update(status="EXPIRED_PENDING_CLEANUP" if state["status"]=="EXPIRED_PENDING_CLEANUP" else "AWAITING_FINAL_CONSENSUS",reason="awaiting original transaction lifecycle: "+state["status"])
                 print("AWAITING pair %d %s; preserving original transaction" % (index,state["status"]),flush=True)
         _save(arguments.out,report)
         acted = False
@@ -715,7 +788,7 @@ def _consensus_main(arguments) -> int:
         publish_release()
         for index,row in enumerate(report["controls"]):
             state = by_hash.get(row.get("transaction_hash"))
-            if row["status"]=="RETRY_APPROVAL_PENDING" and state:
+            if row["status"] in DEFERRED_STATUSES and state:
                 if (state["status"]=="FINALIZED" or (state.get("capability") or {}).get("eligible")):
                     if state.get("result") in {2,5}:
                         settle_deferred_failure(index)
@@ -729,13 +802,14 @@ def _consensus_main(arguments) -> int:
                 acted = True
         if failures:
             break
-        if all(row["status"] in {"FINALIZED","RETRY_APPROVAL_PENDING"} for row in report["controls"]):
+        if all(row["status"]=="FINALIZED" or
+               (row["status"] in DEFERRED_STATUSES and row.get("failure_finalized")) for row in report["controls"]):
             break
         # Refresh authoritative capacity before each paid write, including
         # pending submissions made by other wallets or a browser.
         submitted = 0
         for index,row in enumerate(report["controls"]):
-            if row["status"] == "RETRY_APPROVAL_PENDING" or row.get("transaction_hash") or submitted >= arguments.batch_size:
+            if row["status"] in DEFERRED_STATUSES or row.get("transaction_hash") or submitted >= arguments.batch_size:
                 continue
             queue = gate_cli.bridge("poll",rpc=arguments.rpc,address=arguments.contract,args=[])["queue"]
             report["queue"] = queue
@@ -773,10 +847,13 @@ def _consensus_main(arguments) -> int:
     # A comparison is published only when all 45 exact pairs have real gates.
     if report["completed"]:
         report["consensus_risk_percent"] = counts["RISK"] * 100 / 45
-        report["risk_reduction_percentage_points"] = (mechanical_blocked-counts["RISK"]) * 100 / 45
+        report["candidate_vs_risk_difference_percentage_points"] = (mechanical_blocked-counts["RISK"]) * 100 / 45
         report["inconclusive_percent"] = counts["INCONCLUSIVE"] * 100 / 45
         report["consensus_blocked_percent"] = (counts["RISK"] + counts["INCONCLUSIVE"]) * 100 / 45
-        report["blocked_reduction_percentage_points"] = (mechanical_blocked - counts["RISK"] - counts["INCONCLUSIVE"]) * 100 / 45
+        report["blocked_rate_difference_percentage_points"] = (mechanical_blocked - counts["RISK"] - counts["INCONCLUSIVE"]) * 100 / 45
+        report["comparison_scope"] = {"mechanical_baseline_class_count":4,"consensus_policy_class_count":6,
+            "inconclusive_blocks_ci":True,"same_pinned_release_pairs":45,
+            "interpretation":"Observed rate differences under four visible-signal candidate classes and a six-class consensus policy; no ground truth, accuracy or false-positive reduction claim."}
     _save(arguments.out, report)
     return 0 if report["completed"] else 2
 
@@ -791,12 +868,14 @@ def main() -> int:
     parser.add_argument("--account", default="recuse-deployer")
     parser.add_argument("--rpc", default="https://rpc-bradbury.genlayer.com")
     parser.add_argument("--timeout", type=int, default=3600)
+    parser.add_argument("--submission-ttl",type=int,choices=range(3600,21601),metavar="SECONDS",help="new V6 submissions only: protocol validUntil lifetime, 3600–21600 seconds; existing hashes are unchanged")
     parser.add_argument("--batch-size", type=int, default=10, help="submit at most this many writes before finalizing them (1–20)")
     parser.add_argument("--archive-reverted-submissions", action="store_true", help="explicitly archive proven reverted EVM submissions before scheduling replacement writes")
     parser.add_argument("--queue-paced", action="store_true", help="pace writes by authoritative queue capacity with two free slots, finalizing eligible receipts serially")
     parser.add_argument("--finalize-release", action="store_true", help="prioritize existing runs deploy/policy/first-attestation journals in the single-writer paced loop")
     parser.add_argument("--reschedule-undetermined",type=int,action="append",default=[],metavar="INDEX",help="explicitly reschedule this pair only after live no-commit proof; preserve failed consensus hash and journal")
     parser.add_argument("--reschedule-disagree",type=int,action="append",default=[],metavar="INDEX",help="after explicit operator approval, schedule one replacement for FINALIZED DISAGREE result2 with fresh no-commit proof")
+    parser.add_argument("--reschedule-canceled",type=pathlib.Path,metavar="MANIFEST.json",help="after explicit operator approval, one new request per fixed index/old-hash/envelope manifest; fresh raw canceled/outside-queue and both gate state views required")
     parser.add_argument("--defer-pair",type=int,action="append",default=[],metavar="INDEX",help="leave this pair awaiting operator approval while completing others; report stays incomplete")
     root = pathlib.Path(__file__).resolve().parents[1]
     parser.add_argument("--baseline", type=pathlib.Path, default=root / "corpus/scan-report.json")

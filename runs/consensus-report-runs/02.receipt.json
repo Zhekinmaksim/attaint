@@ -9,7 +9,7 @@
   "hash": "0xc7bfc4c007ac1abba26964000f60675fb6cd8f4641f2b51c4b8482c4efdb4bb0",
   "trace_verified": true,
   "receipt": {
-    "currentTimestamp": "1790869671",
+    "currentTimestamp": "1790876353",
     "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
     "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
     "initialRotations": "3",

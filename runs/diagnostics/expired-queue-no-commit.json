@@ -1,0 +1,705 @@
+{
+  "kind": "sanitized public queue-expiry and cleanup candidate; no signed transactions in this audit",
+  "network": "GenLayer Bradbury",
+  "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+  "block": "0x16333bd",
+  "block_timestamp": 1790872999,
+  "block_timestamp_utc": "2026-10-01T16:43:19.000Z",
+  "raw_pending_entries": 18,
+  "expired_entries": 15,
+  "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+  "expired_pairs": [
+    {
+      "row": 28,
+      "slot": "31",
+      "transaction": "0x4cce7ccd84bb39908593c45f5ce3c126db729cb8f1b8118e7d0636883f6187a5",
+      "pair": {
+        "package": "glob",
+        "from": "13.0.4",
+        "to": "13.0.5"
+      },
+      "envelope_hash": "b11f77fd4fa7cc78288a1217ee8d45db98269f5827d14e9dd4187c726d04069a",
+      "valid_until_utc": "2026-10-01T15:58:35.000Z",
+      "raw_status": "PENDING",
+      "expired": true,
+      "attestation_committed": false,
+      "dedup_committed": false,
+      "canonical_original_verified": true,
+      "identity_checks": {
+        "latest-final": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        },
+        "latest-nonfinal": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        }
+      },
+      "projected_status_code": 8,
+      "projected_status": "CANCELED",
+      "raw_status_code": 1,
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a"
+    },
+    {
+      "row": 29,
+      "slot": "32",
+      "transaction": "0xfaae215edbd658d78c41d91a881dd5ca9cd5ad1da63faaa94630088dea23b44b",
+      "pair": {
+        "package": "glob",
+        "from": "13.0.3",
+        "to": "13.0.4"
+      },
+      "envelope_hash": "aac98e0f7a72b881cca1e9afd820b4505b4c74c205f7852650699b73227bdf91",
+      "valid_until_utc": "2026-10-01T15:58:43.000Z",
+      "raw_status": "PENDING",
+      "expired": true,
+      "attestation_committed": false,
+      "dedup_committed": false,
+      "canonical_original_verified": true,
+      "identity_checks": {
+        "latest-final": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        },
+        "latest-nonfinal": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        }
+      },
+      "projected_status_code": 8,
+      "projected_status": "CANCELED",
+      "raw_status_code": 1,
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a"
+    },
+    {
+      "row": 30,
+      "slot": "33",
+      "transaction": "0xda624d2a03155e453df3e3373f2ce391b8db88056f0225b117b48a66c1cc3626",
+      "pair": {
+        "package": "uuid",
+        "from": "14.0.1",
+        "to": "14.0.2"
+      },
+      "envelope_hash": "981644261ed155d155774f6ffe43270d5428be772fd70a7a19f5e30d9720ef72",
+      "valid_until_utc": "2026-10-01T15:58:52.000Z",
+      "raw_status": "PENDING",
+      "expired": true,
+      "attestation_committed": false,
+      "dedup_committed": false,
+      "canonical_original_verified": true,
+      "identity_checks": {
+        "latest-final": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        },
+        "latest-nonfinal": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        }
+      },
+      "projected_status_code": 8,
+      "projected_status": "CANCELED",
+      "raw_status_code": 1,
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a"
+    },
+    {
+      "row": 31,
+      "slot": "34",
+      "transaction": "0x1c91b53f8c22ffae3ca02039f5423f2a2542ff6fc1176640620ea33672be60d6",
+      "pair": {
+        "package": "uuid",
+        "from": "13.0.2",
+        "to": "14.0.1"
+      },
+      "envelope_hash": "2da9dcb02975b9705400038c7a718a88256035f68d4327656dcdc309be21791c",
+      "valid_until_utc": "2026-10-01T15:59:00.000Z",
+      "raw_status": "PENDING",
+      "expired": true,
+      "attestation_committed": false,
+      "dedup_committed": false,
+      "canonical_original_verified": true,
+      "identity_checks": {
+        "latest-final": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        },
+        "latest-nonfinal": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        }
+      },
+      "projected_status_code": 8,
+      "projected_status": "CANCELED",
+      "raw_status_code": 1,
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a"
+    },
+    {
+      "row": 32,
+      "slot": "35",
+      "transaction": "0x1b3951ffbecc5f149bfae764ee02ab2911b206d15ca3832650567a4ad4b29cc3",
+      "pair": {
+        "package": "uuid",
+        "from": "11.1.1",
+        "to": "13.0.2"
+      },
+      "envelope_hash": "0128f0256716c3e2d451506896fb6dcfa367f1caf6e3f14ff0722f8f3c37c07d",
+      "valid_until_utc": "2026-10-01T15:59:07.000Z",
+      "raw_status": "PENDING",
+      "expired": true,
+      "attestation_committed": false,
+      "dedup_committed": false,
+      "canonical_original_verified": true,
+      "identity_checks": {
+        "latest-final": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        },
+        "latest-nonfinal": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        }
+      },
+      "projected_status_code": 8,
+      "projected_status": "CANCELED",
+      "raw_status_code": 1,
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a"
+    },
+    {
+      "row": 33,
+      "slot": "36",
+      "transaction": "0xe572a8451f783c3d1f81fdae953ab6b098df1962e207eb982bf7a37dbcfdb97b",
+      "pair": {
+        "package": "dotenv",
+        "from": "17.4.1",
+        "to": "17.4.2"
+      },
+      "envelope_hash": "18b66d41b593813d8c242b8017a936bdfe43d2dacb4222e8ee89a462d3298dac",
+      "valid_until_utc": "2026-10-01T15:59:15.000Z",
+      "raw_status": "PENDING",
+      "expired": true,
+      "attestation_committed": false,
+      "dedup_committed": false,
+      "canonical_original_verified": true,
+      "identity_checks": {
+        "latest-final": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        },
+        "latest-nonfinal": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        }
+      },
+      "projected_status_code": 8,
+      "projected_status": "CANCELED",
+      "raw_status_code": 1,
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a"
+    },
+    {
+      "row": 34,
+      "slot": "37",
+      "transaction": "0xc16e5890e905e4e55f35d4fe50623d806abb57ee774094ccfc57f5240364c6a3",
+      "pair": {
+        "package": "dotenv",
+        "from": "17.4.0",
+        "to": "17.4.1"
+      },
+      "envelope_hash": "38929f3763c12e9ebe035b9493fff40e8cd8d09a92f7c40d32980b9f52e437d5",
+      "valid_until_utc": "2026-10-01T15:59:22.000Z",
+      "raw_status": "PENDING",
+      "expired": true,
+      "attestation_committed": false,
+      "dedup_committed": false,
+      "canonical_original_verified": true,
+      "identity_checks": {
+        "latest-final": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        },
+        "latest-nonfinal": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        }
+      },
+      "projected_status_code": 8,
+      "projected_status": "CANCELED",
+      "raw_status_code": 1,
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a"
+    },
+    {
+      "row": 35,
+      "slot": "38",
+      "transaction": "0xd18d94028848e501fd074d3e9e4761040669eaa04315f8b3c63da9e822b49863",
+      "pair": {
+        "package": "dotenv",
+        "from": "17.3.1",
+        "to": "17.4.0"
+      },
+      "envelope_hash": "8155d46bce72284b483f369b48b3d31d286d2dc745fab2c93d154da393849f65",
+      "valid_until_utc": "2026-10-01T15:59:29.000Z",
+      "raw_status": "PENDING",
+      "expired": true,
+      "attestation_committed": false,
+      "dedup_committed": false,
+      "canonical_original_verified": true,
+      "identity_checks": {
+        "latest-final": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        },
+        "latest-nonfinal": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        }
+      },
+      "projected_status_code": 8,
+      "projected_status": "CANCELED",
+      "raw_status_code": 1,
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a"
+    },
+    {
+      "row": 36,
+      "slot": "39",
+      "transaction": "0x9bf1572cead3fd2dc3dda2c5d6d99e831f9cbc13e8bc05664fe4e49d1a4c5e8d",
+      "pair": {
+        "package": "cross-env",
+        "from": "10.0.0",
+        "to": "10.1.0"
+      },
+      "envelope_hash": "03ff3645fc74301f7d43af122c35f62950bb6de112af74b67c81e9f4860567f2",
+      "valid_until_utc": "2026-10-01T15:59:36.000Z",
+      "raw_status": "PENDING",
+      "expired": true,
+      "attestation_committed": false,
+      "dedup_committed": false,
+      "canonical_original_verified": true,
+      "identity_checks": {
+        "latest-final": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        },
+        "latest-nonfinal": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        }
+      },
+      "projected_status_code": 8,
+      "projected_status": "CANCELED",
+      "raw_status_code": 1,
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a"
+    },
+    {
+      "row": 37,
+      "slot": "40",
+      "transaction": "0xb3e46ab3d4af136e6d0ab38807834e75a6c160fce8d7caa7d5b0aaecb3c2a599",
+      "pair": {
+        "package": "cross-env",
+        "from": "7.0.3",
+        "to": "10.0.0"
+      },
+      "envelope_hash": "2da04c519c68cae371f0031058a80317a72a32d473989163305ab868961f173f",
+      "valid_until_utc": "2026-10-01T15:59:43.000Z",
+      "raw_status": "PENDING",
+      "expired": true,
+      "attestation_committed": false,
+      "dedup_committed": false,
+      "canonical_original_verified": true,
+      "identity_checks": {
+        "latest-final": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        },
+        "latest-nonfinal": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        }
+      },
+      "projected_status_code": 8,
+      "projected_status": "CANCELED",
+      "raw_status_code": 1,
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a"
+    },
+    {
+      "row": 38,
+      "slot": "41",
+      "transaction": "0x9b698e21c461bd2f847805742619affd74b71424d171de696ce34a851f01c860",
+      "pair": {
+        "package": "cross-env",
+        "from": "7.0.2",
+        "to": "7.0.3"
+      },
+      "envelope_hash": "c83bf0cb9b42c55dc8e037d25d3381cc482a546a067b5ae41bb924ceb0f5ad1e",
+      "valid_until_utc": "2026-10-01T15:59:51.000Z",
+      "raw_status": "PENDING",
+      "expired": true,
+      "attestation_committed": false,
+      "dedup_committed": false,
+      "canonical_original_verified": true,
+      "identity_checks": {
+        "latest-final": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        },
+        "latest-nonfinal": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        }
+      },
+      "projected_status_code": 8,
+      "projected_status": "CANCELED",
+      "raw_status_code": 1,
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a"
+    },
+    {
+      "row": 39,
+      "slot": "42",
+      "transaction": "0x528c2c8bd17930dfe89fca8c5b315425ea2410162d938bb66dbaa8071f9d77b5",
+      "pair": {
+        "package": "esbuild",
+        "from": "0.28.1",
+        "to": "0.28.2"
+      },
+      "envelope_hash": "149425104625ec70661c9501055b56a933a2354c67b0ea48a4701dc35500a619",
+      "valid_until_utc": "2026-10-01T16:01:47.000Z",
+      "raw_status": "PENDING",
+      "expired": true,
+      "attestation_committed": false,
+      "dedup_committed": false,
+      "canonical_original_verified": true,
+      "identity_checks": {
+        "latest-final": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        },
+        "latest-nonfinal": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        }
+      },
+      "projected_status_code": 8,
+      "projected_status": "CANCELED",
+      "raw_status_code": 1,
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a"
+    },
+    {
+      "row": 13,
+      "slot": "43",
+      "transaction": "0xc4a6b8a7f1488230da97ea26550985eb73585bc3ca8e8fee330ad58081e9084c",
+      "pair": {
+        "package": "express",
+        "from": "5.2.1",
+        "to": "4.22.1"
+      },
+      "envelope_hash": "cf65e0906a1ab6c479c4a55104928095f4b92d1b5973727238c25ab63f04d7a7",
+      "valid_until_utc": "2026-10-01T16:35:30.000Z",
+      "raw_status": "PENDING",
+      "expired": true,
+      "attestation_committed": false,
+      "dedup_committed": false,
+      "canonical_original_verified": true,
+      "identity_checks": {
+        "latest-final": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        },
+        "latest-nonfinal": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        }
+      },
+      "projected_status_code": 8,
+      "projected_status": "CANCELED",
+      "raw_status_code": 1,
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a"
+    },
+    {
+      "row": 40,
+      "slot": "44",
+      "transaction": "0xaf92f5644c769552a5359a04f4669d49ffe33b1282263d39462402bbd907e0df",
+      "pair": {
+        "package": "esbuild",
+        "from": "0.28.0",
+        "to": "0.28.1"
+      },
+      "envelope_hash": "f6111a289569905ac8d9ecc0359744bd81bc1e9dc90d1cf7feff2efaf65240d0",
+      "valid_until_utc": "2026-10-01T16:38:26.000Z",
+      "raw_status": "PENDING",
+      "expired": true,
+      "attestation_committed": false,
+      "dedup_committed": false,
+      "canonical_original_verified": true,
+      "identity_checks": {
+        "latest-final": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        },
+        "latest-nonfinal": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        }
+      },
+      "projected_status_code": 8,
+      "projected_status": "CANCELED",
+      "raw_status_code": 1,
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a"
+    },
+    {
+      "row": 41,
+      "slot": "45",
+      "transaction": "0xd36755344c95025bcb8381d76ee151d2bbb264cba0b125f399f22ca5a6f9cd3b",
+      "pair": {
+        "package": "esbuild",
+        "from": "0.27.7",
+        "to": "0.28.0"
+      },
+      "envelope_hash": "bbe2675f758d2362f9c0ee67500e8ae5c61c1bd005bef9469a3d18135b011362",
+      "valid_until_utc": "2026-10-01T16:42:35.000Z",
+      "raw_status": "PENDING",
+      "expired": true,
+      "attestation_committed": false,
+      "dedup_committed": false,
+      "canonical_original_verified": true,
+      "identity_checks": {
+        "latest-final": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        },
+        "latest-nonfinal": {
+          "attestation_count_start": 22,
+          "attestation_count_end": 22,
+          "stable_count": true,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+          "release_matches": 0,
+          "exact_envelope_matches": 0
+        }
+      },
+      "projected_status_code": 8,
+      "projected_status": "CANCELED",
+      "raw_status_code": 1,
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a"
+    }
+  ],
+  "unexpired_entries": [
+    {
+      "row": 21,
+      "slot": "46",
+      "transaction": "0xc496de7de05cdb11dbce0c4fd606e2dc9d0b1c287c51fe3ce8e71dcf5a83b48f",
+      "pair": {
+        "package": "yargs",
+        "from": "17.7.3",
+        "to": "18.1.0"
+      },
+      "valid_until_utc": "2026-10-01T17:02:07.000Z"
+    },
+    {
+      "row": 42,
+      "slot": "47",
+      "transaction": "0xaa3cd3b21060c549a0a97cb152387a5a16f773970d7198ac1a046bc2c8b20294",
+      "pair": {
+        "package": "prettier",
+        "from": "3.9.5",
+        "to": "3.9.6"
+      },
+      "valid_until_utc": "2026-10-01T17:08:41.000Z"
+    },
+    {
+      "row": 43,
+      "slot": "48",
+      "transaction": "0x9c4710610908c6a2321938232440e5d8a7852f41306a9f79df73820496a18870",
+      "pair": {
+        "package": "prettier",
+        "from": "3.9.4",
+        "to": "3.9.5"
+      },
+      "valid_until_utc": "2026-10-01T17:13:40.000Z"
+    }
+  ],
+  "cleanup_candidate": {
+    "function": "ConsensusMain.cancelTransaction(bytes32)",
+    "contract": "0x0112Bf6e83497965A5fdD6Dad1E447a6E004271D",
+    "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+    "initial_head": "0x4cce7ccd84bb39908593c45f5ce3c126db729cb8f1b8118e7d0636883f6187a5",
+    "simulation_succeeded": true,
+    "estimated_gas": 2120655,
+    "gas_price_wei": "157061550",
+    "estimated_fee_wei": "333073361315250",
+    "requirements": [
+      "Re-read a fresh fixed-block raw queue head and TransactionManager record before every signature.",
+      "Cancel only the current expired head belonging to the original sender and this contract.",
+      "After one call, re-read queue head/count because the operation may also advance expired followers.",
+      "Stop before any current unexpired head; no verdict requests are authorized by this audit."
+    ],
+    "permission": "Sender required; other caller fails CallerNotSender. Queue promotion from sender fails Unauthorized.",
+    "dry_trace_limit": "debug_traceCall unavailable (-32601); exact batch state changes cannot be inspected before broadcast."
+  },
+  "expiry_cause": "Installed GenLayer JS1.1.8 V6 submission hardcodes validUntil=currentUnixTime+3600. Projected CANCELED does not materialize raw pending removal.",
+  "future_submission_assessment": "Do not submit long pending batches with the one-hour default. Consider a longer explicit TTL and a small active batch, with authoritative deadline checks before new sends. Changing TTL alone does not restore expired submissions.",
+  "writes_performed": false,
+  "historical_observed_at": "2026-10-01T16:43:13.368Z",
+  "historical_state_started_at": "2026-10-01T16:43:50.158Z",
+  "historical_state_finished_at": "2026-10-01T16:44:50.200Z",
+  "projection_verified_against_same_historical_block": true,
+  "projection_verified_at": "2026-10-01T16:48:48.758Z",
+  "observation_warning": "Historical fixed-block evidence. Authorized subsequent lifecycle cleanup can change raw statuses, counts, and queue heads; these values are not current status claims."
+}

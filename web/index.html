@@ -656,7 +656,7 @@ function renderCell(){
     return;
   }
   $("cellSay").textContent = state.mode === "cons"
-    ? "The finalized consensus comparison is pending. This cell has no published chain verdict yet."
+    ? "The full 45-pair consensus comparison is pending. Current receipts and unfinished rows are listed in the consensus report."
     : (cell.hits.length
         ? "Blocked by a mechanical reading. None of it is a detection of anything: a minified dist directory and a second maintainer are ordinary npm practice."
         : "Passed untouched. Nineteen of forty-five releases give a deterministic linter nothing to say.");
@@ -696,7 +696,7 @@ function renderBars(){
 function renderTally(){
   var mech = state.mode === "mech";
   $("tally").className = "tally" + (mech ? "" : " cons");
-  $("tallyBig").textContent = mech ? (BLOCKED / 45 * 100).toFixed(1) + "%" : "not measured";
+  $("tallyBig").textContent = mech ? (BLOCKED / 45 * 100).toFixed(1) + "%" : "pending";
   $("tallySay").textContent = mech
     ? BLOCKED + " of 45 consecutive releases of fifteen popular packages. A gate that blocks three updates in five is switched off on its first day."
     : "The finalized consensus comparison is pending. It will use the same 45 pinned release pairs.";

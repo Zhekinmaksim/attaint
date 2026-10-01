@@ -25,6 +25,7 @@ DIRECTORIES = {
 FILES = (
     "README.md", "FINDINGS.md", "SUBMISSION.md", "package.json", "package-lock.json",
     "requirements-dev.txt", "vercel.json", "web/index.html", "web/app.js", ".gitignore", ".vercelignore",
+    "scripts/transaction_manager_abi.json", "scripts/queue_head_abi.json",
 )
 RELEASE_FILES = (
     "runs/deployment.json", "runs/consensus-report.json", "runs/deploy.json",
@@ -37,6 +38,11 @@ RELEASE_FILES = (
     "runs/ci-verification.json",
     "runs/diagnostics/express-finalized-no-commit.json",
     "runs/diagnostics/yargs-finalized-no-commit.json",
+    "runs/diagnostics/failed-rows-23-24.json",
+    "runs/diagnostics/expired-queue-no-commit.json",
+    "runs/diagnostics/expired-cleanup-summary.json",
+    "runs/diagnostics/post-cleanup-unfinished-no-commit.json",
+    "runs/diagnostics/canceled-retry-manifest.json",
     "runs/diagnostics/locator-enum-simulation/manifest.json",
     "runs/diagnostics/locator-enum-simulation/report.json",
     "runs/diagnostics/locator-enum-simulation/leader-summary.json",
@@ -97,7 +103,7 @@ def allowed_sources(root: pathlib.Path) -> list[pathlib.Path]:
     if run_directory.exists():
         for path in run_directory.iterdir():
             if path.name == "mechanical-baseline.json" or re.fullmatch(
-                    r"\d{2}(?:\.envelope|\.transaction|\.receipt|\.gate)\.json", path.name):
+                    r"(?:[0-3]\d|4[0-4])(?:\.envelope|\.transaction|\.receipt|\.gate)\.json", path.name):
                 selected.add(path)
     approved = []
     for path in sorted(selected):

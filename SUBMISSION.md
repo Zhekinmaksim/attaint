@@ -65,6 +65,9 @@ guaranteed by this verification path.
 
 The historical 57.8% rate is a mechanical candidate baseline. Do not label it a
 consensus block rate or claim a measured improvement without the completed results.
+The baseline covers four candidate classes and the consensus policy covers six.
+The final report's `comparison_scope` preserves this distinction; rate differences
+do not establish accuracy or reduced false positives without ground truth.
 
 
 ## Current links and verified status
@@ -84,6 +87,8 @@ and the release bindings are in `runs/deployment.json`.
 
 The production browser read verified `CLEAN`, registry metadata `VERIFIED` and
 six judgments; the manual transaction-hash check verified `FINALIZED`.
+Manual success requires consensus result 1, finalized last-round result 1,
+matching transaction/contract identity and a `request_attestation` method.
 The [GitHub Actions run](https://github.com/Zhekinmaksim/attaint/actions/runs/36879515907)
 passed offline tests and the live gate for attestation `0` on commit
 `c27f67f9af8ae74034630cbaef8d839b57c09e9f`. The CI record is
@@ -94,23 +99,55 @@ Two read-only GenVM validator replays passed with a simulated leader verdict
 judgments and returned `CLEAN` for the same pinned envelope and policy parameters.
 A diagnostic replay is not network consensus. Do not advertise that simulated
 risk finding as a live detection; the finalized live result missed the historical
-handover risk. At the verified checkpoint, 20/45 original corpus pairs had finalized
-gates: 14 `CLEAN`, six `INCONCLUSIVE`, zero `RISK`. Express index 13 ended
+handover risk. At the verified checkpoint (`observed_at: 2026-10-01T16:39:00Z`),
+21/45 original corpus pairs had finalized gates: 14 `CLEAN`, seven `INCONCLUSIVE`,
+zero `RISK`. Express index 13 ended
 `FINALIZED / NO_MAJORITY` without a committed attestation. Its original hash and
-no-commit proof are preserved. After automatic approval review rejected
-resubmission, the user explicitly approved exactly one fresh Express request.
+no-commit proof are preserved. The user explicitly approved exactly one fresh Express request.
 Its [replacement transaction](https://explorer-bradbury.genlayer.com/tx/0xc4a6b8a7f1488230da97ea26550985eb73585bc3ca8e8fee330ad58081e9084c)
-was submitted and awaits finalization at this checkpoint. Yargs index 21 ended
+was submitted and projected as `CANCELED` at this checkpoint. Yargs index 21 ended
 `FINALIZED / MajorityDisagree` (result 2), without a committed attestation in
 either state view. The sanitized proof is
 `runs/diagnostics/yargs-finalized-no-commit.json`. The user explicitly approved
-exactly one fresh Yargs request with the same policy and envelope; the sole
-writer schedules it through the guarded `--reschedule-disagree 21` path.
-Neither approval authorizes further retries. The counts above remain a verified
+exactly one fresh Yargs request with the same policy and envelope. Its
+[replacement](https://explorer-bradbury.genlayer.com/tx/0xc496de7de05cdb11dbce0c4fd606e2dc9d0b1c287c51fe3ce8e71dcf5a83b48f)
+was projected as `CANCELED` at this checkpoint. Both approvals have been used. One retry
+each for indices 23 and 24 is separately approved. Those requests and original
+index 44 have now been submitted with six-hour V6 deadlines, preserving all other
+submission arguments:
+[23](https://explorer-bradbury.genlayer.com/tx/0x64b675b6497880018d26281ed90614e69fc21f13adae86accb0018c853a0ce3d),
+[24](https://explorer-bradbury.genlayer.com/tx/0xe0d87e4fa0ce20e486572c0330a9c86a1d6951c6f2405cedab22493ace1017ae),
+[44](https://explorer-bradbury.genlayer.com/tx/0xfd481df56855efb35eb64cf903f42f2a5c2a9f1878941d063f4f9bcea5ff0491).
+The subsequent queue read showed six pending entries. These submissions are not
+finalized gates. Original audits are
+preserved; no further retries of indices 13 or 21 are authorized.
+The counts above remain a verified
 checkpoint, not a live total.
 The full 45-pair comparison and measured consensus metrics remain pending;
 no full-sample percentages or improvement are claimed. See the README for
 queue pacing, resume behavior and the guarded operator-authorized retry.
+
+Canceled or expired observations and a `ValidatorSelectionFailed` minimal-metadata
+fallback are not verdicts. The fallback cannot prove successful execution or
+produce an accepted gate. The historical audit at block `0x16333bd`
+(1 October 2026, 16:43:19 UTC) confirmed 15 raw `PENDING` entries past
+`validUntil`, projected as `CANCELED` but still occupying the pending queue.
+They had no matching committed attestations in either state view. The public
+proof is `runs/diagnostics/expired-queue-no-commit.json`. Cleanup completed at
+16:56 UTC: eight successful EVM cancellation calls removed the 15 expired slots,
+reducing pending entries from 18 to 3, with fees of 0.00136827391252365 test GEN.
+It stopped at the outside-list Yargs replacement, leaving indices 21, 42 and 43
+untouched. The public
+[cleanup summary](https://attaint.vercel.app/diagnostics/expired-cleanup-summary.json)
+preserves the receipts. This authorized no new retries and supplied no consensus
+verdicts; the 21/45 gate checkpoint is unchanged.
+
+The historical
+[post-cleanup no-commit audit](https://attaint.vercel.app/diagnostics/post-cleanup-unfinished-no-commit.json)
+identified 18 raw canceled releases without matching attestations (index 13 and
+25–41). A separate fresh-request batch is being prepared for explicit approval;
+none of these 18 requests is approved or submitted. Existing active hashes remain
+preserved, and the historical audit must be rechecked before any signature.
 
 The prior contract
 [`0x74407aE5e92002F4F0E1A912C7e785837a67F3C8`](https://explorer-bradbury.genlayer.com/address/0x74407aE5e92002F4F0E1A912C7e785837a67F3C8)

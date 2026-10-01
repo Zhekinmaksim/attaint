@@ -1,0 +1,83 @@
+{
+  "kind": "sanitized finalized failed-consensus audits",
+  "entries": [
+    {
+      "kind": "sanitized original finalized failed-consensus audit",
+      "row": 23,
+      "network": "GenLayer Bradbury",
+      "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "transaction": "0x73eaa46b05374cfd571e52dda0d28a6812b191816ba0e6095841d828e0818ec6",
+      "release": {
+        "package": "yargs",
+        "from": "18.0.0",
+        "to": "16.2.2"
+      },
+      "status": "FINALIZED",
+      "status_code": 7,
+      "consensus_result": "MajorityDisagree",
+      "consensus_result_code": 2,
+      "leader_execution_result_code": 1,
+      "contract_error": false,
+      "terminal_round": 2,
+      "votes": {
+        "agree": 0,
+        "nondeterministic_disagreement": 4,
+        "timeout": 1
+      },
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "envelope_hash": "c3ac9ac91911d72a61ffc4e583b0c07d54afedc0a8666b82d61d4ba323f04169",
+      "canonical_envelope_verified": true,
+      "submitted_evidence_matches_original": true,
+      "attestation_committed": false,
+      "state_checks": {
+        "latest_final_count": 22,
+        "latest_final_identity_present": false,
+        "latest_nonfinal_count": 22,
+        "latest_nonfinal_identity_present": false
+      },
+      "dedup_assessment": "No reservation committed: the only seen assignment follows attestation append in the same atomic execution; identity absent in both finalized and current state. No separate public dedup getter.",
+      "retry_submitted_by_audit": false,
+      "observed_at": "2026-10-01T16:16:31.269Z"
+    },
+    {
+      "kind": "sanitized original finalized failed-consensus audit",
+      "row": 24,
+      "network": "GenLayer Bradbury",
+      "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "transaction": "0x0b8df2ba1d7a8180d60fa29377e077246f2f28ae4c6bd980b2464c9aec49a788",
+      "release": {
+        "package": "rimraf",
+        "from": "6.1.2",
+        "to": "6.1.3"
+      },
+      "status": "FINALIZED",
+      "status_code": 7,
+      "consensus_result": "MajorityDisagree",
+      "consensus_result_code": 2,
+      "leader_execution_result_code": 1,
+      "contract_error": false,
+      "terminal_round": 0,
+      "votes": {
+        "agree": 0,
+        "nondeterministic_disagreement": 4,
+        "timeout": 1
+      },
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "envelope_hash": "28ffb2bece9ce452d247a2e830b9bd7c4d310f9de2814f130c932ccd2c0f2487",
+      "canonical_envelope_verified": true,
+      "submitted_evidence_matches_original": true,
+      "attestation_committed": false,
+      "state_checks": {
+        "latest_final_count": 22,
+        "latest_final_identity_present": false,
+        "latest_nonfinal_count": 22,
+        "latest_nonfinal_identity_present": false
+      },
+      "dedup_assessment": "No reservation committed: the only seen assignment follows attestation append in the same atomic execution; identity absent in both finalized and current state. No separate public dedup getter.",
+      "retry_submitted_by_audit": false,
+      "observed_at": "2026-10-01T16:16:31.272Z"
+    }
+  ]
+}

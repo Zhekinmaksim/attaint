@@ -14,6 +14,20 @@ spec.loader.exec_module(scan)
 
 
 class ScanBatchTests(unittest.TestCase):
+    def test_replacement_settlement_preserves_original_receipt(self):
+        with tempfile.TemporaryDirectory()as directory:
+            root=pathlib.Path(directory);old='0x'+'1'*64;new='0x'+'2'*64
+            path=root/'21.receipt.json';path.write_text(json.dumps({'hash':old,'failure_finalized':True}))
+            row={'transaction_hash':new}
+            failure=scan.prepare_settlement_path(root,21,row,lambda:None,failure=True)
+            self.assertNotEqual(failure,path);self.assertIn(new,failure.name);self.assertTrue(path.exists())
+            def failed_save():raise OSError('report unavailable')
+            with self.assertRaises(OSError):scan.prepare_settlement_path(root,21,row,failed_save)
+            self.assertTrue(path.exists())
+            actual=scan.prepare_settlement_path(root,21,row,lambda:None)
+            self.assertEqual(actual,path);self.assertFalse(path.exists())
+            archived=pathlib.Path(row['prior_settlement_receipts'][0]['path'])
+            self.assertEqual(json.loads(archived.read_text())['hash'],old)
     def test_one_reschedule_flag_never_replaces_a_failed_replacement(self):
         self.assertTrue(scan.reschedule_matches_initial_failure({}, {"hash":"original"}))
         row={"failed_consensus_attempts":[{"hash":"original"}]}
