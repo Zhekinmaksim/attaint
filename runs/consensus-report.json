@@ -577,8 +577,8 @@
       "mechanical_classes": [],
       "package": "express",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0xc4a6b8a7f1488230da97ea26550985eb73585bc3ca8e8fee330ad58081e9084c",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1012,7 +1012,7 @@
     },
     {
       "consensus_result": 2,
-      "consensus_status": "UNDETERMINED",
+      "consensus_status": "FINALIZED",
       "envelope": "runs/consensus-report-runs/23.envelope.json",
       "envelope_hash": "c3ac9ac91911d72a61ffc4e583b0c07d54afedc0a8666b82d61d4ba323f04169",
       "failed_consensus_attempts": [
@@ -1031,6 +1031,8 @@
           "status": "FINALIZED"
         }
       ],
+      "failure_finalized": true,
+      "failure_receipt": "runs/consensus-report-runs/failed-submissions/23-0x64b675b6497880018d26281ed90614e69fc21f13adae86accb0018c853a0ce3d.finalization.json",
       "from": "18.0.0",
       "journal": "runs/consensus-report-runs/23.transaction.json",
       "mechanical_classes": [
@@ -1048,14 +1050,13 @@
         "valid_until": "1790895637"
       },
       "reason": "awaiting original transaction lifecycle: UNDETERMINED",
-      "status": "AWAITING_FINAL_CONSENSUS",
+      "status": "FINALIZED_NONAGREEMENT",
       "to": "16.2.2",
       "transaction_hash": "0x64b675b6497880018d26281ed90614e69fc21f13adae86accb0018c853a0ce3d"
     },
     {
-      "consensus_read_error": "The contract function \"getTransactionAllData\" reverted with the following signature:\n0x1f90236d",
-      "consensus_result": 0,
-      "consensus_status": "CANCELED",
+      "consensus_result": 1,
+      "consensus_status": "ACCEPTED",
       "envelope": "runs/consensus-report-runs/24.envelope.json",
       "envelope_hash": "28ffb2bece9ce452d247a2e830b9bd7c4d310f9de2814f130c932ccd2c0f2487",
       "failed_consensus_attempts": [
@@ -1081,8 +1082,8 @@
       ],
       "package": "rimraf",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23288225",
+        "block_timestamp": "1790879099",
         "hash": "0xe0d87e4fa0ce20e486572c0330a9c86a1d6951c6f2405cedab22493ace1017ae",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1104,8 +1105,8 @@
       "mechanical_classes": [],
       "package": "rimraf",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0x718a05863886c59bf61f35ab2fe1194076d27663d8da6cc195adf6dca6439a95",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1127,8 +1128,8 @@
       "mechanical_classes": [],
       "package": "rimraf",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0xa0193a511b9e81fa106ab89ff23d67f8cd5a0b7e582105292325f3b2232b1e24",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1152,8 +1153,8 @@
       ],
       "package": "glob",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0xe2e596ddb0b5430363b0e334273913c8c7729b47d1402bbbc051f585a0560866",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1177,8 +1178,8 @@
       ],
       "package": "glob",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0x4cce7ccd84bb39908593c45f5ce3c126db729cb8f1b8118e7d0636883f6187a5",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1202,8 +1203,8 @@
       ],
       "package": "glob",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0xfaae215edbd658d78c41d91a881dd5ca9cd5ad1da63faaa94630088dea23b44b",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1225,8 +1226,8 @@
       "mechanical_classes": [],
       "package": "uuid",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0xda624d2a03155e453df3e3373f2ce391b8db88056f0225b117b48a66c1cc3626",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1250,8 +1251,8 @@
       ],
       "package": "uuid",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0x1c91b53f8c22ffae3ca02039f5423f2a2542ff6fc1176640620ea33672be60d6",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1275,8 +1276,8 @@
       ],
       "package": "uuid",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0x1b3951ffbecc5f149bfae764ee02ab2911b206d15ca3832650567a4ad4b29cc3",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1300,8 +1301,8 @@
       ],
       "package": "dotenv",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0xe572a8451f783c3d1f81fdae953ab6b098df1962e207eb982bf7a37dbcfdb97b",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1323,8 +1324,8 @@
       "mechanical_classes": [],
       "package": "dotenv",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0xc16e5890e905e4e55f35d4fe50623d806abb57ee774094ccfc57f5240364c6a3",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1346,8 +1347,8 @@
       "mechanical_classes": [],
       "package": "dotenv",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0xd18d94028848e501fd074d3e9e4761040669eaa04315f8b3c63da9e822b49863",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1369,8 +1370,8 @@
       "mechanical_classes": [],
       "package": "cross-env",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0x9bf1572cead3fd2dc3dda2c5d6d99e831f9cbc13e8bc05664fe4e49d1a4c5e8d",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1392,8 +1393,8 @@
       "mechanical_classes": [],
       "package": "cross-env",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0xb3e46ab3d4af136e6d0ab38807834e75a6c160fce8d7caa7d5b0aaecb3c2a599",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1415,8 +1416,8 @@
       "mechanical_classes": [],
       "package": "cross-env",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0x9b698e21c461bd2f847805742619affd74b71424d171de696ce34a851f01c860",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1440,8 +1441,8 @@
       ],
       "package": "esbuild",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0x528c2c8bd17930dfe89fca8c5b315425ea2410162d938bb66dbaa8071f9d77b5",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1465,8 +1466,8 @@
       ],
       "package": "esbuild",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0xaf92f5644c769552a5359a04f4669d49ffe33b1282263d39462402bbd907e0df",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1490,8 +1491,8 @@
       ],
       "package": "esbuild",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23289075",
+        "block_timestamp": "1790880019",
         "hash": "0xd36755344c95025bcb8381d76ee151d2bbb264cba0b125f399f22ca5a6f9cd3b",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1518,7 +1519,7 @@
         }
       ],
       "consensus_result": 0,
-      "consensus_status": "PENDING",
+      "consensus_status": "CANCELED",
       "envelope": "runs/consensus-report-runs/42.envelope.json",
       "envelope_hash": "d390e0d8506bf9b85e807d90e2740b0e4e92d0e4ee66a0e2eb27a53cf6617edd",
       "from": "3.9.5",
@@ -1527,7 +1528,17 @@
         "OPAQUE"
       ],
       "package": "prettier",
-      "status": "SUBMITTED",
+      "raw_consensus_observation": {
+        "block": "23289075",
+        "block_timestamp": "1790880019",
+        "hash": "0x2d3c7a7ee860fa8e7a3a22c51c3a35441f254923113470690f67c983c4eeda9a",
+        "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+        "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+        "status": 1,
+        "valid_until": "1790899655"
+      },
+      "reason": "awaiting original transaction lifecycle: CANCELED",
+      "status": "AWAITING_FINAL_CONSENSUS",
       "to": "3.9.6",
       "transaction_hash": "0x2d3c7a7ee860fa8e7a3a22c51c3a35441f254923113470690f67c983c4eeda9a"
     },
@@ -1546,7 +1557,7 @@
         }
       ],
       "consensus_result": 0,
-      "consensus_status": "PENDING",
+      "consensus_status": "CANCELED",
       "envelope": "runs/consensus-report-runs/43.envelope.json",
       "envelope_hash": "5b10344d5636df1acab0d2cc58363a3b8796d8579b7c701dd7f19546de7f52e8",
       "from": "3.9.4",
@@ -1555,14 +1566,23 @@
         "OPAQUE"
       ],
       "package": "prettier",
-      "status": "SUBMITTED",
+      "raw_consensus_observation": {
+        "block": "23289075",
+        "block_timestamp": "1790880019",
+        "hash": "0xaf98606b962d010e2b7c25c5da31f09ce1df987ef78bb5581bc5b44b971aaf5f",
+        "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+        "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+        "status": 1,
+        "valid_until": "1790899689"
+      },
+      "reason": "awaiting original transaction lifecycle: CANCELED",
+      "status": "AWAITING_FINAL_CONSENSUS",
       "to": "3.9.5",
       "transaction_hash": "0xaf98606b962d010e2b7c25c5da31f09ce1df987ef78bb5581bc5b44b971aaf5f"
     },
     {
-      "consensus_read_error": "The contract function \"getTransactionAllData\" reverted with the following signature:\n0x1f90236d",
-      "consensus_result": 0,
-      "consensus_status": "CANCELED",
+      "consensus_result": 5,
+      "consensus_status": "UNDETERMINED",
       "envelope": "runs/consensus-report-runs/44.envelope.json",
       "envelope_hash": "52c531b4233d07f35eb56cc141c9b87a0b77810756997941a847d3521eb71f6f",
       "from": "3.9.3",
@@ -1572,8 +1592,8 @@
       ],
       "package": "prettier",
       "raw_consensus_observation": {
-        "block": "23287174",
-        "block_timestamp": "1790878776",
+        "block": "23288367",
+        "block_timestamp": "1790879233",
         "hash": "0xfd481df56855efb35eb64cf903f42f2a5c2a9f1878941d063f4f9bcea5ff0491",
         "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
         "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
@@ -1590,9 +1610,9 @@
   "policy_id": 0,
   "queue": {
     "address": "0x56a05a9bB7B261ad720020a08B9Fd5A13177b949",
-    "block": "23287171",
+    "block": "23289075",
     "maximum": 20,
-    "pending": 4,
+    "pending": 2,
     "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
     "source": "AddressManager\u2192Queues"
   },

@@ -290,10 +290,19 @@ original index 44 have now been submitted with `--submission-ttl 21600`:
 - [Index 44](https://explorer-bradbury.genlayer.com/tx/0xfd481df56855efb35eb64cf903f42f2a5c2a9f1878941d063f4f9bcea5ff0491).
 
 The subsequent queue read showed six pending entries. Submission does not count
-as a finalized gate; no further retries of indices 13 or 21 are authorized.
-Index 23's replacement is `UNDETERMINED`, result 2, awaiting normal finalization
-eligibility at 18:25:11 UTC. Raw records for indices 24 and 44 remain unexpired
-`PENDING`, despite the status view projecting `CANCELED`; their hashes are retained.
+as a finalized gate. Index 23's replacement has reached `FINALIZED`, result 2,
+without a committed attestation. The public
+[finalized-retry audit](https://attaint.vercel.app/diagnostics/finalized-retries-no-commit.json)
+checks failed replacements 21 and 23 against both complete state views, each
+with a stable count of 23. Those counts do not prove finality of other requests.
+No further retries of indices 13, 21 or 23 are authorized. Index 24 is
+`ACCEPTED`, result 1, awaiting normal finalization eligibility at 18:57:20 UTC;
+it is not yet counted as a finalized gate. Numeric status 14 was confirmed from
+the official SDK as nonterminal `LEADER_REVEALING` and added to the observer and
+browser decoder. Index 44 has since reached `UNDETERMINED / NO_MAJORITY`
+(result 5), with normal finalization eligibility at 19:05:33 UTC. Indices 42 and
+43 project `CANCELED` while their raw records remain unexpired `PENDING` (1)
+followers. Their hashes are retained and no replacement is authorized.
 The counts above are a verified checkpoint, not an updated live total. This is partial progress;
 the full 45-pair comparison and measured risk/block-rate differences remain
 pending, with no full-sample percentages or improvement claimed.
@@ -306,6 +315,10 @@ execution unavailable, the receipt partial and finalization capability absent.
 This cannot certify acceptance, a finalized gate, or permission to resubmit.
 When a matching raw read confirms an expired `PENDING` entry, the observer reports
 `EXPIRED_PENDING_CLEANUP`, with no finalization capability or verdict.
+The browser requires raw status 8 before treating projected cancellation as
+materialized and clears the previous gate during a new pending request. A
+projected cancellation cannot create a fresh-request authorization or leave an
+old clean result displayed as the new request's result.
 The historical queue audit at block `0x16333bd` (1 October 2026, 16:43:19 UTC)
 confirmed 15 exact entries whose raw transaction-manager state remained
 `PENDING` (1), while the projected status was `CANCELED` (8) because block time

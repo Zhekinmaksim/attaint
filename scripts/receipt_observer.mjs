@@ -15,7 +15,10 @@ export async function observeReceiptStates({hashes,getTransaction,finalizationCa
         const receipt=await getTransaction(hash);
         const statusCode=Number(receipt.status);
         if(!Number.isSafeInteger(statusCode)||statusCode<0) throw new Error('consensus receipt has no valid numeric status');
-        const status=receipt.statusName||`UNKNOWN_STATUS_${statusCode}`;
+        // SDK 1.1.8 omits this additive processing phase; current official
+        // genlayer-js/src/types/transactions.ts names status 14 LEADER_REVEALING.
+        // Keep all existing status names/numbers and terminal criteria unchanged.
+        const status=receipt.statusName||(statusCode===14?'LEADER_REVEALING':`UNKNOWN_STATUS_${statusCode}`);
         const capability=['ACCEPTED','READY_TO_FINALIZE','UNDETERMINED'].includes(status)?await finalizationCapability(hash):null;
         return await addRawExpiry({hash,status,status_code:statusCode,recipient:receipt.recipient,
           execution:receipt.txExecutionResultName,result:Number(receipt.result),round:receipt.numOfRounds,capability});

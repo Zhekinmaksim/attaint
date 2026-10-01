@@ -5,6 +5,7 @@ import { parseEventLogs, createPublicClient, http, decodeFunctionData, encodeFun
 import { createGasGuard } from '../scripts/gas_guard.mjs';
 import { assertFinalizedConsensusReceipt } from '../scripts/finalized_receipt.mjs';
 import { createSubmissionTTL } from '../scripts/submission_ttl.mjs';
+import { confirmProjectedCancellation } from '../scripts/raw_cancellation.mjs';
 
 const EXPLORER = 'https://explorer-bradbury.genlayer.com';
 const reader = createClient({ chain: testnetBradbury });
@@ -16,6 +17,12 @@ let deployment, account, writer, envelope, pending, busy = false, pollTimer, gen
 let walletEstimate, submissionGasGuard, submissionTTL;
 const read = (method, args = []) => reader.readContract({ address: deployment.contract, functionName: method, args, jsonSafeReturn: true, transactionHashVariant: TransactionHashVariant.LATEST_FINAL });
 const notify = message => { $('live-notice').textContent = message; };
+function awaitRequestGate() {
+  generation++;
+  $('live-result').textContent = 'PENDING · no finalized gate for this request';
+  $('live-result').className = 'live-result';
+  $('live-gate').textContent = '';
+}
 function controls() {
   $('live-send').disabled = busy || !account || !envelope || !deployment?.contract;
   $('live-connect').disabled = busy || !deployment?.contract;
@@ -95,7 +102,7 @@ async function connect() {
         submissionGasGuard?.assertCanSign();
         if (!submissionTTL || !request.params?.[0]?.data) throw new Error('Missing estimated submission deadline; no transaction was sent.');
         const tx = request.params[0], data = submissionTTL.rewrite(tx.data);
-        await evmReader.call({ account, to: tx.to, data, value: BigInt(tx.value || 0), blockTag: 'pending' });
+        await evmReader.call({ account, to: tx.to, data, value: BigInt(tx.value || 0), gas: 16777216n, blockTag: 'pending' });
         pending.submission_ttl = submissionTTL.metadata();
         request = { ...request, params: [{ ...tx, data }, ...request.params.slice(1)] };
       }
@@ -135,7 +142,13 @@ async function poll() {
       pending.hash = hash; pending.status = 'SUBMITTED';
     }
     const receipt = await reader.getTransaction({ hash: pending.hash });
-    pending.receipt = receipt; pending.status = receipt.statusName || receipt.status; renderTransaction();
+    pending.receipt = receipt; pending.status = receipt.statusName || (Number(receipt.status) === 14 ? 'LEADER_REVEALING' : receipt.status);
+    if (pending.status === 'CANCELED') {
+      pending.status = 'CANCELLATION_UNCONFIRMED';
+      renderTransaction();
+      Object.assign(pending, await confirmProjectedCancellation({publicClient:evmReader,hash:pending.hash,recipient:deployment.contract}));
+    }
+    renderTransaction();
     $('live-receipt').textContent = json(receipt);
     $('live-finalize').hidden = true;
     if (['ACCEPTED', 'READY_TO_FINALIZE'].includes(pending.status)) {
@@ -181,11 +194,12 @@ async function send() {
     if (policy.policy_hash !== deployment.policy_hash) throw new Error('Immutable policy mismatch.');
     const countBefore = Number(await read('attestation_count'));
     pending = { expected: envelope, account, countBefore, status: 'AWAITING_WALLET', deadline: Date.now() + 30 * 60 * 1000 };
+    awaitRequestGate();
     walletOperation = 'attest';
     submissionTTL = createSubmissionTTL({ seconds: 21600, decodeFunctionData, encodeFunctionData });
     submissionGasGuard = createGasGuard({estimate: async request => {
       const data = submissionTTL.rewrite(request.data);
-      await evmReader.call({ account, to: request.to, data, value: BigInt(request.value || 0), blockTag: 'pending' });
+      await evmReader.call({ account, to: request.to, data, value: BigInt(request.value || 0), gas: 16777216n, blockTag: 'pending' });
       return walletEstimate({ ...request, data });
     }, readRpc: operation => operation()});
     writer.estimateTransactionGas = submissionGasGuard.estimate;
@@ -204,9 +218,10 @@ $('live-refresh').onclick = inspect;
 $('live-example').onclick = async () => { try { const r = await fetch('/event-stream.json'); if (!r.ok) throw new Error('Example is unavailable.'); await loadEnvelope(await r.json()); } catch (error) { notify(error.message); } };
 $('live-envelope').onchange = async event => { try { const file = event.target.files[0]; if (!file) return; if (file.size > 100000) throw new Error('Envelope file is too large.'); await loadEnvelope(JSON.parse(await file.text())); } catch (error) { envelope = null; controls(); notify(error.message); } };
 $('live-check').onclick = async () => {
+  if (!deployment) { notify('Wait for the verified deployment manifest before checking a transaction.'); return; }
   const hash = $('live-hash').value.trim();
   if (!/^0x[0-9a-f]{64}$/i.test(hash)) { notify('Enter the GenLayer consensus transaction hash.'); return; }
-  if (!pending || pending.hash !== hash) pending = { hash, status: 'SUBMITTED', deadline: Date.now() + 30 * 60 * 1000 };
+  if (!pending || pending.hash !== hash) { pending = { hash, status: 'SUBMITTED', deadline: Date.now() + 30 * 60 * 1000 }; awaitRequestGate(); }
   clearTimeout(pollTimer); pending.deadline = Date.now() + 30 * 60 * 1000; await poll();
 };
 $('live-download').onclick = () => {

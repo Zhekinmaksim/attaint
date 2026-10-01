@@ -58,7 +58,7 @@ html = html.replace(/(<span class="status" id="receipt-status">)[^<]*(<\/span>)/
 await writeFile('web/index.html', html);
 try { await copyFile('runs/attempt-history.json', 'web/attempt-history.json'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 try { await copyFile('runs/ci-verification.json', 'web/ci-verification.json'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
-for (const name of ['express-finalized-no-commit', 'yargs-finalized-no-commit', 'failed-rows-23-24', 'expired-queue-no-commit', 'expired-cleanup-summary', 'post-cleanup-unfinished-no-commit', 'canceled-retry-manifest', 'expired-cleanup-43-summary', 'canceled-retry-42-43-manifest']) {
+for (const name of ['express-finalized-no-commit', 'yargs-finalized-no-commit', 'failed-rows-23-24', 'expired-queue-no-commit', 'expired-cleanup-summary', 'post-cleanup-unfinished-no-commit', 'canceled-retry-manifest', 'expired-cleanup-43-summary', 'canceled-retry-42-43-manifest', 'finalized-retries-no-commit']) {
   try { await mkdir('web/diagnostics', {recursive:true}); await copyFile(`runs/diagnostics/${name}.json`, `web/diagnostics/${name}.json`); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 }
 for (const name of ['manifest.json', 'report.json', 'leader-summary.json', 'validator-1-summary.json', 'validator-2-summary.json', 'diagnostic-code.py']) {

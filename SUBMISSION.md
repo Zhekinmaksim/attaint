@@ -120,10 +120,19 @@ submission arguments:
 [24](https://explorer-bradbury.genlayer.com/tx/0xe0d87e4fa0ce20e486572c0330a9c86a1d6951c6f2405cedab22493ace1017ae),
 [44](https://explorer-bradbury.genlayer.com/tx/0xfd481df56855efb35eb64cf903f42f2a5c2a9f1878941d063f4f9bcea5ff0491).
 The subsequent queue read showed six pending entries. These submissions are not
-finalized gates. Index 23 is `UNDETERMINED`, result 2, with normal finalization
-eligibility at 18:25:11 UTC. Indices 24 and 44 remain raw unexpired `PENDING`
-despite a projected `CANCELED` view. Original audits are
-preserved; no further retries of indices 13 or 21 are authorized.
+finalized gates. Index 23's replacement is now `FINALIZED`, result 2, without a
+committed attestation. The public
+[finalized-retry audit](https://attaint.vercel.app/diagnostics/finalized-retries-no-commit.json)
+covers failed replacements 21 and 23, absent from both complete state views
+with stable counts of 23. These counts do not prove finality of other requests.
+Index 24 is `ACCEPTED`, result 1, with finalization eligibility at 18:57:20 UTC;
+it is not yet a finalized gate. The official SDK identifies numeric status 14 as
+nonterminal `LEADER_REVEALING`; observer and browser decoders now support it.
+Index 44 has since reached `UNDETERMINED / NO_MAJORITY` (result 5), with normal
+finalization eligibility at 19:05:33 UTC. Indices 42 and 43 project `CANCELED`
+while their raw records remain unexpired `PENDING` followers, with no new
+replacement authorized. Original audits
+and hashes are preserved; no further retries of indices 13, 21 or 23 are authorized.
 The counts above remain a verified
 checkpoint, not a live total.
 The full 45-pair comparison and measured consensus metrics remain pending;
@@ -132,7 +141,9 @@ queue pacing, resume behavior and the guarded operator-authorized retry.
 
 Canceled or expired observations and a `ValidatorSelectionFailed` minimal-metadata
 fallback are not verdicts. The fallback cannot prove successful execution or
-produce an accepted gate. The historical audit at block `0x16333bd`
+produce an accepted gate. The browser checks raw status 8 before treating a
+projected cancellation as materialized and clears old gate results during a new
+pending request. The historical audit at block `0x16333bd`
 (1 October 2026, 16:43:19 UTC) confirmed 15 raw `PENDING` entries past
 `validUntil`, projected as `CANCELED` but still occupying the pending queue.
 They had no matching committed attestations in either state view. The public

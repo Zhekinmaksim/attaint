@@ -1,0 +1,123 @@
+{
+  "kind": "sanitized historical finalized retry no-commit evidence",
+  "observed_at": "2026-10-01T18:27:49.080Z",
+  "block_number": "0x1635a5e",
+  "block_timestamp": 1790879275,
+  "identity_read_started_at": "2026-10-01T18:28:22.720Z",
+  "identity_read_finished_at": "2026-10-01T18:29:25.517Z",
+  "entries": [
+    {
+      "row": 21,
+      "hash": "0xc496de7de05cdb11dbce0c4fd606e2dc9d0b1c287c51fe3ce8e71dcf5a83b48f",
+      "requester": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "release": {
+        "package": "yargs",
+        "from": "17.7.3",
+        "to": "18.1.0"
+      },
+      "status": "FINALIZED",
+      "raw_transaction_manager_status_code": 7,
+      "receipt_status_code": 7,
+      "terminal_consensus_result_code": 5,
+      "terminal_consensus_result": "NoMajority",
+      "terminal_result_source": "RoundsStorage.getLastRoundData independently agrees with gen_getTransactionReceipt.result",
+      "terminal_round_number": 0,
+      "stored_round_struct_round_field": 0,
+      "transaction_manager_base_result_code": 0,
+      "leader_execution_result_code": 1,
+      "successful_attestation": false,
+      "votes": {
+        "AGREE": 2,
+        "NONDET_DISAGREE": 2,
+        "TIMEOUT": 1
+      },
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "envelope_hash": "0d152e1f80ab2ff55de5e6d8f242bf10a6418acdcee156c236b60accd2abc0e5",
+      "canonical_envelope_hash_verified": true,
+      "canonical_submitted_evidence_matches": true,
+      "attestation_committed": false,
+      "dedup_committed": false,
+      "complete_identity_checks": {
+        "latest-final": {
+          "count_start": 23,
+          "count_end": 23,
+          "stable": true,
+          "matching_release_count": 0,
+          "matching_envelope_count": 0,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1"
+        },
+        "latest-nonfinal": {
+          "count_start": 23,
+          "count_end": 23,
+          "stable": true,
+          "matching_release_count": 0,
+          "matching_envelope_count": 0,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1"
+        }
+      },
+      "additional_retry_authorized_by_audit": false
+    },
+    {
+      "row": 23,
+      "hash": "0x64b675b6497880018d26281ed90614e69fc21f13adae86accb0018c853a0ce3d",
+      "requester": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+      "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+      "release": {
+        "package": "yargs",
+        "from": "18.0.0",
+        "to": "16.2.2"
+      },
+      "status": "FINALIZED",
+      "raw_transaction_manager_status_code": 7,
+      "receipt_status_code": 7,
+      "terminal_consensus_result_code": 2,
+      "terminal_consensus_result": "MajorityDisagree",
+      "terminal_result_source": "RoundsStorage.getLastRoundData independently agrees with gen_getTransactionReceipt.result",
+      "terminal_round_number": 2,
+      "stored_round_struct_round_field": 0,
+      "transaction_manager_base_result_code": 0,
+      "leader_execution_result_code": 1,
+      "successful_attestation": false,
+      "votes": {
+        "AGREE": 0,
+        "NONDET_DISAGREE": 4,
+        "TIMEOUT": 1
+      },
+      "policy_id": 0,
+      "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+      "envelope_hash": "c3ac9ac91911d72a61ffc4e583b0c07d54afedc0a8666b82d61d4ba323f04169",
+      "canonical_envelope_hash_verified": true,
+      "canonical_submitted_evidence_matches": true,
+      "attestation_committed": false,
+      "dedup_committed": false,
+      "complete_identity_checks": {
+        "latest-final": {
+          "count_start": 23,
+          "count_end": 23,
+          "stable": true,
+          "matching_release_count": 0,
+          "matching_envelope_count": 0,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1"
+        },
+        "latest-nonfinal": {
+          "count_start": 23,
+          "count_end": 23,
+          "stable": true,
+          "matching_release_count": 0,
+          "matching_envelope_count": 0,
+          "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1"
+        }
+      },
+      "additional_retry_authorized_by_audit": false
+    }
+  ],
+  "dedup_proof_basis": "The only seen-map write occurs after appending an attestation in the same atomic execution. Both complete state views contain no matching release identity for the requester and policy. No separate public dedup getter.",
+  "count_note": "Both current complete views contained 23 stable attestations; older 22-record evidence is not reused.",
+  "result_field_note": "The base TransactionManager.result reads zero after finalization. The terminal consensus result is preserved separately in RoundsStorage and the receipt and is not inferred from the base field.",
+  "round_field_note": "The row23 stored round struct round field is zero although RoundsStorage current round number is two; both values are retained without normalization.",
+  "historical_warning": "Subsequent authorized work may change state counts or identities. Re-check before any repeat request.",
+  "new_verdict_requests_sent_by_audit": false,
+  "state_count_semantics": "Counts record returned complete RPC view data; they do not certify finality of other transactions. Only the two target receipt statuses are asserted finalized."
+}
