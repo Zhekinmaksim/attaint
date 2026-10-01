@@ -5,7 +5,9 @@ export function assertFinalizedConsensusReceipt(receipt, {hash, recipient, metho
   if (String(receipt.txId).toLowerCase() !== hash.toLowerCase() ||
       String(receipt.recipient).toLowerCase() !== recipient.toLowerCase())
     throw new Error('Consensus receipt belongs to another transaction or contract.');
-  if (method && receipt.txDataDecoded?.callData?.method !== method)
+  const callData = receipt.txDataDecoded?.callData;
+  const actualMethod = callData instanceof Map ? callData.get('method') : callData?.method;
+  if (method && actualMethod !== method)
     throw new Error('Consensus receipt belongs to another contract method.');
   if (Number(receipt.result) !== 1 || Number(receipt.lastRound?.result) !== 1)
     throw new Error('Finalized transaction has no accepted consensus decision; no successful attestation is claimed.');

@@ -10,7 +10,7 @@ const EXPLORER = 'https://explorer-bradbury.genlayer.com';
 const reader = createClient({ chain: testnetBradbury });
 const evmReader = createPublicClient({ chain: testnetBradbury, transport: http(testnetBradbury.rpcUrls.default.http[0]) });
 const $ = id => document.getElementById(id);
-const json = value => JSON.stringify(value, (_, v) => typeof v === 'bigint' ? v.toString() : v, 2);
+const json = value => JSON.stringify(value, (_, v) => typeof v === 'bigint' ? v.toString() : v instanceof Map ? Object.fromEntries(v) : v, 2);
 const link = (label, path) => { const a = document.createElement('a'); a.textContent = label; a.href = `${EXPLORER}/${path}`; a.target = '_blank'; a.rel = 'noopener'; return a; };
 let deployment, account, writer, envelope, pending, busy = false, pollTimer, generation = 0, walletOperation = '';
 let walletEstimate, submissionGasGuard, submissionTTL;

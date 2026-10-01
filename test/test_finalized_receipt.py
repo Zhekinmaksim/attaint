@@ -11,13 +11,18 @@ class FinalizedReceiptTests(unittest.TestCase):
         subprocess.run(['node', '--input-type=module', '-e', r'''
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {decodeInputData} from 'genlayer-js';
 import {assertFinalizedConsensusReceipt as verify} from './scripts/finalized_receipt.mjs';
 const journal=JSON.parse(readFileSync('runs/first-attestation.json','utf8'));
 const receipt=journal.receipt;
 const identity={hash:journal.hash,recipient:journal.address,method:'request_attestation'};
 verify(receipt,identity);
+const native={...receipt,txDataDecoded:decodeInputData(receipt.txData,receipt.recipient)};
+assert.ok(native.txDataDecoded.callData instanceof Map);
+verify(native,identity);
 // Both historical failure modes had a successful leader return, but no commit.
 for(const result of [2,5]) assert.throws(()=>verify({...receipt,result},identity),/no accepted consensus/);
+for(const result of [2,5]) assert.throws(()=>verify({...native,result},identity),/no accepted consensus/);
 assert.throws(()=>verify({...receipt,lastRound:{...receipt.lastRound,result:2}},identity),/no accepted consensus/);
 assert.throws(()=>verify({...receipt,txId:'0x'+'0'.repeat(64)},identity),/another transaction/);
 assert.throws(()=>verify({...receipt,recipient:'0x'+'0'.repeat(40)},identity),/another transaction/);
