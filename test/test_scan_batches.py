@@ -14,6 +14,29 @@ spec.loader.exec_module(scan)
 
 
 class ScanBatchTests(unittest.TestCase):
+    def test_settled_gates_keep_distinct_pair_slots_and_reject_cross_pair_records(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            def fixture(package, before, after, attestation):
+                row = {"package":package,"from":before,"to":after,"envelope_hash":package+before+after}
+                live = {"chainId":4221,"exit_code":2,"gate":{"package":package,
+                    "from_version":before,"to_version":after,"envelope_hash":row["envelope_hash"],
+                    "att_id":attestation,"gate":"INCONCLUSIVE"}}
+                return row,live
+            row24,live24 = fixture("rimraf","6.1.2","6.1.3",22)
+            row43,live43 = fixture("prettier","3.9.4","3.9.5",24)
+            scan.save_gate_snapshot(root,24,row24,live24,22)
+            original = (root/"24.gate.json").read_bytes()
+            scan.save_gate_snapshot(root,43,row43,live43,24)
+            self.assertEqual((root/"24.gate.json").read_bytes(),original)
+            self.assertEqual(json.loads((root/"43.gate.json").read_text()),live43)
+            self.assertFalse((root/"44.gate.json").exists())
+            with self.assertRaisesRegex(ValueError,"pinned pair"):
+                scan.save_gate_snapshot(root,43,row43,live24,22)
+            with self.assertRaisesRegex(ValueError,"pinned pair"):
+                scan.save_gate_snapshot(root,24,row24,live24,99)
+            self.assertEqual((root/"24.gate.json").read_bytes(),original)
+
     def test_replacement_settlement_preserves_original_receipt(self):
         with tempfile.TemporaryDirectory()as directory:
             root=pathlib.Path(directory);old='0x'+'1'*64;new='0x'+'2'*64

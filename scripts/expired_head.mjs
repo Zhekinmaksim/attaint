@@ -47,7 +47,7 @@ export async function readQueueHead({publicClient,recipient}) {
   const head=await publicClient.readContract({address:queues[0].addr,abi:queueAbi,functionName:'getPendingHeadTxId',args:[recipient],blockNumber:block.number});
   return{head,recipient,block:block.number};
 }
-export async function readCanceledProof({publicClient,hash,sender,recipient,expectedCalldata}) {
+async function readTerminalProof({publicClient,hash,sender,recipient,expectedCalldata},status) {
   const block=await publicClient.getBlock();
   const entries=await publicClient.readContract({address:addressManager,abi:addressAbi,functionName:'getAllContractAddresses',blockNumber:block.number});
   const resolve=name=>{const found=entries.filter(e=>e.key===name);if(found.length!==1)throw Error('cannot resolve '+name);return found[0].addr;};
@@ -58,11 +58,15 @@ export async function readCanceledProof({publicClient,hash,sender,recipient,expe
     publicClient.readContract({address:queue,abi,functionName:'getPendingHead',args:[recipient],blockNumber:block.number}),
     publicClient.readContract({address:queue,abi,functionName:'getPendingTail',args:[recipient],blockNumber:block.number}),
   ]);
-  if(!same(raw.id,hash)||Number(raw.status)!==8||!same(raw.sender,sender)||!same(raw.recipient,recipient)||!same(raw.txOrigin,sender)||BigInt(raw.value)!==0n||!same(raw.txCalldata,expectedCalldata))throw Error('no exact raw canceled transaction identity/calldata proof');
+  if(!same(raw.id,hash)||Number(raw.status)!==status||!same(raw.sender,sender)||!same(raw.recipient,recipient)||!same(raw.txOrigin,sender)||BigInt(raw.value)!==0n||!same(raw.txCalldata,expectedCalldata))throw Error('no exact raw terminal transaction identity/calldata proof');
   if(tail<head||tail-head>20n)throw Error('pending queue is outside bounded audit range');
   const pending=[];
   for(let slot=head;slot<tail;slot++)pending.push(await publicClient.readContract({address:queue,abi,functionName:'getPendingTxId',args:[recipient,slot],blockNumber:block.number}));
-  if(pending.some(id=>same(id,hash)))throw Error('raw canceled transaction still belongs to pending queue');
-  return{hash,sender,recipient,raw_status:8,valid_until:raw.validUntil,calldata_matches:true,value_wei:'0',
+  if(pending.some(id=>same(id,hash)))throw Error('raw terminal transaction still belongs to pending queue');
+  return{hash,sender,recipient,raw_status:status,valid_until:raw.validUntil,calldata_matches:true,value_wei:'0',
     block:block.number,block_timestamp:block.timestamp,queue:{address:queue,head,tail,pending_hashes:pending},outside_pending_queue:true};
 }
+
+// Separate fixed-status entry points keep canceled proof semantics unchanged.
+export const readCanceledProof = args => readTerminalProof(args,8);
+export const readFinalizedFailureProof = args => readTerminalProof(args,7);

@@ -189,6 +189,10 @@ This immutable manifest pins each old hash and envelope, the policy, code and
 requester. Each fresh write requires raw `CANCELED` state outside the pending
 queue and complete final/current gate audits showing no committed identity.
 A signed replacement consumes that one-request allowance even if it fails.
+For failed finalized generations, `--reschedule-finalized` takes a separate
+immutable manifest pinning the exact old hash and expected result 2 or 5.
+It requires RAW 7, both complete gate views, and a durable archived proof before
+releasing a journal. It cannot reuse an older generation's allowance.
 The new submissions use a six-hour submission deadline
 (`--submission-ttl 21600`) for new writes. The runner changes only the V6
 `validUntil` argument, simulates the exact calldata before estimation and signing,
@@ -265,47 +269,29 @@ as a live detection. The finalized clean outcome is a miss for this historical
 handover case. Offline tests and simulations establish different things
 from a receipt-backed consensus judgment.
 
-At the verified checkpoint (`observed_at: 2026-10-01T16:39:00Z`), 21 of the
-original 45 corpus pairs had finalized gates: 14 `CLEAN`, seven `INCONCLUSIVE`
-and zero `RISK`. The Express pair at index 13
-(`5.2.1 → 4.22.1`) ended `FINALIZED / NO_MAJORITY`, with no matching committed
-attestation; its original journal and hash are archived. The user explicitly
-approved exactly one fresh Express request. Its
-[replacement](https://explorer-bradbury.genlayer.com/tx/0xc4a6b8a7f1488230da97ea26550985eb73585bc3ca8e8fee330ad58081e9084c)
-was projected as `CANCELED` at this checkpoint. The no-commit audit is
-`runs/diagnostics/express-finalized-no-commit.json`. Yargs index 21
-(`17.7.3 → 18.1.0`) ended `FINALIZED / MajorityDisagree` (result 2). Both state
-views contained 22 attestations and no matching Yargs identity; the sanitized
-audit is `runs/diagnostics/yargs-finalized-no-commit.json`. The user explicitly
-approved exactly one fresh Yargs request with the same policy and envelope.
-Its [replacement](https://explorer-bradbury.genlayer.com/tx/0xc496de7de05cdb11dbce0c4fd606e2dc9d0b1c287c51fe3ce8e71dcf5a83b48f)
-subsequently reached `FINALIZED / NO_MAJORITY` (result 5), without a committed
-attestation. Its one-request approval is used; no third request is authorized.
-Both original failed-finalization audits remain preserved. The user has
-separately approved one retry each for indices 23 and 24. These retries and
-original index 44 have now been submitted with `--submission-ttl 21600`:
+At the 2 October 2026 checkpoint, the saved report contains 22/45 finalized
+corpus gates: 14 `CLEAN`, eight `INCONCLUSIVE` and zero `RISK`. Index 24 is now
+finalized. Indices 42 and 43 have successful finalized receipts and accepted-round
+traces identifying attestations 23 and 24, but remain `INCONCLUSIVE_READBACK`:
+the Bradbury RPC currently fails to return contract code and current state.
+These two traces alone do not certify the current gate. The
+[readback audit](https://attaint.vercel.app/diagnostics/finalized-42-43-readback-audit.json)
+records that distinction. No replacement of either successful request is planned.
 
-- [Index 23](https://explorer-bradbury.genlayer.com/tx/0x64b675b6497880018d26281ed90614e69fc21f13adae86accb0018c853a0ce3d).
-- [Index 24](https://explorer-bradbury.genlayer.com/tx/0xe0d87e4fa0ce20e486572c0330a9c86a1d6951c6f2405cedab22493ace1017ae).
-- [Index 44](https://explorer-bradbury.genlayer.com/tx/0xfd481df56855efb35eb64cf903f42f2a5c2a9f1878941d063f4f9bcea5ff0491).
+Indices 21, 23 and 44 finalized without agreement (results 5, 2 and 5). Eighteen
+other requests, index 13 and indices 25–41, were canceled without committed gates
+at the saved audit. The operator has requested completion of the remaining run.
+The bounded recovery uses the existing 18-entry canceled manifest and a separate
+[three-entry finalized-failure manifest](https://attaint.vercel.app/diagnostics/finalized-retry-21-23-44-manifest.json).
+Each exact failed hash permits one replacement only after a fresh raw terminal
+status, matching calldata/requester and complete audits of both state views prove
+there is no committed update. An existing signing intent consumes its allowance.
+The RPC outage blocks these checks, so no new replacement has been sent in this
+recovery session. Failed attempts and their original hashes remain preserved.
 
-The subsequent queue read showed six pending entries. Submission does not count
-as a finalized gate. Index 23's replacement has reached `FINALIZED`, result 2,
-without a committed attestation. The public
-[finalized-retry audit](https://attaint.vercel.app/diagnostics/finalized-retries-no-commit.json)
-checks failed replacements 21 and 23 against both complete state views, each
-with a stable count of 23. Those counts do not prove finality of other requests.
-No further retries of indices 13, 21 or 23 are authorized. Index 24 is
-`ACCEPTED`, result 1, awaiting normal finalization eligibility at 18:57:20 UTC;
-it is not yet counted as a finalized gate. Numeric status 14 was confirmed from
-the official SDK as nonterminal `LEADER_REVEALING` and added to the observer and
-browser decoder. Index 44 has since reached `UNDETERMINED / NO_MAJORITY`
-(result 5), with normal finalization eligibility at 19:05:33 UTC. Indices 42 and
-43 project `CANCELED` while their raw records remain unexpired `PENDING` (1)
-followers. Their hashes are retained and no replacement is authorized.
-The counts above are a verified checkpoint, not an updated live total. This is partial progress;
-the full 45-pair comparison and measured risk/block-rate differences remain
-pending, with no full-sample percentages or improvement claimed.
+The full 45-pair comparison remains incomplete. No full-sample consensus rates,
+improvement or accuracy claim is published. Saved gates are historical verified
+observations; a network read failure cannot become a passing CI result.
 
 An expired or canceled observation, `READ_ERROR`, or a
 `ValidatorSelectionFailed` metadata fallback is not a verdict. If the full
@@ -334,7 +320,7 @@ untouched. The receipt-backed
 [cleanup summary](https://attaint.vercel.app/diagnostics/expired-cleanup-summary.json)
 is also saved as `runs/diagnostics/expired-cleanup-summary.json`.
 This cleanup authorized no new retries and produced no consensus verdicts;
-the 21/45 gate checkpoint remains unchanged.
+that cleanup itself did not change the then-current 21/45 gate checkpoint.
 
 A separate, explicitly approved index-43 cleanup completed at 17:50 UTC. Its
 [successful EVM transaction](https://explorer-bradbury.genlayer.com/tx/0x32c575376e9d74f9f1387a0a2e65e0f06ecd4ecd28218942bffeb8e65691f9cd)
@@ -348,17 +334,14 @@ are used:
 - [Index 42 consensus transaction](https://explorer-bradbury.genlayer.com/tx/0x2d3c7a7ee860fa8e7a3a22c51c3a35441f254923113470690f67c983c4eeda9a), EVM hash `0xae2fbc16b2b64544f09ba7307ee297d04789f69cff078ed0754db6bff5fc7e7d`.
 - [Index 43 consensus transaction](https://explorer-bradbury.genlayer.com/tx/0xaf98606b962d010e2b7c25c5da31f09ce1df987ef78bb5581bc5b44b971aaf5f), EVM hash `0x1a0301a8ba0cb223f1d18006f19541291ed4ae2d15982b786ca4a62be9bb84c7`.
 
-The earlier pre-sign RPC error was resolved by passing the tested gas cap in the
-simulation. These are submitted requests, not finalized gates. The 18-entry
-batch remains unapproved, and the 21/45 gate checkpoint is unchanged.
+The pre-sign simulation issue was resolved by passing the tested gas cap.
+Both replacements now have successful finalized receipts; their gate readback
+remains subject to the current RPC limitation described above.
 
 The historical
 [post-cleanup no-commit audit](https://attaint.vercel.app/diagnostics/post-cleanup-unfinished-no-commit.json)
-identified 18 raw canceled releases without matching attestations: index 13 and
-indices 25–41. A separate batch of fresh requests is being prepared for explicit
-authorization; none of those 18 requests is approved or submitted. Existing
-active hashes are preserved. Audit conclusions must be rechecked against current
-state before any signature.
+covers the 18 canceled releases. It must be rechecked against current state before
+any replacement signature; it cannot stand in for a fresh audit.
 
 The previous attempt at
 [`0x74407aE5e92002F4F0E1A912C7e785837a67F3C8`](https://explorer-bradbury.genlayer.com/address/0x74407aE5e92002F4F0E1A912C7e785837a67F3C8)

@@ -1,0 +1,72 @@
+{
+  "observed_at": "2026-10-02T05:31:11.641666+00:00",
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+  "mode": "read-only",
+  "rows": [
+    {
+      "pair_index": 42,
+      "hash": "0x2d3c7a7ee860fa8e7a3a22c51c3a35441f254923113470690f67c983c4eeda9a",
+      "attestation_id_from_accepted_trace": 23,
+      "receipt_sha256": "08e86997fbf942e02bf0894a5dcb2d3f46bf98be06cbf370f4d9ffd494a878b9",
+      "receipt_status": "FINALIZED",
+      "result": 1,
+      "trace_identity": {
+        "round": 0,
+        "round_data_round": 0,
+        "leader": "0xF01877B6Ac60861CA3b134e0E483C482679b4682",
+        "receipt_execution_hash": "0x2326ec4d8980d6eadc025f5404826099331ddf4c5d47d252c21302119b43156f",
+        "binding": "finalized-round-and-leader",
+        "cryptographic_trace_binding": false
+      },
+      "live_gate_verified": false
+    },
+    {
+      "pair_index": 43,
+      "hash": "0xaf98606b962d010e2b7c25c5da31f09ce1df987ef78bb5581bc5b44b971aaf5f",
+      "attestation_id_from_accepted_trace": 24,
+      "receipt_sha256": "3f454bc6de3fc4cfe2278ebbfc7797219dde7ccc4a9d3ad1d7b9999539176dd9",
+      "receipt_status": "FINALIZED",
+      "result": 1,
+      "trace_identity": {
+        "round": 2,
+        "round_data_round": 2,
+        "leader": "0xa856ae1b278F030082c66Fa50A5F51F485D1F940",
+        "receipt_execution_hash": "0x87f92d23d0dcedaa2cabf03df07f00977676810488814444c004d454dc56423a",
+        "binding": "finalized-round-and-leader",
+        "cryptographic_trace_binding": false
+      },
+      "live_gate_verified": false
+    }
+  ],
+  "errors": {
+    "code": "gen_getContractCode: failed to retrieve contract code for address",
+    "gate_latest_final": "gen_call: failed to get contract state: getting latest accepted transaction: failed to get latest accepted transactions: caller error",
+    "gate_latest_nonfinal": "gen_call: failed to get contract state: getting latest accepted transaction: failed to get latest accepted transactions: caller error"
+  },
+  "report_rows_changed": false,
+  "blockchain_writes": 0,
+  "gate_file_path_bug": {
+    "file": "probes/scan.py",
+    "line": 625,
+    "issue": "settle_row uses stale outer-loop prefix (44) for every gate snapshot",
+    "observed_44_gate_identity": {
+      "att_id": 22,
+      "package": "rimraf",
+      "from_version": "6.1.2",
+      "to_version": "6.1.3",
+      "actual_pair_index": 24
+    },
+    "fix_owner": "root"
+  },
+  "rpc_compatibility_check": {
+    "documented_status_finalized": "same source/state retrieval failure",
+    "sdk_default": "same source/state retrieval failure",
+    "gen_syncing": {
+      "syncedBlock": "0x163eb0d",
+      "latestBlock": "0x163eb0d",
+      "blocksBehind": 0
+    },
+    "interpretation": "RPC state retrieval fails despite synchronized block height; no client compatibility fix established"
+  }
+}

@@ -4,24 +4,25 @@
   "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
   "exit_code": 2,
   "gate": {
-    "att_id": 21,
+    "att_id": 22,
     "challenges": 0,
-    "envelope_hash": "71846a5dfecc935efe70aabb96b3085c2d934191e2b605960415359fd92608bf",
+    "envelope_hash": "28ffb2bece9ce452d247a2e830b9bd7c4d310f9de2814f130c932ccd2c0f2487",
     "findings": [],
-    "from_version": "16.2.2",
+    "from_version": "6.1.2",
     "gate": "INCONCLUSIVE",
     "inconclusive_classes": [
-      "EGRESS"
+      "EGRESS",
+      "OPAQUE"
     ],
     "level": 1,
-    "package": "yargs",
+    "package": "rimraf",
     "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
     "policy_id": 0,
     "provenance": "registry-checked metadata; client-built file excerpts",
     "registry_verification": "VERIFIED",
     "requester": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
-    "rounds": 5,
-    "to_version": "17.7.3",
+    "rounds": 4,
+    "to_version": "6.1.3",
     "verdict": "INCONCLUSIVE"
   },
   "policy": {
@@ -32,7 +33,7 @@
       "isc",
       "mit"
     ],
-    "attestations": 22,
+    "attestations": 23,
     "blocking": [
       "DEP_ADDED",
       "EGRESS",
@@ -50,5 +51,11 @@
     "pool": 0
   },
   "rpc": "https://rpc-bradbury.genlayer.com",
+  "snapshot_recovery": {
+    "fresh_rpc_read": false,
+    "original_path_error": "44.gate.json",
+    "pair_index": 24,
+    "source": "saved-consensus-report-row"
+  },
   "source": "live-finalized-bradbury"
 }

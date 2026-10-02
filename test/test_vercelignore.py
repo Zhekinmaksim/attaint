@@ -28,7 +28,7 @@ const api=require_dist(),root=process.cwd();
 const {ig}=await api.getVercelIgnore(root,false);
 for(const parent of ['runs/diagnostics','runs/diagnostics/locator-enum-simulation','runs/consensus-report-runs']) assert.equal(ig.ignores(parent),false,parent);
 const diagnosticNames=['manifest.json','report.json','leader-summary.json','validator-1-summary.json','validator-2-summary.json','diagnostic-code.py'];
-const diagnosticPaths=['runs/diagnostics/express-finalized-no-commit.json','runs/diagnostics/yargs-finalized-no-commit.json','runs/diagnostics/failed-rows-23-24.json','runs/diagnostics/expired-queue-no-commit.json','runs/diagnostics/expired-cleanup-summary.json','runs/diagnostics/post-cleanup-unfinished-no-commit.json','runs/diagnostics/canceled-retry-manifest.json','runs/diagnostics/expired-cleanup-43-summary.json','runs/diagnostics/canceled-retry-42-43-manifest.json','runs/diagnostics/finalized-retries-no-commit.json',...diagnosticNames.map(name=>'runs/diagnostics/locator-enum-simulation/'+name)];
+const diagnosticPaths=['runs/diagnostics/express-finalized-no-commit.json','runs/diagnostics/yargs-finalized-no-commit.json','runs/diagnostics/failed-rows-23-24.json','runs/diagnostics/expired-queue-no-commit.json','runs/diagnostics/expired-cleanup-summary.json','runs/diagnostics/post-cleanup-unfinished-no-commit.json','runs/diagnostics/canceled-retry-manifest.json','runs/diagnostics/expired-cleanup-43-summary.json','runs/diagnostics/canceled-retry-42-43-manifest.json','runs/diagnostics/finalized-retries-no-commit.json','runs/diagnostics/finalized-retry-21-23-44-manifest.json','runs/diagnostics/finalized-42-43-readback-audit.json',...diagnosticNames.map(name=>'runs/diagnostics/locator-enum-simulation/'+name)];
 const selected=['runs/deploy.json','runs/attempt-history.json','runs/ci-verification.json','runs/consensus-report-runs/mechanical-baseline.json',
   ...diagnosticPaths];
 for(let index=0;index<45;index++) for(const suffix of ['envelope','transaction','receipt','gate']) {
@@ -42,7 +42,7 @@ const excluded=['runs/attempt-01-registry-api/deploy.json','runs/attempt-02-ques
   'runs/diagnostics/locator-enum-simulation/validator-1-request.json',
   'runs/diagnostics/locator-enum-simulation/validator-2-response.json',
   'runs/diagnostics/locator-enum-simulation/nested/report.json',
-  'runs/diagnostics/unpublished/report.json','runs/unreviewed.json',
+  'runs/diagnostics/unpublished/report.json','runs/diagnostics/gate-file-recovery/44.misattributed-gate.json','runs/diagnostics/finalized-42-43-readback-audit.private.json','runs/unreviewed.json',
   'runs/consensus-report-runs/45.envelope.json','runs/consensus-report-runs/99.receipt.json',
   'runs/consensus-report-runs/private.envelope.json','runs/consensus-report-runs/00.request.json',
   'runs/consensus-report-runs/private/00.envelope.json',

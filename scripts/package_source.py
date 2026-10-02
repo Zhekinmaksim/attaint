@@ -46,6 +46,8 @@ RELEASE_FILES = (
     "runs/diagnostics/expired-cleanup-43-summary.json",
     "runs/diagnostics/canceled-retry-42-43-manifest.json",
     "runs/diagnostics/finalized-retries-no-commit.json",
+    "runs/diagnostics/finalized-retry-21-23-44-manifest.json",
+    "runs/diagnostics/finalized-42-43-readback-audit.json",
     "runs/diagnostics/locator-enum-simulation/manifest.json",
     "runs/diagnostics/locator-enum-simulation/report.json",
     "runs/diagnostics/locator-enum-simulation/leader-summary.json",

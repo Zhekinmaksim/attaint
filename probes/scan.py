@@ -25,6 +25,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "cli"))
 
 import envelope as env  # noqa: E402
 import canceled_retry  # noqa: E402
+import finalized_retry  # noqa: E402
 
 INCIDENTS = [
     ("event-stream", "3.3.4", "3.3.5", "takeover: right9ctrl gains publish rights"),
@@ -394,6 +395,24 @@ def prepare_settlement_path(run_dir,index,row,save_report,failure=False):
             path.unlink()
     return path
 
+def save_gate_snapshot(run_dir, index, row, live, attestation_id):
+    """Publish a gate only in the slot whose pinned release identity it matches."""
+    if type(index) is not int or not 0 <= index < 45:
+        raise ValueError("invalid gate snapshot pair index")
+    gate = live.get("gate", {})
+    expected = {"package": row["package"], "from_version": row["from"],
+                "to_version": row["to"], "envelope_hash": row["envelope_hash"],
+                "att_id": attestation_id}
+    if (live.get("chainId") != 4221
+            or any(gate.get(key) != value for key, value in expected.items())
+            or gate.get("gate") not in {"CLEAN", "RISK", "INCONCLUSIVE"}
+            or live.get("exit_code") != {"CLEAN":0,"RISK":1,"INCONCLUSIVE":2}[gate["gate"]]):
+        raise ValueError("gate snapshot does not match its pinned pair/attestation")
+    path = run_dir / ("%02d.gate.json" % index)
+    _save(path, live)
+    return path
+
+
 def queue_capacity(queue, margin=2):
     maximum, pending = queue.get("maximum"), queue.get("pending")
     if type(maximum) is not int or type(pending) is not int or not 0 <= pending <= maximum or maximum <= margin:
@@ -477,6 +496,25 @@ def _consensus_main(arguments) -> int:
         canceled_entries=canceled_retry.load_manifest(json.loads(arguments.reschedule_canceled.read_text()),report)
         if set(canceled_entries)&set(getattr(arguments,"defer_pair",[])):
             raise ValueError("a canceled retry cannot also be deferred")
+    finalized_entries={}
+    if getattr(arguments,"reschedule_finalized",None):
+        finalized_entries=finalized_retry.load_manifest(json.loads(arguments.reschedule_finalized.read_text()),report)
+        conflicts=set(canceled_entries)|set(getattr(arguments,"defer_pair",[]))|set(arguments.reschedule_undetermined)|set(arguments.reschedule_disagree)
+        if set(finalized_entries)&conflicts:
+            raise ValueError("a finalized manifest pair cannot also use another retry/defer mode")
+    def read_finalized_proof(journal,sender,result):
+        return gate_cli.bridge("finalized-failure-proof",rpc=arguments.rpc,address=arguments.contract,
+            hash=journal["hash"],sender=sender,result=result,method=journal["method"],args=journal["args"])
+    def persist_finalized_history(row):
+        _save(arguments.out,report)
+        path=root/"runs/attempt-history.json"
+        history=json.loads(path.read_text())if path.exists()else{}
+        records=history.setdefault("finalized_retry_attempts",[])
+        for old in row.get(finalized_retry.HISTORY,[]):
+            if not any(item["hash"]==old["hash"]for item in records):
+                records.append({**old,"contract":arguments.contract,"package":row["package"],"from":row["from"],"to":row["to"],
+                    "retry_basis":"One replacement anchored to this exact RAW FINALIZED nonagreement hash/result, unchanged calldata and both state views without a matching attestation."})
+        _save(path,history)
     def read_canceled_raw(journal,sender):
         return gate_cli.bridge("canceled-proof",rpc=arguments.rpc,address=arguments.contract,
             hash=journal["hash"],sender=sender,method=journal["method"],args=journal["args"])
@@ -571,7 +609,10 @@ def _consensus_main(arguments) -> int:
             if journal.get("hash"):
                 if row.get("transaction_hash") and row["transaction_hash"] != journal["hash"]:
                     raise ValueError("report/journal transaction mismatch at pair %d" % index)
-                if index in canceled_entries and canceled_retry.is_anchored_original(row,canceled_entries[index],journal):
+                if index in finalized_entries and finalized_retry.is_anchored_original(row,finalized_entries[index],journal):
+                    finalized_retry.archive_finalized(journal_path,row,finalized_entries[index],read_finalized_proof,
+                        read_canceled_gates,_save,persist_finalized_history)
+                elif index in canceled_entries and canceled_retry.is_anchored_original(row,canceled_entries[index],journal):
                     canceled_retry.archive_canceled(journal_path,row,canceled_entries[index],read_canceled_raw,
                         read_canceled_gates,_save,persist_canceled_history)
                 elif reschedule_results(index) and reschedule_matches_initial_failure(row,journal):
@@ -584,6 +625,7 @@ def _consensus_main(arguments) -> int:
                     row["status"] = "SUBMITTED"
             elif journal.get("submission_intent") and arguments.archive_reverted_submissions:
                 canceled_retry.forbid_replacement_intent_archive(row,journal)
+                finalized_retry.forbid_replacement_intent_archive(row,journal)
                 archive_reverted_submission(journal_path,row,lambda hash:gate_cli.bridge("evm-receipt",rpc=arguments.rpc,hash=hash),lambda:persist_failure_history(row))
             elif journal.get("submission_intent"):
                 # Resolve an uncertain receipt without authorizing a replacement.
@@ -622,7 +664,7 @@ def _consensus_main(arguments) -> int:
                                       policy_hash=arguments.policy_hash, attestation=att_id,
                                       evidence=evidence, rpc=arguments.rpc, code_hash=arguments.code_hash,
                                       expected_requester=receipt["receipt"]["sender"])
-            _save(prefix.with_suffix(".gate.json"), live)
+            save_gate_snapshot(run_dir,index,row,live,att_id)
         except (ValueError, KeyError, TypeError, OSError, subprocess.SubprocessError) as error:
             row.update(status="INCONCLUSIVE_READBACK", reason=str(error))
             failures.append(index)
@@ -639,7 +681,14 @@ def _consensus_main(arguments) -> int:
     def submit_row(index):
         row = report["controls"][index]
         canceled_retry.require_fresh_manifest(row,canceled_entries.get(index))
-        if index in canceled_entries:
+        finalized_retry.require_fresh_manifest(row,finalized_entries.get(index))
+        if index in finalized_entries:
+            entry=finalized_entries[index]
+            records=[r for r in row.get(finalized_retry.HISTORY,[])if r["hash"]==entry["expected_old_hash"]]
+            if len(records)!=1:raise ValueError("no durable finalized retry anchor archive")
+            original=json.loads(pathlib.Path(records[0]["journal"]).read_text())
+            finalized_retry.prove_finalized(original,entry,read_finalized_proof,read_canceled_gates)
+        elif index in canceled_entries:
             entry=canceled_entries[index]
             records=[r for r in row.get("canceled_consensus_attempts",[])if r["hash"]==entry["expected_old_hash"]]
             if len(records)!=1:raise ValueError("no durable canceled retry anchor archive")
@@ -656,7 +705,8 @@ def _consensus_main(arguments) -> int:
             method="request_attestation", args=prepared_args[index],
             account=arguments.account, out=pathlib.Path(row["journal"]),
             **({"submission_ttl":arguments.submission_ttl} if getattr(arguments,"submission_ttl",None) else {}),
-            **({"expected_sender":canceled_entries[index]["requester"],"canceled_retry_anchor":canceled_entries[index]["expected_old_hash"]} if index in canceled_entries else {}))
+            **({"expected_sender":canceled_entries[index]["requester"],"canceled_retry_anchor":canceled_entries[index]["expected_old_hash"]} if index in canceled_entries else {}),
+            **({"expected_sender":finalized_entries[index]["requester"],"finalized_retry_anchor":finalized_entries[index]["expected_old_hash"]} if index in finalized_entries else {}))
         row.update(transaction_hash=journal["hash"], status="SUBMITTED")
         _save(arguments.out, report)
         print("SUBMITTED %02d/45 %s %s → %s %s" %
@@ -875,6 +925,7 @@ def main() -> int:
     parser.add_argument("--finalize-release", action="store_true", help="prioritize existing runs deploy/policy/first-attestation journals in the single-writer paced loop")
     parser.add_argument("--reschedule-undetermined",type=int,action="append",default=[],metavar="INDEX",help="explicitly reschedule this pair only after live no-commit proof; preserve failed consensus hash and journal")
     parser.add_argument("--reschedule-disagree",type=int,action="append",default=[],metavar="INDEX",help="after explicit operator approval, schedule one replacement for FINALIZED DISAGREE result2 with fresh no-commit proof")
+    parser.add_argument("--reschedule-finalized",type=pathlib.Path,metavar="MANIFEST.json",help="one replacement per immutable finalized nonagreement hash/result manifest, with fresh RAW7/calldata/requester and both gate absence audits")
     parser.add_argument("--reschedule-canceled",type=pathlib.Path,metavar="MANIFEST.json",help="after explicit operator approval, one new request per fixed index/old-hash/envelope manifest; fresh raw canceled/outside-queue and both gate state views required")
     parser.add_argument("--defer-pair",type=int,action="append",default=[],metavar="INDEX",help="leave this pair awaiting operator approval while completing others; report stays incomplete")
     root = pathlib.Path(__file__).resolve().parents[1]

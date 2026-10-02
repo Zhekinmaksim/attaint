@@ -15,7 +15,7 @@ import {readPendingQueue} from './queues.mjs';
 import {acquireWriterLock} from './writer_lock.mjs';
 import {observeReceiptStates} from './receipt_observer.mjs';
 import {createSubmissionTTL} from './submission_ttl.mjs';
-import {inspectExpiredHead,cancelAbi,createRawStatusReader,readQueueHead,readCanceledProof} from './expired_head.mjs';
+import {inspectExpiredHead,cancelAbi,createRawStatusReader,readQueueHead,readCanceledProof,readFinalizedFailureProof} from './expired_head.mjs';
 
 const options = process.argv.slice(3);
 const option = (name, fallback = '') => {
@@ -149,6 +149,15 @@ try {
     const calldata=sdk.abi.calldata.encode(sdk.abi.calldata.makeCalldataObject(required('--method'),args));
     const expectedCalldata=sdk.abi.transactions.serialize([calldata,false]);
     result={...meta,...await readRpc(()=>readCanceledProof({publicClient,hash:required('--hash'),sender:required('--sender'),recipient:required('--address'),expectedCalldata}))};
+  } else if(command==='finalized-failure-proof') {
+    const hash=required('--hash'),expectedResult=Number(required('--result'));
+    if(![2,5].includes(expectedResult))throw Error('finalized failure proof requires exact DISAGREE 2 or UNDETERMINED 5 result');
+    const calldata=sdk.abi.calldata.encode(sdk.abi.calldata.makeCalldataObject(required('--method'),args));
+    const expectedCalldata=sdk.abi.transactions.serialize([calldata,false]);
+    const raw=await readRpc(()=>readFinalizedFailureProof({publicClient,hash,sender:required('--sender'),recipient:required('--address'),expectedCalldata}));
+    const receipt=await readRpc(()=>client.getTransaction({hash}));
+    if(receipt.txId!==hash||receipt.recipient!==required('--address')||receipt.sender.toLowerCase()!==required('--sender').toLowerCase()||receipt.status!==7||receipt.statusName!=='FINALIZED'||receipt.result!==expectedResult)throw Error('finalized failure receipt does not match the exact manifest result/identity');
+    result={...meta,...raw,receipt};
   } else if(command==='pending-head') {
     result={...meta,...await readRpc(()=>readQueueHead({publicClient,recipient:required('--address')}))};
   } else if(command==='expired-head'||command==='cancel-expired') {
@@ -269,7 +278,14 @@ try {
       if(previous.canceled_retry_anchor&&previous.canceled_retry_anchor!==anchor)throw Error('canceled replacement journal anchor mismatch');
       result.canceled_retry_anchor=anchor;
     }
-    if(result.canceled_retry_anchor&&options.includes('--retry-signed-intent'))throw Error('a canceled replacement signing intent has consumed its one authorized attempt; manual resend is forbidden');
+    if(option('--finalized-retry-anchor')) {
+      const anchor=option('--finalized-retry-anchor');
+      if(command!=='write'||!/^0x[0-9a-f]{64}$/i.test(anchor))throw Error('invalid finalized replacement anchor');
+      if(previous.finalized_retry_anchor&&previous.finalized_retry_anchor!==anchor)throw Error('finalized replacement journal anchor mismatch');
+      result.finalized_retry_anchor=anchor;
+    }
+    if(result.finalized_retry_anchor&&result.canceled_retry_anchor)throw Error('a replacement journal cannot carry two authorization anchors');
+    if((result.canceled_retry_anchor||result.finalized_retry_anchor)&&options.includes('--retry-signed-intent'))throw Error('a terminal replacement signing intent has consumed its one authorized attempt; manual resend is forbidden');
     if (!hash) {result.value_wei = valueWei; if (sourceHash) result.source_sha256 = sourceHash;}
     if (options.includes('--retry-signed-intent')) {
       if (hash) throw new Error('signed-intent retry cannot replace an existing consensus transaction');

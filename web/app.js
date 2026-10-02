@@ -70,6 +70,9 @@ function showGate(gate) {
 }
 async function inspect() {
   const epoch = ++generation;
+  $('live-result').textContent = 'PENDING · reading current gate';
+  $('live-result').className = 'live-result';
+  $('live-gate').textContent = '';
   try {
     notify('Reading finalized state from Bradbury…');
     const policy = await read('get_policy', [deployment.policy_id]);
@@ -81,7 +84,7 @@ async function inspect() {
     if (epoch !== generation) return;
     showGate(gate);
     notify(`Finalized chain record #${id}: ${gate.package} ${gate.from_version} → ${gate.to_version}. This is a bounded evidence verdict, not a whole-package safety guarantee.`);
-  } catch (error) { if (epoch === generation) { $('live-result').textContent = 'INCONCLUSIVE · chain read failed · exit 2'; $('live-gate').textContent = ''; notify(error.shortMessage || error.message); } }
+  } catch (error) { if (epoch === generation) { $('live-result').textContent = 'INCONCLUSIVE · chain read failed · exit 2'; $('live-result').className = 'live-result INCONCLUSIVE'; $('live-gate').textContent = ''; notify(error.shortMessage || error.message); } }
 }
 async function connect() {
   try {

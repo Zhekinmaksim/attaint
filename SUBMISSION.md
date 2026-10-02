@@ -79,10 +79,10 @@ Policy: ID `0`, hash `ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9
 Deployed source SHA-256: `80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa`.
 
 The [first live attestation](https://explorer-bradbury.genlayer.com/tx/0xe53abde17154cbf3cbb41ced701fa8a42e1c327beb1ded40e351b31ebe4cbe18)
-is `FINALIZED` (confirmed 1 October 2026 at 13:59 UTC). Its current gate for
+is `FINALIZED` (confirmed 1 October 2026 at 13:59 UTC). Its verified gate on 1 October 2026 for
 `event-stream 3.3.4 → 3.3.5` is `CLEAN`, with registry metadata `VERIFIED`, six
-class judgments, no findings and no inconclusive classes. A fresh finalized-state
-CLI check returned exit `0`; the local proof is `runs/first-attestation-gate.json`
+class judgments, no findings and no inconclusive classes. The finalized-state
+CLI check at that checkpoint returned exit `0`; the local proof is `runs/first-attestation-gate.json`
 and the release bindings are in `runs/deployment.json`.
 
 The production browser read verified `CLEAN`, registry metadata `VERIFIED` and
@@ -99,45 +99,29 @@ Two read-only GenVM validator replays passed with a simulated leader verdict
 judgments and returned `CLEAN` for the same pinned envelope and policy parameters.
 A diagnostic replay is not network consensus. Do not advertise that simulated
 risk finding as a live detection; the finalized live result missed the historical
-handover risk. At the verified checkpoint (`observed_at: 2026-10-01T16:39:00Z`),
-21/45 original corpus pairs had finalized gates: 14 `CLEAN`, seven `INCONCLUSIVE`,
-zero `RISK`. Express index 13 ended
-`FINALIZED / NO_MAJORITY` without a committed attestation. Its original hash and
-no-commit proof are preserved. The user explicitly approved exactly one fresh Express request.
-Its [replacement transaction](https://explorer-bradbury.genlayer.com/tx/0xc4a6b8a7f1488230da97ea26550985eb73585bc3ca8e8fee330ad58081e9084c)
-was submitted and projected as `CANCELED` at this checkpoint. Yargs index 21 ended
-`FINALIZED / MajorityDisagree` (result 2), without a committed attestation in
-either state view. The sanitized proof is
-`runs/diagnostics/yargs-finalized-no-commit.json`. The user explicitly approved
-exactly one fresh Yargs request with the same policy and envelope. Its
-[replacement](https://explorer-bradbury.genlayer.com/tx/0xc496de7de05cdb11dbce0c4fd606e2dc9d0b1c287c51fe3ce8e71dcf5a83b48f)
-subsequently reached `FINALIZED / NO_MAJORITY` (result 5), without a committed
-attestation. Its one approved retry is used, with no third request authorized. One retry
-each for indices 23 and 24 is separately approved. Those requests and original
-index 44 have now been submitted with six-hour V6 deadlines, preserving all other
-submission arguments:
-[23](https://explorer-bradbury.genlayer.com/tx/0x64b675b6497880018d26281ed90614e69fc21f13adae86accb0018c853a0ce3d),
-[24](https://explorer-bradbury.genlayer.com/tx/0xe0d87e4fa0ce20e486572c0330a9c86a1d6951c6f2405cedab22493ace1017ae),
-[44](https://explorer-bradbury.genlayer.com/tx/0xfd481df56855efb35eb64cf903f42f2a5c2a9f1878941d063f4f9bcea5ff0491).
-The subsequent queue read showed six pending entries. These submissions are not
-finalized gates. Index 23's replacement is now `FINALIZED`, result 2, without a
-committed attestation. The public
-[finalized-retry audit](https://attaint.vercel.app/diagnostics/finalized-retries-no-commit.json)
-covers failed replacements 21 and 23, absent from both complete state views
-with stable counts of 23. These counts do not prove finality of other requests.
-Index 24 is `ACCEPTED`, result 1, with finalization eligibility at 18:57:20 UTC;
-it is not yet a finalized gate. The official SDK identifies numeric status 14 as
-nonterminal `LEADER_REVEALING`; observer and browser decoders now support it.
-Index 44 has since reached `UNDETERMINED / NO_MAJORITY` (result 5), with normal
-finalization eligibility at 19:05:33 UTC. Indices 42 and 43 project `CANCELED`
-while their raw records remain unexpired `PENDING` followers, with no new
-replacement authorized. Original audits
-and hashes are preserved; no further retries of indices 13, 21 or 23 are authorized.
-The counts above remain a verified
-checkpoint, not a live total.
-The full 45-pair comparison and measured consensus metrics remain pending;
-no full-sample percentages or improvement are claimed. See the README for
-queue pacing, resume behavior and the guarded operator-authorized retry.
+handover risk. At the 2 October 2026 checkpoint, the saved report contains 22/45 finalized
+corpus gates: 14 `CLEAN`, eight `INCONCLUSIVE` and zero `RISK`. Index 24 is now
+finalized. Indices 42 and 43 have successful finalized receipts and accepted-round
+traces identifying attestations 23 and 24, but remain `INCONCLUSIVE_READBACK`:
+the Bradbury RPC currently fails to return contract code and current state.
+These two traces alone do not certify the current gate. The
+[readback audit](https://attaint.vercel.app/diagnostics/finalized-42-43-readback-audit.json)
+records that distinction. No replacement of either successful request is planned.
+
+Indices 21, 23 and 44 finalized without agreement (results 5, 2 and 5). Eighteen
+other requests, index 13 and indices 25–41, were canceled without committed gates
+at the saved audit. The operator has requested completion of the remaining run.
+The bounded recovery uses the existing 18-entry canceled manifest and a separate
+[three-entry finalized-failure manifest](https://attaint.vercel.app/diagnostics/finalized-retry-21-23-44-manifest.json).
+Each exact failed hash permits one replacement only after a fresh raw terminal
+status, matching calldata/requester and complete audits of both state views prove
+there is no committed update. An existing signing intent consumes its allowance.
+The RPC outage blocks these checks, so no new replacement has been sent in this
+recovery session. Failed attempts and their original hashes remain preserved.
+
+The full 45-pair comparison remains incomplete. No full-sample consensus rates,
+improvement or accuracy claim is published. Saved gates are historical verified
+observations; a network read failure cannot become a passing CI result.
 
 Canceled or expired observations and a `ValidatorSelectionFailed` minimal-metadata
 fallback are not verdicts. The fallback cannot prove successful execution or
@@ -165,32 +149,5 @@ records no attestation requests. The one approved replacement each for indices
 42 and 43 has now been submitted with six-hour deadlines:
 [42](https://explorer-bradbury.genlayer.com/tx/0x2d3c7a7ee860fa8e7a3a22c51c3a35441f254923113470690f67c983c4eeda9a),
 [43](https://explorer-bradbury.genlayer.com/tx/0xaf98606b962d010e2b7c25c5da31f09ce1df987ef78bb5581bc5b44b971aaf5f).
-Both allowances are used. The pre-sign RPC issue is resolved; these requests
-are not finalized gates. The 18-entry batch remains unapproved and the 21/45
-gate checkpoint is unchanged.
-
-The historical
-[post-cleanup no-commit audit](https://attaint.vercel.app/diagnostics/post-cleanup-unfinished-no-commit.json)
-identified 18 raw canceled releases without matching attestations (index 13 and
-25–41). A separate fresh-request batch is being prepared for explicit approval;
-none of these 18 requests is approved or submitted. Existing active hashes remain
-preserved, and the historical audit must be rechecked before any signature.
-
-The prior contract
-[`0x74407aE5e92002F4F0E1A912C7e785837a67F3C8`](https://explorer-bradbury.genlayer.com/address/0x74407aE5e92002F4F0E1A912C7e785837a67F3C8)
-is failed-attempt evidence. Its deployment and policy finalized, but the smoke
-transaction ended `UNDETERMINED` after validator disagreement at `INSTALL_HOOK`.
-It produced no accepted attestation. The diagnostic was `nondet_disagree`; a
-stale SDK label of `DETERMINISTIC_VIOLATION` is not proof of a replay fault.
-The [failed-attempt history](https://attaint.vercel.app/attempt-history.json)
-publishes the contract and transaction identities with archived statuses. Do not attach
-this attempt as proof of a successful current-release workflow.
-
-[Readable contract](https://attaint.vercel.app/attaint.py),
-[Bradbury artifact](https://attaint.vercel.app/attaint.bradbury.py),
-[project documentation](https://attaint.vercel.app/README.md), and the
-[source archive](https://attaint.vercel.app/source.zip) are published. Check their
-revision against the archive's SHA-256 manifest; source publication is separate
-from a successful chain release. Source repository: [Zhekinmaksim/attaint](https://github.com/Zhekinmaksim/attaint).
-Use the Vercel URL; `attaint.xyz` routing will be configured by the user and has
-not been verified.
+Both allowances are used. Their successful finalized receipts are preserved;
+current gate reads remain blocked by the RPC failure described above.
