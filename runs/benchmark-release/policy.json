@@ -1,0 +1,219 @@
+{
+  "network": "bradbury",
+  "chainId": 4221,
+  "rpc": "https://rpc-bradbury.genlayer.com",
+  "command": "write",
+  "address": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+  "method": "register_policy",
+  "args": [
+    "mit,apache-2.0,isc,bsd-2-clause,bsd-3-clause",
+    "DEP_ADDED,EGRESS,INSTALL_HOOK,LICENSE_SHIFT,MAINTAINER_SHIFT,OPAQUE",
+    6,
+    1,
+    1000000000000000
+  ],
+  "hash": "0x0eba23ed228cb6d0803a4d17efe671d9f0bdcbd21aa1bbd1cedf4e526e3f2549",
+  "value_wei": "0",
+  "submission_intent": {
+    "evm_hash": "0x64384ba9a38216b4b0e0dbd9e80beb32a1b14b5d1347c296f7aa373f5b8324f4",
+    "state": "SIGNED",
+    "nonce": "447",
+    "to": "0x0112Bf6e83497965A5fdD6Dad1E447a6E004271D",
+    "chainId": 4221,
+    "from": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+    "value_wei": "0",
+    "operation_sha256": "130960c761fb58b632b135dcdcfc68c01cebbef72fb7ab727ece451f90ff24f4"
+  },
+  "trace_verified": true,
+  "receipt": {
+    "currentTimestamp": "1790866136",
+    "sender": "0x771388495F34d21C5574FeFc04cd1D5811E00aDa",
+    "recipient": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+    "initialRotations": "3",
+    "txSlot": "1",
+    "createdTimestamp": "1790861106",
+    "lastVoteTimestamp": "1790861117",
+    "randomSeed": "0xb6b11422f8aecf5a14da946425cd86c9dc00fa5577be96a7c76591db590c52bf",
+    "result": 1,
+    "txExecutionHash": "0xc642bc37394a0b917221886a5299b9e5783dc6e28d7405f5816d4b8ed83ea85b",
+    "txCalldata": "0xf89eb89b1604617267732de4026d69742c6170616368652d322e302c6973632c6273642d322d636c617573652c6273642d332d636c617573659c044445505f41444445442c4547524553532c494e5354414c4c5f484f4f4b2c4c4943454e53455f53484946542c4d41494e5441494e45525f53484946542c4f504151554531098180d0b1d2fe9a0e066d6574686f647c72656769737465725f706f6c69637900",
+    "eqBlocksOutputs": "0xc786706164646564",
+    "messages": [],
+    "queueType": 0,
+    "queuePosition": "0",
+    "activator": "0x422357d87B035e478777C84748BAC834CE2A9597",
+    "lastLeader": "0x3B940A5b4A762583453D9e9Cf0981BE0426A8e79",
+    "status": 7,
+    "txId": "0x0eba23ed228cb6d0803a4d17efe671d9f0bdcbd21aa1bbd1cedf4e526e3f2549",
+    "readStateBlockRange": {
+      "activationBlock": "23274662",
+      "processingBlock": "23274662",
+      "proposalBlock": "23274663"
+    },
+    "numOfRounds": "0",
+    "lastRound": {
+      "round": "0",
+      "leaderIndex": "3",
+      "votesCommitted": "5",
+      "votesRevealed": "5",
+      "appealBond": "0",
+      "rotationsLeft": "3",
+      "result": 1,
+      "roundValidators": [
+        "0x3f5cAED686336ED9cF3Dede61154B0Cd67Fb9bD7",
+        "0xB93a46B843fB32E8Ce392e68eDFE93Faa4a40817",
+        "0x7c23E70217AB2A9E777940Eb769bA4198d1BaA61",
+        "0x3B940A5b4A762583453D9e9Cf0981BE0426A8e79",
+        "0x27276953fa2052A5178Ae5a3D114a3DFB9A2fC98"
+      ],
+      "validatorVotes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "validatorVotesHash": [
+        "0x2fbeb37bc697d3acd9021920f4079b5c17d5045d7f9201d78c032ca235010645",
+        "0xc3ddc10d57be8f7010328d3df2d543b49f538ff1a911f71fd9e7e7a28ab7bbd2",
+        "0xf97364d8d1856ac7ac92c6b35e9976f064413e147c2e1f6d909ab485e7e9ebf6",
+        "0x4c34076a2c67da8f997397db26ee8bc20c89f5b1763277bc5a24616e66350fc8",
+        "0xcb461bb3b79b3d7686b65926445a8d05c299236f553200637b44bb5cc5596c6a"
+      ],
+      "validatorResultHash": [
+        "0x07a5a5b4e12fc2aae5f8b1dbe6f1d2b455a6c90a007e5ce379fdba4b1729335d",
+        "0x07a5a5b4e12fc2aae5f8b1dbe6f1d2b455a6c90a007e5ce379fdba4b1729335d",
+        "0x07a5a5b4e12fc2aae5f8b1dbe6f1d2b455a6c90a007e5ce379fdba4b1729335d",
+        "0x07a5a5b4e12fc2aae5f8b1dbe6f1d2b455a6c90a007e5ce379fdba4b1729335d",
+        "0x07a5a5b4e12fc2aae5f8b1dbe6f1d2b455a6c90a007e5ce379fdba4b1729335d"
+      ],
+      "validatorVotesName": [
+        "AGREE",
+        "AGREE",
+        "AGREE",
+        "AGREE",
+        "AGREE"
+      ]
+    },
+    "consumedValidators": [
+      "0x3f5cAED686336ED9cF3Dede61154B0Cd67Fb9bD7",
+      "0xB93a46B843fB32E8Ce392e68eDFE93Faa4a40817",
+      "0x7c23E70217AB2A9E777940Eb769bA4198d1BaA61",
+      "0x3B940A5b4A762583453D9e9Cf0981BE0426A8e79",
+      "0x27276953fa2052A5178Ae5a3D114a3DFB9A2fC98"
+    ],
+    "txExecutionResult": 1,
+    "txData": "0xf89eb89b1604617267732de4026d69742c6170616368652d322e302c6973632c6273642d322d636c617573652c6273642d332d636c617573659c044445505f41444445442c4547524553532c494e5354414c4c5f484f4f4b2c4c4943454e53455f53484946542c4d41494e5441494e45525f53484946542c4f504151554531098180d0b1d2fe9a0e066d6574686f647c72656769737465725f706f6c69637900",
+    "txDataDecoded": {
+      "callData": {
+        "args": [
+          "mit,apache-2.0,isc,bsd-2-clause,bsd-3-clause",
+          "DEP_ADDED,EGRESS,INSTALL_HOOK,LICENSE_SHIFT,MAINTAINER_SHIFT,OPAQUE",
+          "6",
+          "1",
+          "1000000000000000"
+        ],
+        "method": "register_policy"
+      },
+      "leaderOnly": false,
+      "type": "call"
+    },
+    "numOfInitialValidators": "3",
+    "statusName": "FINALIZED",
+    "resultName": "AGREE",
+    "txExecutionResultName": "FINISHED_WITH_RETURN"
+  },
+  "finalization_capability": {
+    "source": "consensusData.canFinalize",
+    "eligible": false,
+    "block": "23274700",
+    "block_timestamp": "1790861192",
+    "evaluated_at": "1790861186",
+    "raw": [
+      false,
+      "1790861186",
+      "1790862917"
+    ]
+  },
+  "trace": {
+    "transaction_id": "0x0eba23ed228cb6d0803a4d17efe671d9f0bdcbd21aa1bbd1cedf4e526e3f2549",
+    "result_code": 0,
+    "return_data": "0x2e046461746101066576656e7473050b66696e6765727072696e7416066672616d657375160466756e6391080b6d6f64756c655f6e616d653c63707974686f6e160466756e63e184070b6d6f64756c655f6e616d653c63707974686f6e160466756e6391ff050b6d6f64756c655f6e616d653c63707974686f6e160466756e63d1ff050b6d6f64756c655f6e616d653c63707974686f6e160466756e63d184060b6d6f64756c655f6e616d653c63707974686f6e160466756e63c184060b6d6f64756c655f6e616d653c63707974686f6e160466756e63c9be070b6d6f64756c655f6e616d653c63707974686f6e160466756e63c1be070b6d6f64756c655f6e616d653c63707974686f6e160466756e6399be070b6d6f64756c655f6e616d653c63707974686f6e160466756e6381be070b6d6f64756c655f6e616d653c63707974686f6e160466756e63e9f7060b6d6f64756c655f6e616d653c63707974686f6e160466756e63d1f7060b6d6f64756c655f6e616d653c63707974686f6e160466756e63f9bd070b6d6f64756c655f6e616d653c63707974686f6e160466756e63b9070b6d6f64756c655f6e616d653c63707974686f6e106d6f64756c655f696e7374616e636573160763707974686f6e0e086d656d6f726965730d83022ae888a417aa3e9cf7ebb9428a843085e29266968c9d3022b1a00a416982e3ae09736f6674666c6f61740e086d656d6f726965730d8302fc9e4fa3448da50dc6ff514aba0568ba045276f58d3c60fdf4c5c3d28b16acc8046b696e643452657475726e0f73746f726167655f6368616e6765732d15a30221a18c3b5d08c02eb3d07c125fac9537c503d7c726e698692f86af6feaea514600000000830a000000000000000000000000000000000000000000000000000000000000000000000000771388495f34d21c5574fefc04cd1d5811e00ada400000002c0000004300000006000000010000000080c6a47e8d03000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000015a302372d46c3ada9f897c74d349bbfe0e450c798167c9f580f8daf85def57e96c3ea00000000830601000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000000000000000000000000000000000000000000000000000000000000000000015a30251f070952b8dcca6286320c402cf8eeed8431fab60e72afb046a6711bbe5c2860000000083046170616368652d322e302c6273642d322d636c617573652c6273642d332d636c617573652c6973632c6d6974000000000000000000000000000000000000000015a302ac20447db01c6d0ca42431255838797245c6548bf7551509aca1b0ff3543fd7a0000000083046163316434386362323066653363356139363632616664323463663761373335336366633165623532386664383262643364626562666362663937303563653115a302c090b99177aaadc7dc47c23a87b6bdf425cb3af0a1b3eae7f098ed05fe37b03e0000000083064445505f41444445442c4547524553532c494e5354414c4c5f484f4f4b2c4c4943454e53455f53484946542c4d41494e5441494e45525f53484946542c4f50415155450000000000000000000000000000000000000000000000000000000000",
+    "stdout": "",
+    "stderr": "",
+    "genvm_log": [
+      {
+        "file": "common/src/lib.rs:111",
+        "level": "info",
+        "message": "logging initialized",
+        "target": "genvm_common",
+        "ts": "1790861117927",
+        "version": "v0.2.11-x86_64-linux-release"
+      },
+      {
+        "file": "src/exe/run.rs:150",
+        "genvm_id": "5119750",
+        "level": "info",
+        "message": "genvm id",
+        "target": "genvm::exe::run",
+        "ts": "1790861117927"
+      },
+      {
+        "default": "v0.1.0",
+        "file": "src/runners/parse.rs:88",
+        "level": "warn",
+        "message": "runner comment does not start with version, using default",
+        "target": "genvm::runners::parse",
+        "ts": "1790861117931"
+      },
+      {
+        "file": "src/lib.rs:299",
+        "level": "info",
+        "message": "metrics",
+        "metrics": {
+          "gvm": {
+            "host": {
+              "time": 1979
+            },
+            "llm_module": {
+              "calls": 0,
+              "time": 0
+            },
+            "supervisor": {
+              "compilation_time": 0,
+              "compiled_modules": 0,
+              "precompile_hits": 2
+            },
+            "web_module": {
+              "calls": 0,
+              "time": 0
+            }
+          },
+          "llm": null,
+          "web": null
+        },
+        "target": "genvm",
+        "ts": "1790861118122"
+      },
+      {
+        "file": "src/exe/run.rs:111",
+        "level": "warn",
+        "message": "sigterm received",
+        "target": "genvm::exe::run",
+        "ts": "1790861118123"
+      }
+    ],
+    "storage_proof": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "run_time": "0s",
+    "eq_outputs": []
+  },
+  "trace_identity": {
+    "round": 0,
+    "round_data_round": 0,
+    "leader": "0x3B940A5b4A762583453D9e9Cf0981BE0426A8e79",
+    "receipt_execution_hash": "0xc642bc37394a0b917221886a5299b9e5783dc6e28d7405f5816d4b8ed83ea85b",
+    "binding": "finalized-round-and-leader",
+    "cryptographic_trace_binding": false
+  },
+  "return_value": "0"
+}

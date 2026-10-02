@@ -5,9 +5,12 @@ from version A to version B under an immutable consumer policy, then exposes a
 CI decision: `CLEAN` → 0, `RISK` → 1, `INCONCLUSIVE` → 2.
 
 Hosted application: [attaint.vercel.app](https://attaint.vercel.app).
-The corrected contract has a `FINALIZED` attestation and a live CLI exit code `0`.
-The current gate is `CLEAN`, while the earlier diagnostic returned `RISK`. Read
-the release status before using either result as CI evidence.
+The public application now uses a separate Bradbury instance with the same
+reviewed contract code and immutable policy as the benchmark. Deployment, policy
+and attestation 0 are finalized. A fresh verified read for `event-stream
+3.3.4 → 3.3.5` returned `RISK / MAINTAINER_SHIFT`, and the CLI exited 1.
+The earlier benchmark returned `CLEAN` for this same envelope; both outcomes
+are preserved. See the release status for exact identities and limits.
 
 The six judgment classes are licence incompatibility (`LICENSE_SHIFT`), unexplained
 transfer of publisher trust (`MAINTAINER_SHIFT`), new or changed install behaviour
@@ -74,6 +77,28 @@ these class counts, the same 45 pinned pairs and that inconclusive results block
 CI. Its rate differences describe these two policies; without ground truth they
 do not measure accuracy or a reduction in false positives.
 
+## Verify the published example
+
+Open [the live gate](https://attaint.vercel.app/#live) without a wallet. The page
+reads attestation 0 from Bradbury and verifies its consensus receipt. To check
+the same record from a terminal:
+
+```sh
+git clone https://github.com/Zhekinmaksim/attaint.git
+cd attaint
+npm ci
+python3 cli/attaint_gate.py \
+  --contract 0xbC94Fc0015574e85226DAaAdD2fC2CB8b2FbF42A \
+  --policy 0 \
+  --policy-hash ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1 \
+  --attestation 0 \
+  --envelope corpus/event-stream-3.3.4-3.3.5.json --json
+```
+
+The process exit is the gate decision: 0 permits, 1 blocks a risk, and 2 blocks
+an inconclusive result. A nonzero exit is intentional when the update is blocked.
+The live result may change after a successful on-chain challenge.
+
 ## Build evidence and run checks
 
 The envelope builder and offline tests use Python 3.10+ and the standard library.
@@ -96,7 +121,7 @@ python3 cli/attaint_gate.py \
   --policy "$ATTAINT_POLICY_ID" \
   --policy-hash "$ATTAINT_POLICY_HASH" \
   --attestation "$ATTAINT_ATTESTATION_ID" \
-  --envelope corpus/event-stream-live.json --json
+  --envelope corpus/event-stream-3.3.4-3.3.5.json --json
 ```
 
 This command must verify the expected policy and update, not accept an unrelated
@@ -114,9 +139,9 @@ and prompt strings are preserved. The compiler checks the public ABI; run the
 full offline suite against both forms. Deploy `contracts/attaint.bradbury.py`,
 keeping the readable source for review.
 
-The SDK runner requires Node.js and an installed GenLayer CLI. Run `npm ci` to
-install the lockfile-pinned SDK dependencies. It imports the GenLayer SDK from
-local dependencies or the CLI installation. Writes use an
+Read-only verification requires Node.js 20+ and `npm ci` for the lockfile-pinned
+SDK dependencies. It does not require a wallet or a global GenLayer CLI. The
+runner can also import dependencies from an installed GenLayer CLI. Writes use an
 unlocked CLI account from the system keychain; `--account` selects one. The
 `GENLAYER_PRIVATE_KEY` environment variable is an alternative. Never publish
 credentials in source or output artifacts.
@@ -128,10 +153,10 @@ python3 -m venv .venv
 .venv/bin/python scripts/compile_contract.py
 python3 test/run_tests.py
 ATTAINT_CONTRACT_PATH=contracts/attaint.bradbury.py python3 test/run_tests.py
-node scripts/live.mjs deploy --file contracts/attaint.bradbury.py --out deployment.json --wait
+node scripts/live.mjs deploy --file contracts/attaint.bradbury.py --out deployment.json --submission-ttl 21600 --wait --timeout 21600
 node scripts/live.mjs write --address "$ATTAINT_CONTRACT" \
   --method register_policy --args-file policy-args.json \
-  --out policy-receipt.json --wait
+  --out policy-receipt.json --submission-ttl 21600 --wait --timeout 21600
 ```
 
 The proposed six-class policy uses this `policy-args.json` JSON argument array:
@@ -151,15 +176,27 @@ a transaction by hash. Submit the canonical envelope body as the `evidence`
 argument. Its package, versions, hash and evidence level must match the request.
 Keep confirmed receipts with the run artifacts and verify the resulting state.
 Reusing a journal resumes its transaction instead of broadcasting a duplicate.
+Pass arguments through `--args-file`, a file containing a JSON array. The runner
+rejects unknown options, duplicate flags, missing values and positional arguments
+before credentials or network access. `--args` is not supported.
 
-Repeat the exact saved 45-pair control sample through live consensus:
+Bradbury's observed finality window is about 30 minutes after acceptance; this is
+not a completion guarantee. Keep the transaction hash and check that same request
+while it is pending or accepted. A six-hour submission deadline gives a request
+time in the queue; it does not shorten finality or permit automatic resubmission.
+
+Repeat the exact saved 45-pair control sample only on a dedicated benchmark
+instance. The public application instance must not share the batch's growing
+history. The existing benchmark address is
+`0x686C79234138FBF1734C8457c917acD9A6C3Fa7a`; its current read limitation must be
+resolved before resuming that run:
 
 ```sh
 python3 probes/scan.py --consensus \
-  --contract "$ATTAINT_CONTRACT" --policy "$ATTAINT_POLICY_ID" \
+  --contract "$ATTAINT_BENCHMARK_CONTRACT" --policy "$ATTAINT_POLICY_ID" \
   --policy-hash "$ATTAINT_POLICY_HASH" \
   --out runs/consensus-report.json --account "$GENLAYER_ACCOUNT" \
-  --queue-paced --finalize-release --timeout 3600
+  --queue-paced --finalize-release --timeout 21600 --submission-ttl 21600
 ```
 
 Resume with the same command and output path. The saved mechanical baseline
@@ -220,6 +257,7 @@ grants authorization for further retries after its one approved request.
 | `cli/envelope.py` | Checksum verification and bounded evidence extraction. |
 | `cli/attaint_gate.py` | Live CI gate with exit codes 0, 1 and 2. |
 | `scripts/live.mjs` | SDK deployment, write, read and transaction settlement. |
+| `scripts/read_capacity.mjs` | Current-block accepted-history gas check before admitting a new public request. |
 | `probes/scan.py` | Corpus scan and consensus comparison. |
 | `probes/recover_pins.py` | Recover unpublished-version checksum records. |
 | `probes/recover_sources.py` | Document attempts to recover source bytes. |
@@ -229,15 +267,64 @@ grants authorization for further retries after its one approved request.
 
 ## Release status
 
-As of 1 October 2026 at 13:59 UTC, the corrected contract, policy registration and
-first live attestation have reached `FINALIZED`. The current gate for
+### Public application instance
+
+The public instance is
+[`0xbC94Fc0015574e85226DAaAdD2fC2CB8b2FbF42A`](https://explorer-bradbury.genlayer.com/address/0xbC94Fc0015574e85226DAaAdD2fC2CB8b2FbF42A)
+on Bradbury, chain ID 4221. Its deployed source SHA-256 is
+`80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa`
+(20,100 UTF-8 bytes). Policy `0` has hash
+`ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1`.
+These match the benchmark's code and policy parameters; attestations and balances
+belong to each contract separately.
+
+- [Public deployment](https://explorer-bradbury.genlayer.com/tx/0x6f1263222ab164243bdbc4cf5d023341ea211d72f658a1543da95d6e2d548df8): finalized; accepted-round trace verified.
+- [Public policy registration](https://explorer-bradbury.genlayer.com/tx/0x82fd7f2d5742e7a9872a1e13357975c3702c1e5c4ffc7c07d15e2e3c0e01ca0a): finalized; immutable policy independently read back.
+- [Public first attestation](https://explorer-bradbury.genlayer.com/tx/0x83f2ed64e1615d58ff39fdfee7b55958b4ec281ae1fec88f9c4d20c30297e3e2): finalized; attestation 0 reads `RISK / MAINTAINER_SHIFT` at `publisher`.
+
+On 2 October 2026 at 06:36 UTC, the CLI independently verified the live source,
+policy, update identity, requester and envelope, and exited `1`. The result has
+registry metadata `VERIFIED`, six class judgments and one finding,
+`MAINTAINER_SHIFT@publisher`. This is a risk block, not a transport failure.
+The same envelope and policy previously returned `CLEAN` on the benchmark
+instance. The different outcomes show judgment variability, not repeatable
+detection accuracy; neither attempt has been discarded.
+
+The benchmark's accumulated accepted history made the public node's current-state
+lookup fail. A direct EVM read of all 30 accepted records reverted with a gas
+limit of 16,777,216 and succeeded with 95,000,000. The same read estimated
+26,776,380 gas. Another instance with three accepted records estimated 2,990,683
+and remained readable. This identifies a history-read capacity problem; moving
+the public workflow to a fresh instance does not repair the node or establish
+unbounded scalability.
+
+The public pre-sign capacity check resolves ConsensusData through the official
+AddressManager and estimates the full accepted-history read at one current block.
+It refuses a request above 8,000,000 gas, above 100 accepted records, or when the
+check fails. The 8-million threshold is conservative application headroom below
+the observed failing limit, not a network guarantee. The check does not replace
+live code, policy or gate verification and does not predict every future result's
+storage cost. Once capacity is exhausted, new requests must remain disabled until
+an explicitly reviewed deployment or infrastructure change restores the path.
+
+Finalized views independently check the entire bounded accepted history before
+and after each node read. Every transaction must be finalized with agreement;
+the ordered history and canonical block must remain unchanged. An unconfirmed
+earlier transaction blocks the read even when the newest one is finalized.
+A wallet send without an acknowledged hash remains unresolved; inspect wallet
+activity and resume that hash before another request.
+
+### Historical benchmark instance
+
+On 1 October 2026 at 13:59 UTC, the benchmark contract, policy registration and
+first live attestation reached `FINALIZED`. The gate read at that checkpoint for
 `event-stream 3.3.4 → 3.3.5` is `CLEAN`: registry metadata `VERIFIED`, six class
 judgments, no findings and no inconclusive classes. A fresh read of finalized
 state passed the CLI's code, policy, envelope and requester checks with exit `0`.
-The local proof is in `runs/deployment.json`, the three transaction journals and
-`runs/first-attestation-gate.json`.
+The local proof is in `runs/benchmark-release/deployment.json`, the three transaction journals and
+`runs/benchmark-release/first-attestation-gate.json`.
 
-The published Vercel application was verified in a real browser: its Bradbury
+The then-published Vercel application was verified in a real browser: its Bradbury
 read returned `CLEAN`, registry metadata `VERIFIED` and six judgments, and its
 manual transaction-hash check returned `FINALIZED`.
 Manual success also requires consensus result `AGREE` (1), the finalized last
@@ -247,10 +334,10 @@ attestations.
 The [GitHub Actions run](https://github.com/Zhekinmaksim/attaint/actions/runs/36879515907)
 passed both the offline tests and the live gate for attestation `0`, on commit
 `c27f67f9af8ae74034630cbaef8d839b57c09e9f`; the live gate exited `0`.
-The record is in `runs/ci-verification.json`.
+The record is in `runs/benchmark-release/ci-verification.json`.
 
 - Network: Bradbury, chain ID 4221.
-- Contract: [`0x686C79234138FBF1734C8457c917acD9A6C3Fa7a`](https://explorer-bradbury.genlayer.com/address/0x686C79234138FBF1734C8457c917acD9A6C3Fa7a).
+- Benchmark contract: [`0x686C79234138FBF1734C8457c917acD9A6C3Fa7a`](https://explorer-bradbury.genlayer.com/address/0x686C79234138FBF1734C8457c917acD9A6C3Fa7a).
 - Deployed source SHA-256: `80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa` (20,100 UTF-8 bytes), verified against the fetched contract code.
 - Immutable policy ID: `0`; hash: `ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1`.
 - Attestation ID: `0`; envelope SHA-256: `49e222e812104fc865421eb55f886bc378a60c87889b125dc73fc2a08e529042`.
@@ -273,7 +360,8 @@ At the 2 October 2026 checkpoint, the saved report contains 22/45 finalized
 corpus gates: 14 `CLEAN`, eight `INCONCLUSIVE` and zero `RISK`. Index 24 is now
 finalized. Indices 42 and 43 have successful finalized receipts and accepted-round
 traces identifying attestations 23 and 24, but remain `INCONCLUSIVE_READBACK`:
-the Bradbury RPC currently fails to return contract code and current state.
+the public node's current-state lookup fails for this benchmark's accumulated
+accepted history. The separate public instance does not resolve these rows.
 These two traces alone do not certify the current gate. The
 [readback audit](https://attaint.vercel.app/diagnostics/finalized-42-43-readback-audit.json)
 records that distinction. No replacement of either successful request is planned.
@@ -286,7 +374,7 @@ The bounded recovery uses the existing 18-entry canceled manifest and a separate
 Each exact failed hash permits one replacement only after a fresh raw terminal
 status, matching calldata/requester and complete audits of both state views prove
 there is no committed update. An existing signing intent consumes its allowance.
-The RPC outage blocks these checks, so no new replacement has been sent in this
+The benchmark's current-state read failure blocks these checks, so no new replacement has been sent in this
 recovery session. Failed attempts and their original hashes remain preserved.
 
 The full 45-pair comparison remains incomplete. No full-sample consensus rates,

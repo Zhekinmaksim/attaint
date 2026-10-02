@@ -30,12 +30,15 @@ baseline supports a separate receipt-backed consensus comparison.
 
 ## How-to steps
 
-1. Open the hosted application. Confirm the displayed Bradbury contract and
-   policy match the published deployment artifacts.
-2. Select the pinned `event-stream 3.3.4 → 3.3.5` envelope, or build and inspect an
+1. Open https://attaint.vercel.app/#live. Without connecting a wallet, read
+   attestation 0 and expand its consensus receipt. Confirm the live contract,
+   immutable policy and evidence hash match the published release.
+2. For a new transaction, select the pinned `event-stream 3.3.4 → 3.3.5` envelope, or build and inspect an
    envelope with `python3 cli/envelope.py PACKAGE FROM TO --out envelope.json`.
-3. Connect a Bradbury wallet and submit the attestation. Follow the actual pending,
-   accepted and finalized transaction states. A failed transaction is not a verdict.
+3. Connect a Bradbury wallet and submit the attestation after the live checks pass.
+   Follow the actual pending, accepted and finalized states using the saved hash.
+   Acceptance usually precedes finality by about 30 minutes; keep checking that
+   request instead of resubmitting it. The submission deadline is six hours.
 4. Read the confirmed attestation and current gate. Inspect its policy hash,
    update identity, evidence hash, findings, evidence level and provenance.
 5. Run the README's CLI gate command against that same attestation and envelope.
@@ -74,25 +77,57 @@ do not establish accuracy or reduced false positives without ground truth.
 
 Website: [attaint.vercel.app](https://attaint.vercel.app).
 Repository: [Zhekinmaksim/attaint](https://github.com/Zhekinmaksim/attaint).
-Contract: [`0x686C79234138FBF1734C8457c917acD9A6C3Fa7a`](https://explorer-bradbury.genlayer.com/address/0x686C79234138FBF1734C8457c917acD9A6C3Fa7a).
+Public application contract: [`0xbC94Fc0015574e85226DAaAdD2fC2CB8b2FbF42A`](https://explorer-bradbury.genlayer.com/address/0xbC94Fc0015574e85226DAaAdD2fC2CB8b2FbF42A).
 Policy: ID `0`, hash `ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1`.
 Deployed source SHA-256: `80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa`.
 
-The [first live attestation](https://explorer-bradbury.genlayer.com/tx/0xe53abde17154cbf3cbb41ced701fa8a42e1c327beb1ded40e351b31ebe4cbe18)
+The public [deployment](https://explorer-bradbury.genlayer.com/tx/0x6f1263222ab164243bdbc4cf5d023341ea211d72f658a1543da95d6e2d548df8)
+and [policy registration](https://explorer-bradbury.genlayer.com/tx/0x82fd7f2d5742e7a9872a1e13357975c3702c1e5c4ffc7c07d15e2e3c0e01ca0a)
+are finalized with verified accepted-round traces.
+The [first public-instance request](https://explorer-bradbury.genlayer.com/tx/0x83f2ed64e1615d58ff39fdfee7b55958b4ec281ae1fec88f9c4d20c30297e3e2)
+is finalized as attestation 0. Its independently verified live gate is
+`RISK / MAINTAINER_SHIFT` at `publisher`, with registry metadata `VERIFIED` and
+six class judgments. The CLI returned exit 1 at 06:36 UTC on 2 October 2026.
+The earlier benchmark returned `CLEAN` for the same envelope and policy. Both
+attempts remain published; this variability is not a claim of detection accuracy.
+
+The public instance uses the same reviewed code and policy parameters as the
+benchmark, with separate state. The benchmark's 30-record accepted-history read
+estimated 26,776,380 gas; it reverted at a 16,777,216 gas limit and succeeded at
+95,000,000. Its current-state lookup through the public node fails. A new instance
+restores room for the interactive workflow, but is not a node fix or a scalability
+claim. Before signing, the application checks accepted-history read cost at the
+current block and refuses new requests above a conservative 8,000,000 gas or when
+the check cannot complete. Existing hashes must be retained and resumed.
+
+Finalized views independently check the entire bounded accepted history before
+and after each node read. Every transaction must be finalized with agreement;
+the ordered history and canonical block must remain unchanged. An unconfirmed
+earlier transaction blocks the read even when the newest one is finalized.
+A wallet send without an acknowledged hash remains unresolved; inspect wallet
+activity and resume that hash before another request.
+
+## Historical benchmark evidence
+
+Benchmark contract:
+[`0x686C79234138FBF1734C8457c917acD9A6C3Fa7a`](https://explorer-bradbury.genlayer.com/address/0x686C79234138FBF1734C8457c917acD9A6C3Fa7a).
+Its attestations and the 45-pair report are not public-instance results.
+
+The [first benchmark attestation](https://explorer-bradbury.genlayer.com/tx/0xe53abde17154cbf3cbb41ced701fa8a42e1c327beb1ded40e351b31ebe4cbe18)
 is `FINALIZED` (confirmed 1 October 2026 at 13:59 UTC). Its verified gate on 1 October 2026 for
 `event-stream 3.3.4 → 3.3.5` is `CLEAN`, with registry metadata `VERIFIED`, six
 class judgments, no findings and no inconclusive classes. The finalized-state
-CLI check at that checkpoint returned exit `0`; the local proof is `runs/first-attestation-gate.json`
-and the release bindings are in `runs/deployment.json`.
+CLI check at that checkpoint returned exit `0`; the local proof is `runs/benchmark-release/first-attestation-gate.json`
+and the release bindings are in `runs/benchmark-release/deployment.json`.
 
-The production browser read verified `CLEAN`, registry metadata `VERIFIED` and
+The historical production browser read verified `CLEAN`, registry metadata `VERIFIED` and
 six judgments; the manual transaction-hash check verified `FINALIZED`.
 Manual success requires consensus result 1, finalized last-round result 1,
 matching transaction/contract identity and a `request_attestation` method.
 The [GitHub Actions run](https://github.com/Zhekinmaksim/attaint/actions/runs/36879515907)
 passed offline tests and the live gate for attestation `0` on commit
 `c27f67f9af8ae74034630cbaef8d839b57c09e9f`. The CI record is
-`runs/ci-verification.json`.
+`runs/benchmark-release/ci-verification.json`.
 
 Two read-only GenVM validator replays passed with a simulated leader verdict
 `RISK / MAINTAINER_SHIFT` at `publisher`. The live transaction performed fresh
@@ -103,7 +138,8 @@ handover risk. At the 2 October 2026 checkpoint, the saved report contains 22/45
 corpus gates: 14 `CLEAN`, eight `INCONCLUSIVE` and zero `RISK`. Index 24 is now
 finalized. Indices 42 and 43 have successful finalized receipts and accepted-round
 traces identifying attestations 23 and 24, but remain `INCONCLUSIVE_READBACK`:
-the Bradbury RPC currently fails to return contract code and current state.
+the public node's current-state lookup fails for this benchmark's accumulated
+accepted history. The separate public instance does not resolve these rows.
 These two traces alone do not certify the current gate. The
 [readback audit](https://attaint.vercel.app/diagnostics/finalized-42-43-readback-audit.json)
 records that distinction. No replacement of either successful request is planned.
@@ -116,7 +152,7 @@ The bounded recovery uses the existing 18-entry canceled manifest and a separate
 Each exact failed hash permits one replacement only after a fresh raw terminal
 status, matching calldata/requester and complete audits of both state views prove
 there is no committed update. An existing signing intent consumes its allowance.
-The RPC outage blocks these checks, so no new replacement has been sent in this
+The benchmark's current-state read failure blocks these checks, so no new replacement has been sent in this
 recovery session. Failed attempts and their original hashes remain preserved.
 
 The full 45-pair comparison remains incomplete. No full-sample consensus rates,
@@ -138,7 +174,7 @@ It stopped at the outside-list Yargs replacement, leaving indices 21, 42 and 43
 untouched. The public
 [cleanup summary](https://attaint.vercel.app/diagnostics/expired-cleanup-summary.json)
 preserves the receipts. This authorized no new retries and supplied no consensus
-verdicts; the 21/45 gate checkpoint is unchanged.
+verdicts; that cleanup did not change the then-current 21/45 gate checkpoint.
 
 A separate approved index-43 cleanup completed at 17:50 UTC, reducing the queue
 from 4 to 3. Its successful

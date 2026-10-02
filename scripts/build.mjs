@@ -36,9 +36,10 @@ try { deployment = JSON.parse(await readFile('runs/deployment.json', 'utf8')); }
 catch (error) { if (error.code !== 'ENOENT') throw error; }
 if (deployment) {
   const compiled = await readFile('contracts/attaint.bradbury.py');
-  if (deployment.chain_id !== 4221 || deployment.code_sha256 !== createHash('sha256').update(compiled).digest('hex')) throw new Error('Release manifest does not match the Bradbury artifact.');
+  if (deployment.status !== 'FINALIZED' || deployment.chain_id !== 4221 || deployment.code_sha256 !== createHash('sha256').update(compiled).digest('hex')) throw new Error('Release manifest does not match the Bradbury artifact.');
   for (const name of ['deploy', 'policy', 'first-attestation']) {
     const journal = JSON.parse(await readFile(`runs/${name}.json`, 'utf8'));
+    if (Number(journal.receipt?.status) !== 7 || Number(journal.receipt?.result) !== 1 || Number(journal.receipt?.lastRound?.result) !== 1 || journal.hash?.toLowerCase() !== deployment.transactions?.[name]?.toLowerCase()) throw new Error(`Release ${name} must match its finalized consensus transaction.`);
     if (journal.receipt?.statusName !== 'FINALIZED' || journal.trace?.result_code !== 0 || journal.trace_verified !== true || journal.trace_identity?.round !== Number(journal.receipt.numOfRounds) || Number(journal.trace_identity.round_data_round ?? journal.trace_identity.round) !== Number(journal.receipt.lastRound?.round)) throw new Error(`Release ${name} must have finalized successfully with its accepted-round trace verified.`);
     if (journal.chainId !== 4221 || journal.receipt.txId?.toLowerCase() !== journal.hash?.toLowerCase() || journal.receipt.txExecutionResultName !== 'FINISHED_WITH_RETURN') throw new Error(`Release ${name} receipt identity or execution mismatch.`);
     if (name === 'deploy') {
@@ -58,12 +59,16 @@ html = html.replace(/(<span class="status" id="receipt-status">)[^<]*(<\/span>)/
 await writeFile('web/index.html', html);
 try { await copyFile('runs/attempt-history.json', 'web/attempt-history.json'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 try { await copyFile('runs/ci-verification.json', 'web/ci-verification.json'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
-for (const name of ['express-finalized-no-commit', 'yargs-finalized-no-commit', 'failed-rows-23-24', 'expired-queue-no-commit', 'expired-cleanup-summary', 'post-cleanup-unfinished-no-commit', 'canceled-retry-manifest', 'expired-cleanup-43-summary', 'canceled-retry-42-43-manifest', 'finalized-retries-no-commit', 'finalized-retry-21-23-44-manifest', 'finalized-42-43-readback-audit']) {
+for (const name of ['express-finalized-no-commit', 'yargs-finalized-no-commit', 'failed-rows-23-24', 'expired-queue-no-commit', 'expired-cleanup-summary', 'post-cleanup-unfinished-no-commit', 'canceled-retry-manifest', 'expired-cleanup-43-summary', 'canceled-retry-42-43-manifest', 'finalized-retries-no-commit', 'finalized-retry-21-23-44-manifest', 'finalized-42-43-readback-audit', 'public-instance-recovery']) {
   try { await mkdir('web/diagnostics', {recursive:true}); await copyFile(`runs/diagnostics/${name}.json`, `web/diagnostics/${name}.json`); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 }
 for (const name of ['manifest.json', 'report.json', 'leader-summary.json', 'validator-1-summary.json', 'validator-2-summary.json', 'diagnostic-code.py']) {
   const directory = 'diagnostics/locator-enum-simulation';
   try { await mkdir(`web/${directory}`, {recursive:true}); await copyFile(`runs/${directory}/${name}`, `web/${directory}/${name}`); } catch (error) { if (error.code !== 'ENOENT') throw error; }
+}
+await rm('web/benchmark-release', {recursive:true,force:true});
+for (const name of ['deployment.json','deploy.json','policy.json','first-attestation.json','first-attestation-gate.json','policy-readback.json','deployed-code.json','ci-verification.json']) {
+  try { await mkdir('web/benchmark-release', {recursive:true}); await copyFile(`runs/benchmark-release/${name}`, `web/benchmark-release/${name}`); } catch(error) { if(error.code !== 'ENOENT') throw error; }
 }
 try { await copyFile('runs/consensus-report.json', 'web/consensus-report.json'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 await mkdir('web/receipts', { recursive: true });

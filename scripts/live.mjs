@@ -11,11 +11,14 @@ import {recordSigningIntent,recoverSigningIntent} from './write_journal.mjs';
 import {selectFinalizedRound,decodeFinalizedTrace,validateNonagreementReceipt} from './settled_trace.mjs';
 import {prepareSignedIntentRetry,assertUnusedIntentNonce,submissionOperationHash,submissionFieldsHash,validateRetryTransaction} from './signed_retry.mjs';
 import {createGasGuard} from './gas_guard.mjs';
+import {assertReadCapacity} from './read_capacity.mjs';
+import {readFinalizedContract} from './finalized_read.mjs';
 import {readPendingQueue} from './queues.mjs';
 import {acquireWriterLock} from './writer_lock.mjs';
 import {observeReceiptStates} from './receipt_observer.mjs';
 import {createSubmissionTTL} from './submission_ttl.mjs';
 import {inspectExpiredHead,cancelAbi,createRawStatusReader,readQueueHead,readCanceledProof,readFinalizedFailureProof} from './expired_head.mjs';
+import {validateLiveArguments} from './live_arguments.mjs';
 
 const options = process.argv.slice(3);
 const option = (name, fallback = '') => {
@@ -36,12 +39,16 @@ const readRpc = (operation) => retryRpcRead(operation, {
 });
 
 try {
-  const cliEntry = realpathSync(execFileSync('which', ['genlayer'], {encoding:'utf8'}).trim());
-  const cliRoot = resolve(dirname(cliEntry), '..');
+  const command = process.argv[2];
+  validateLiveArguments(command, options);
+  let cliRoot;
+  const getCliRoot = () => {
+    if (!cliRoot) cliRoot = resolve(dirname(realpathSync(execFileSync('which', ['genlayer'], {encoding:'utf8'}).trim())), '..');
+    return cliRoot;
+  };
   let sdk, chains;
   try {sdk = await import('genlayer-js'); chains = await import('genlayer-js/chains');}
-  catch {sdk = await import(pathToFileURL(join(cliRoot,'node_modules/genlayer-js/dist/index.js'))); chains = await import(pathToFileURL(join(cliRoot,'node_modules/genlayer-js/dist/chains/index.js')));}
-  const command = process.argv[2];
+  catch {sdk = await import(pathToFileURL(join(getCliRoot(),'node_modules/genlayer-js/dist/index.js'))); chains = await import(pathToFileURL(join(getCliRoot(),'node_modules/genlayer-js/dist/chains/index.js')));}
   const finalizeNonagreement = options.includes('--finalize-nonagreement');
   if (finalizeNonagreement && command !== 'settle') throw new Error('--finalize-nonagreement is limited to settlement of an existing transaction');
   if (options.includes('--retry-signed-intent') && !['deploy','write'].includes(command)) throw new Error('--retry-signed-intent is limited to unresolved deploy/write submissions');
@@ -61,7 +68,7 @@ try {
     const name = option('--account',process.env.GENLAYER_ACCOUNT || config.activeAccount || '');
     let secret = process.env.GENLAYER_PRIVATE_KEY;
     if (!secret && name) {
-      const keytarModule = await import(pathToFileURL(join(cliRoot,'node_modules/keytar/lib/keytar.js')));
+      const keytarModule = await import(pathToFileURL(join(getCliRoot(),'node_modules/keytar/lib/keytar.js')));
       secret = await (keytarModule.default || keytarModule).getPassword('genlayer-cli','account:'+name);
     }
     if (!secret) throw new Error('No unlocked account. Unlock the GenLayer CLI account first.');
@@ -72,8 +79,11 @@ try {
   const client = sdk.createClient({chain:chains.testnetBradbury,endpoint:rpc,account});
   let viem;
   try {viem = await import('viem');}
-  catch {viem = await import(pathToFileURL(join(cliRoot,'node_modules/viem/_esm/index.js')));}
+  catch {viem = await import(pathToFileURL(join(getCliRoot(),'node_modules/viem/_esm/index.js')));}
   const publicClient = viem.createPublicClient({chain:chains.testnetBradbury,transport:viem.http(rpc)});
+  const readView = (functionName, args, variant='latest-final') => variant === 'latest-final'
+    ? readFinalizedContract({client, publicClient, address:required('--address'), functionName, args})
+    : client.readContract({address:required('--address'), functionName, args, transactionHashVariant:variant});
   const finalizationCapability = createFinalizationChecker({client,publicClient,chain:chains.testnetBradbury});
   const actualChain = Number(BigInt(await readRpc(() => client.request({method:'eth_chainId'}))));
   if (actualChain !== 4221) throw new Error(`wrong chain: expected 4221, received ${actualChain}`);
@@ -195,7 +205,7 @@ try {
       result.queue_after=await readRpc(()=>readPendingQueue({publicClient,recipient}));
     }
   } else if (command === 'read') {
-    result = {...meta,address,method:required('--method'),result:await readRpc(() => client.readContract({address:required('--address'),functionName:required('--method'),args,transactionHashVariant:option('--variant','latest-final')}))};
+    result = {...meta,address,method:required('--method'),result:await readRpc(() => readView(required('--method'),args,option('--variant','latest-final')))};
   } else if (command === 'code') {
     const code = await readRpc(() => client.getContractCode(required('--address')));
     if (!code) throw new Error('empty contract code');
@@ -225,12 +235,12 @@ try {
   } else if (command === 'gates') {
     const variant=option('--variant','latest-nonfinal');
     if(!['latest-final','latest-nonfinal'].includes(variant))throw Error('gates audit requires a final/current state view');
-    const getCount = () => client.readContract({address:required('--address'),functionName:'attestation_count',args:[],transactionHashVariant:variant});
+    const getCount = () => readView('attestation_count',[],variant);
     const before = Number(await readRpc(getCount));
     if (!Number.isSafeInteger(before) || before < 0 || before > 2000) throw new Error('attestation count is outside bounded audit range');
     const gates = [];
     for (let index=0;index<before;index+=4) gates.push(...await Promise.all(Array.from({length:Math.min(4,before-index)},(_,offset)=>
-      readRpc(() => client.readContract({address:required('--address'),functionName:'gate',args:[index+offset],transactionHashVariant:variant})))));
+      readRpc(() => readView('gate',[index+offset],variant)))));
     const after = Number(await readRpc(getCount));
     if (before !== after || gates.some((gate,index)=>Number(gate.att_id) !== index)) throw new Error('attestation set changed during audit; retry read-only proof');
     result = {...meta,address:required('--address'),variant,observed_at:new Date().toISOString(),count:before,gates};
@@ -300,7 +310,10 @@ try {
       required('--out');
       signingKind = 'submission';
       if (command === 'deploy') hash = await client.deployContract({code:deploymentCode,args});
-      else if (command === 'write') hash = await client.writeContract({address:required('--address'),functionName:required('--method'),args,value:BigInt(valueWei)});
+      else if (command === 'write') {
+        result.read_capacity = await assertReadCapacity({publicClient,recipient:required('--address')});
+        hash = await client.writeContract({address:required('--address'),functionName:required('--method'),args,value:BigInt(valueWei)});
+      }
       else throw new Error('settle requires --hash');
       signingKind = null;
     }

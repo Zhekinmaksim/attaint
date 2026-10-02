@@ -1,0 +1,18 @@
+{
+  "source": "github-actions-live-gate",
+  "repository": "https://github.com/Zhekinmaksim/attaint",
+  "commit": "c27f67f9af8ae74034630cbaef8d839b57c09e9f",
+  "run_id": 36879515907,
+  "run_url": "https://github.com/Zhekinmaksim/attaint/actions/runs/36879515907",
+  "event": "workflow_dispatch",
+  "attestation_input": "0",
+  "offline_job": {"id": 110427401889, "conclusion": "success"},
+  "live_gate_job": {"id": 110427401407, "conclusion": "success"},
+  "chain_id": 4221,
+  "contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+  "policy_id": 0,
+  "policy_hash": "ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1",
+  "code_sha256": "80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa",
+  "envelope_hash": "49e222e812104fc865421eb55f886bc378a60c87889b125dc73fc2a08e529042",
+  "observed_at": "2026-10-01T14:55:49Z"
+}

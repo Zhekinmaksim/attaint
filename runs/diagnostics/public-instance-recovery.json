@@ -1,0 +1,25 @@
+{
+  "observed_at": "2026-10-02T06:07:57.674795+00:00",
+  "network": "bradbury",
+  "chain_id": 4221,
+  "benchmark_contract": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
+  "accepted_history_count": 30,
+  "accepted_history_estimated_gas": 26776380,
+  "full_history_call": {
+    "gas_16777216": "reverted",
+    "gas_95000000": "success_30_records"
+  },
+  "two_pages_of_15_at_16777216": "both_succeeded",
+  "current_block_gas_limit": 100000000,
+  "public_instance": "0xbC94Fc0015574e85226DAaAdD2fC2CB8b2FbF42A",
+  "code_sha256": "80aef33c040d44fe71ae528afd9946f9aec9c39655635d08edf03944e5cea9fa",
+  "application_admission_gas_limit": 8000000,
+  "limitation": "A conservative client preflight, not an upstream node fix; direct third-party writes and concurrent submissions can still grow history. Public and benchmark instances are separate.",
+  "finality_issue": "The RPC returned an accepted policy for latest-final and status=finalized while its receipt was ACCEPTED. Applications independently require the entire bounded accepted history to be finalized with agreement and stable before/after views, with a canonical-block check.",
+  "failed_policy_attempt": {
+    "hash": "0xa7f051c35b7a7de8d943ac3b08cbd8cac2b2c199fcb33bc7916aa3ef1dd21218",
+    "execution": "FINISHED_WITH_ERROR",
+    "reason": "Unrecognized --args flag caused an empty argument list before CLI validation was added. No policy created.",
+    "correction": "Strict option validation now rejects unknown flags before any signing or RPC call; correct policy used --args-file."
+  }
+}

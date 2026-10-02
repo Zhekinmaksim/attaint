@@ -265,12 +265,13 @@
   <section id="live">
     <div class="kicker">Bradbury · live consensus</div>
     <h2>One update. One pinned policy. A chain verdict.</h2>
-    <p class="sub">Inspect the published record without a wallet. To judge another update, build its envelope locally and submit it with your Bradbury wallet.</p>
+    <p class="sub">The published attestation loads directly from Bradbury without a wallet. Expand its receipt to check finality. To judge another update, build its envelope locally and submit it with your Bradbury wallet.</p>
     <p class="live-meta">Contract: <span id="live-contract">Awaiting verified deployment</span></p>
     <p class="live-meta" id="live-policy">No policy loaded.</p>
     <div class="live-grid">
       <div class="live-box">
         <h3>Submit an update</h3>
+        <p class="note">New requests need testnet GEN. Acceptance usually precedes finality by about 30 minutes. Keep the hash and resume the same request while it is pending.</p>
         <button type="button" id="live-example">Load event-stream 3.3.4 → 3.3.5</button>
         <label for="live-envelope">Or upload an attaint/1 envelope</label>
         <input type="file" accept="application/json,.json" id="live-envelope">
@@ -297,7 +298,7 @@
       </div>
     </div>
     <p id="live-notice" role="status">Reading deployment manifest…</p>
-    <p class="note">2 October checkpoint: 22/45 finalized gates (14 clean, 8 inconclusive). Two additional finalized receipts await current-state verification. Bradbury contract reads are currently failing; the full comparison remains pending. <a href="/diagnostics/finalized-42-43-readback-audit.json">Readback audit</a>.</p>
+    <p class="note">2 October checkpoint: 22/45 finalized gates (14 clean, 8 inconclusive). Two additional finalized receipts await current-state verification. The separate benchmark contract exceeds the public node’s history-read capacity; the full comparison remains pending. The live app uses a separate instance with the same code and policy. <a href="/diagnostics/finalized-42-43-readback-audit.json">Readback audit</a>.</p>
     <p class="note" style="margin-top:20px"><a href="https://github.com/Zhekinmaksim/attaint">GitHub repository</a> · <a href="/attaint.py">Contract source</a> · <a href="/envelope.py">Evidence builder</a> · <a href="/attaint_gate.py">CLI gate</a> · <a href="/source.zip">Complete source archive</a> · <a href="/mechanical-report.json">45-pair baseline</a> · <a href="/consensus-report.json">Consensus report</a></p>
   </section>
 

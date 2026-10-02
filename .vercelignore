@@ -34,6 +34,17 @@ runs/diagnostics/*
 !runs/diagnostics/finalized-retries-no-commit.json
 !runs/diagnostics/finalized-retry-21-23-44-manifest.json
 !runs/diagnostics/finalized-42-43-readback-audit.json
+!runs/diagnostics/public-instance-recovery.json
+!runs/benchmark-release
+runs/benchmark-release/*
+!runs/benchmark-release/deployment.json
+!runs/benchmark-release/deploy.json
+!runs/benchmark-release/policy.json
+!runs/benchmark-release/first-attestation.json
+!runs/benchmark-release/first-attestation-gate.json
+!runs/benchmark-release/policy-readback.json
+!runs/benchmark-release/deployed-code.json
+!runs/benchmark-release/ci-verification.json
 !runs/diagnostics/locator-enum-simulation
 runs/diagnostics/locator-enum-simulation/*
 !runs/diagnostics/locator-enum-simulation/manifest.json
@@ -68,3 +79,5 @@ web/diagnostics
 **/*.pyc
 
 !web/source.zip
+
+web/benchmark-release

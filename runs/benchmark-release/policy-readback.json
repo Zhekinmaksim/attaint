@@ -2,7 +2,7 @@
   "network": "bradbury",
   "chainId": 4221,
   "rpc": "https://rpc-bradbury.genlayer.com",
-  "address": "0xbC94Fc0015574e85226DAaAdD2fC2CB8b2FbF42A",
+  "address": "0x686C79234138FBF1734C8457c917acD9A6C3Fa7a",
   "method": "get_policy",
   "result": {
     "allowed_licenses": [
@@ -12,7 +12,7 @@
       "isc",
       "mit"
     ],
-    "attestations": 1,
+    "attestations": 0,
     "blocking": [
       "DEP_ADDED",
       "EGRESS",

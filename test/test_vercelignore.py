@@ -26,17 +26,18 @@ import {pathToFileURL} from 'node:url';
 const {require_dist}=await import(pathToFileURL(process.argv[2]));
 const api=require_dist(),root=process.cwd();
 const {ig}=await api.getVercelIgnore(root,false);
-for(const parent of ['runs/diagnostics','runs/diagnostics/locator-enum-simulation','runs/consensus-report-runs']) assert.equal(ig.ignores(parent),false,parent);
+for(const parent of ['runs/benchmark-release','runs/diagnostics','runs/diagnostics/locator-enum-simulation','runs/consensus-report-runs']) assert.equal(ig.ignores(parent),false,parent);
 const diagnosticNames=['manifest.json','report.json','leader-summary.json','validator-1-summary.json','validator-2-summary.json','diagnostic-code.py'];
-const diagnosticPaths=['runs/diagnostics/express-finalized-no-commit.json','runs/diagnostics/yargs-finalized-no-commit.json','runs/diagnostics/failed-rows-23-24.json','runs/diagnostics/expired-queue-no-commit.json','runs/diagnostics/expired-cleanup-summary.json','runs/diagnostics/post-cleanup-unfinished-no-commit.json','runs/diagnostics/canceled-retry-manifest.json','runs/diagnostics/expired-cleanup-43-summary.json','runs/diagnostics/canceled-retry-42-43-manifest.json','runs/diagnostics/finalized-retries-no-commit.json','runs/diagnostics/finalized-retry-21-23-44-manifest.json','runs/diagnostics/finalized-42-43-readback-audit.json',...diagnosticNames.map(name=>'runs/diagnostics/locator-enum-simulation/'+name)];
+const benchmarkPaths=['deployment.json','deploy.json','policy.json','first-attestation.json','first-attestation-gate.json','policy-readback.json','deployed-code.json','ci-verification.json'].map(name=>'runs/benchmark-release/'+name);
+const diagnosticPaths=['runs/diagnostics/public-instance-recovery.json','runs/diagnostics/express-finalized-no-commit.json','runs/diagnostics/yargs-finalized-no-commit.json','runs/diagnostics/failed-rows-23-24.json','runs/diagnostics/expired-queue-no-commit.json','runs/diagnostics/expired-cleanup-summary.json','runs/diagnostics/post-cleanup-unfinished-no-commit.json','runs/diagnostics/canceled-retry-manifest.json','runs/diagnostics/expired-cleanup-43-summary.json','runs/diagnostics/canceled-retry-42-43-manifest.json','runs/diagnostics/finalized-retries-no-commit.json','runs/diagnostics/finalized-retry-21-23-44-manifest.json','runs/diagnostics/finalized-42-43-readback-audit.json',...diagnosticNames.map(name=>'runs/diagnostics/locator-enum-simulation/'+name)];
 const selected=['runs/deploy.json','runs/attempt-history.json','runs/ci-verification.json','runs/consensus-report-runs/mechanical-baseline.json',
-  ...diagnosticPaths];
+  ...diagnosticPaths,...benchmarkPaths];
 for(let index=0;index<45;index++) for(const suffix of ['envelope','transaction','receipt','gate']) {
   const path=`runs/consensus-report-runs/${String(index).padStart(2,'0')}.${suffix}.json`;
   assert.equal(ig.ignores(path),false,path);
   if(suffix==='envelope') selected.push(path);
 }
-const excluded=['runs/attempt-01-registry-api/deploy.json','runs/attempt-02-question-polarity/policy.json',
+const excluded=['runs/public-instance/deploy.json','runs/benchmark-release/private.json','runs/attempt-01-registry-api/deploy.json','runs/attempt-02-question-polarity/policy.json',
   'runs/diagnostics/locator-enum-simulation/leader-request.json',
   'runs/diagnostics/locator-enum-simulation/leader-response.json',
   'runs/diagnostics/locator-enum-simulation/validator-1-request.json',
@@ -61,6 +62,7 @@ try {
   const paths=actual.fileList.map(path=>relative(root,path));
   assert.equal(paths.filter(path=>/^runs\/consensus-report-runs\/\d{2}\.envelope\.json$/.test(path)).length,45);
   assert.deepEqual(paths.filter(path=>path.startsWith('runs/diagnostics/')).sort(),diagnosticPaths.sort());
+  assert.deepEqual(paths.filter(path=>path.startsWith('runs/benchmark-release/')).sort(),benchmarkPaths.sort());
 } finally {rmSync(scratch,{recursive:true,force:true});}
 """
         process = subprocess.run(["node", "--input-type=module", "-", str(bundle)],
