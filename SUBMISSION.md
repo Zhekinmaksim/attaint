@@ -30,7 +30,7 @@ baseline supports a separate receipt-backed consensus comparison.
 
 ## How-to steps
 
-1. Open https://attaint.vercel.app/#live. Without connecting a wallet, read
+1. Open https://attaint.xyz/#live. Without connecting a wallet, read
    attestation 0 and expand its consensus receipt. Confirm the live contract,
    immutable policy and evidence hash match the published release.
 2. For a new transaction, select the pinned `event-stream 3.3.4 → 3.3.5` envelope, or build and inspect an
@@ -58,7 +58,7 @@ guaranteed by this verification path.
 ## Supporting evidence to attach
 
 - [Public repository](https://github.com/Zhekinmaksim/attaint) and
-  [source archive](https://attaint.vercel.app/source.zip), containing the readable
+  [source archive](https://attaint.xyz/source.zip), containing the readable
   contract, generated artifact, pinned minifier/ABI verifier, tests and setup docs.
 - Hosted website with the working contract interface.
 - Exact Bradbury contract explorer URL.
@@ -77,7 +77,7 @@ do not establish accuracy or reduced false positives without ground truth.
 
 ## Current links and verified status
 
-Website: [attaint.vercel.app](https://attaint.vercel.app).
+Website: [attaint.xyz](https://attaint.xyz).
 Repository: [Zhekinmaksim/attaint](https://github.com/Zhekinmaksim/attaint).
 Public application contract: [`0xbC94Fc0015574e85226DAaAdD2fC2CB8b2FbF42A`](https://explorer-bradbury.genlayer.com/address/0xbC94Fc0015574e85226DAaAdD2fC2CB8b2FbF42A).
 Policy: ID `0`, hash `ac1d48cb20fe3c5a9662afd24cf7a7353cfc1eb528fd82bd3dbebfcbf9705ce1`.
@@ -120,9 +120,9 @@ The production browser workflow was also completed for `chalk 5.6.0 → 5.6.2`: 
 new wallet request was finalized as attestation 1, then resumed after a page
 reload by its exact hash without reconnecting a wallet. The verified browser and
 CLI gate both returned `CLEAN`, exit 0. The public
-[browser verification](https://attaint.vercel.app/browser-verification.json),
-[receipt](https://attaint.vercel.app/receipts/browser-attestation.json) and
-[envelope](https://attaint.vercel.app/browser-envelope.json) preserve the run.
+[browser verification](https://attaint.xyz/browser-verification.json),
+[receipt](https://attaint.xyz/receipts/browser-attestation.json) and
+[envelope](https://attaint.xyz/browser-envelope.json) preserve the run.
 Its request hash is
 `0x5814d9a9c59c608829d2a0aeb105c1c06ae92c15421aacccbfcdf4478fb25b7a`.
 This is separate from the incomplete 45-pair benchmark.
@@ -161,14 +161,14 @@ traces identifying attestations 23 and 24, but remain `INCONCLUSIVE_READBACK`:
 the public node's current-state lookup fails for this benchmark's accumulated
 accepted history. The separate public instance does not resolve these rows.
 These two traces alone do not certify the current gate. The
-[readback audit](https://attaint.vercel.app/diagnostics/finalized-42-43-readback-audit.json)
+[readback audit](https://attaint.xyz/diagnostics/finalized-42-43-readback-audit.json)
 records that distinction. No replacement of either successful request is planned.
 
 Indices 21, 23 and 44 finalized without agreement (results 5, 2 and 5). Eighteen
 other requests, index 13 and indices 25–41, were canceled without committed gates
 at the saved audit. The operator has requested completion of the remaining run.
 The bounded recovery uses the existing 18-entry canceled manifest and a separate
-[three-entry finalized-failure manifest](https://attaint.vercel.app/diagnostics/finalized-retry-21-23-44-manifest.json).
+[three-entry finalized-failure manifest](https://attaint.xyz/diagnostics/finalized-retry-21-23-44-manifest.json).
 Each exact failed hash permits one replacement only after a fresh raw terminal
 status, matching calldata/requester and complete audits of both state views prove
 there is no committed update. An existing signing intent consumes its allowance.
@@ -192,7 +192,7 @@ proof is `runs/diagnostics/expired-queue-no-commit.json`. Cleanup completed at
 reducing pending entries from 18 to 3, with fees of 0.00136827391252365 test GEN.
 It stopped at the outside-list Yargs replacement, leaving indices 21, 42 and 43
 untouched. The public
-[cleanup summary](https://attaint.vercel.app/diagnostics/expired-cleanup-summary.json)
+[cleanup summary](https://attaint.xyz/diagnostics/expired-cleanup-summary.json)
 preserves the receipts. This authorized no new retries and supplied no consensus
 verdicts; that cleanup did not change the then-current 21/45 gate checkpoint.
 
@@ -200,7 +200,7 @@ A separate approved index-43 cleanup completed at 17:50 UTC, reducing the queue
 from 4 to 3. Its successful
 [transaction](https://explorer-bradbury.genlayer.com/tx/0x32c575376e9d74f9f1387a0a2e65e0f06ecd4ecd28218942bffeb8e65691f9cd)
 cost 0.0003009118063437 test GEN within a 0.00075 cap; the public
-[summary](https://attaint.vercel.app/diagnostics/expired-cleanup-43-summary.json)
+[summary](https://attaint.xyz/diagnostics/expired-cleanup-43-summary.json)
 records no attestation requests. The one approved replacement each for indices
 42 and 43 has now been submitted with six-hour deadlines:
 [42](https://explorer-bradbury.genlayer.com/tx/0x2d3c7a7ee860fa8e7a3a22c51c3a35441f254923113470690f67c983c4eeda9a),

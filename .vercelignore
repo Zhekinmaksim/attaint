@@ -75,6 +75,10 @@ runs/consensus-report-runs/*
 **/*keychain*
 **/*keystore*
 web/*.png
+!web/logo.png
+!web/favicon-16x16.png
+!web/favicon-32x32.png
+!web/apple-touch-icon.png
 web/*.webm
 web/runs
 web/diagnostics

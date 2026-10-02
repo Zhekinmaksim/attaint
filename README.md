@@ -4,7 +4,7 @@ A GenLayer consensus gate for npm dependency updates. It judges one package movi
 from version A to version B under an immutable consumer policy, then exposes a
 CI decision: `CLEAN` → 0, `RISK` → 1, `INCONCLUSIVE` → 2.
 
-Hosted application: [attaint.vercel.app](https://attaint.vercel.app).
+Hosted application: [attaint.xyz](https://attaint.xyz).
 The public application now uses a separate Bradbury instance with the same
 reviewed contract code and immutable policy as the benchmark. Deployment, policy
 and attestation 0 are finalized. A fresh verified read for `event-stream
@@ -79,7 +79,7 @@ do not measure accuracy or a reduction in false positives.
 
 ## Verify the published example
 
-Open [the live gate](https://attaint.vercel.app/#live) without a wallet. The page
+Open [the live gate](https://attaint.xyz/#live) without a wallet. The page
 reads attestation 0 from Bradbury and verifies its consensus receipt. For a new
 update, upload the builder's envelope or expand **Or paste an envelope**, paste
 the JSON and click **Load pasted envelope**. Inspect the selected package,
@@ -331,9 +331,9 @@ The production browser workflow was also completed for `chalk 5.6.0 → 5.6.2`: 
 new wallet request was finalized as attestation 1, then resumed after a page
 reload by its exact hash without reconnecting a wallet. The verified browser and
 CLI gate both returned `CLEAN`, exit 0. The public
-[browser verification](https://attaint.vercel.app/browser-verification.json),
-[receipt](https://attaint.vercel.app/receipts/browser-attestation.json) and
-[envelope](https://attaint.vercel.app/browser-envelope.json) preserve the run.
+[browser verification](https://attaint.xyz/browser-verification.json),
+[receipt](https://attaint.xyz/receipts/browser-attestation.json) and
+[envelope](https://attaint.xyz/browser-envelope.json) preserve the run.
 Its request hash is
 `0x5814d9a9c59c608829d2a0aeb105c1c06ae92c15421aacccbfcdf4478fb25b7a`.
 This is separate from the incomplete 45-pair benchmark.
@@ -369,7 +369,7 @@ The record is in `runs/benchmark-release/ci-verification.json`.
 - [Policy transaction](https://explorer-bradbury.genlayer.com/tx/0x0eba23ed228cb6d0803a4d17efe671d9f0bdcbd21aa1bbd1cedf4e526e3f2549).
 - [First live attestation transaction](https://explorer-bradbury.genlayer.com/tx/0xe53abde17154cbf3cbb41ced701fa8a42e1c327beb1ded40e351b31ebe4cbe18).
 
-The earlier [read-only GenVM diagnostic](https://attaint.vercel.app/diagnostics/locator-enum-simulation/report.json)
+The earlier [read-only GenVM diagnostic](https://attaint.xyz/diagnostics/locator-enum-simulation/report.json)
 returned `RISK / MAINTAINER_SHIFT` at `publisher`, and two validator replays
 reported no disagreement. It used the same pinned envelope and policy parameters
 in a diagnostic wrapper. The live transaction ran fresh nondeterministic
@@ -387,14 +387,14 @@ traces identifying attestations 23 and 24, but remain `INCONCLUSIVE_READBACK`:
 the public node's current-state lookup fails for this benchmark's accumulated
 accepted history. The separate public instance does not resolve these rows.
 These two traces alone do not certify the current gate. The
-[readback audit](https://attaint.vercel.app/diagnostics/finalized-42-43-readback-audit.json)
+[readback audit](https://attaint.xyz/diagnostics/finalized-42-43-readback-audit.json)
 records that distinction. No replacement of either successful request is planned.
 
 Indices 21, 23 and 44 finalized without agreement (results 5, 2 and 5). Eighteen
 other requests, index 13 and indices 25–41, were canceled without committed gates
 at the saved audit. The operator has requested completion of the remaining run.
 The bounded recovery uses the existing 18-entry canceled manifest and a separate
-[three-entry finalized-failure manifest](https://attaint.vercel.app/diagnostics/finalized-retry-21-23-44-manifest.json).
+[three-entry finalized-failure manifest](https://attaint.xyz/diagnostics/finalized-retry-21-23-44-manifest.json).
 Each exact failed hash permits one replacement only after a fresh raw terminal
 status, matching calldata/requester and complete audits of both state views prove
 there is no committed update. An existing signing intent consumes its allowance.
@@ -429,7 +429,7 @@ calls removed those 15 expired slots and reduced pending entries from 18 to 3.
 Actual fees totalled 0.00136827391252365 test GEN. It stopped at the Yargs
 replacement at index 21, outside the fixed list, leaving indices 21, 42 and 43
 untouched. The receipt-backed
-[cleanup summary](https://attaint.vercel.app/diagnostics/expired-cleanup-summary.json)
+[cleanup summary](https://attaint.xyz/diagnostics/expired-cleanup-summary.json)
 is also saved as `runs/diagnostics/expired-cleanup-summary.json`.
 This cleanup authorized no new retries and produced no consensus verdicts;
 that cleanup itself did not change the then-current 21/45 gate checkpoint.
@@ -438,7 +438,7 @@ A separate, explicitly approved index-43 cleanup completed at 17:50 UTC. Its
 [successful EVM transaction](https://explorer-bradbury.genlayer.com/tx/0x32c575376e9d74f9f1387a0a2e65e0f06ecd4ecd28218942bffeb8e65691f9cd)
 reduced pending entries from 4 to 3, costing 0.0003009118063437 test GEN against
 a 0.00075 test GEN cap. The public
-[index-43 summary](https://attaint.vercel.app/diagnostics/expired-cleanup-43-summary.json)
+[index-43 summary](https://attaint.xyz/diagnostics/expired-cleanup-43-summary.json)
 records zero attestation requests. The one approved replacement each for indices
 42 and 43 has now been submitted with a 21,600-second deadline; both allowances
 are used:
@@ -451,7 +451,7 @@ Both replacements now have successful finalized receipts; their gate readback
 remains subject to the current RPC limitation described above.
 
 The historical
-[post-cleanup no-commit audit](https://attaint.vercel.app/diagnostics/post-cleanup-unfinished-no-commit.json)
+[post-cleanup no-commit audit](https://attaint.xyz/diagnostics/post-cleanup-unfinished-no-commit.json)
 covers the 18 canceled releases. It must be rechecked against current state before
 any replacement signature; it cannot stand in for a fresh audit.
 
@@ -468,7 +468,7 @@ on whether the answer was inconclusive. The SDK incorrectly labelled numeric vot
 replay fault. The questions also needed corrected risk
 polarity for `OPAQUE`/`DEP_ADDED` and clearer install behaviour scope. These
 findings are summarized in the public
-[failed-attempt history](https://attaint.vercel.app/attempt-history.json).
+[failed-attempt history](https://attaint.xyz/attempt-history.json).
 That contract is failed-attempt evidence, not the current release.
 
 The application and CLI continue to fail closed for unconfirmed transactions,
@@ -476,14 +476,15 @@ incomplete evidence or mismatched current gate state. The consensus
 report must retain failures and inconclusive rows; no improvement is claimed
 before a completed confirmed run.
 
-Published source paths: [readable contract](https://attaint.vercel.app/attaint.py),
-[Bradbury artifact](https://attaint.vercel.app/attaint.bradbury.py),
-[evidence builder](https://attaint.vercel.app/envelope.py),
-[CLI gate](https://attaint.vercel.app/attaint_gate.py),
-[class vocabulary](https://attaint.vercel.app/spec/classes.md), and
-[specification](https://attaint.vercel.app/spec/attaint-spec.md).
-The [complete source archive](https://attaint.vercel.app/source.zip) is published
+Published source paths: [readable contract](https://attaint.xyz/attaint.py),
+[Bradbury artifact](https://attaint.xyz/attaint.bradbury.py),
+[evidence builder](https://attaint.xyz/envelope.py),
+[CLI gate](https://attaint.xyz/attaint_gate.py),
+[class vocabulary](https://attaint.xyz/spec/classes.md), and
+[specification](https://attaint.xyz/spec/attaint-spec.md).
+The [complete source archive](https://attaint.xyz/source.zip) is published
 with a SHA-256 manifest. Check the manifest/release status for its revision; a
 published source artifact alone does not establish a successful deployment.
-Source repository: [Zhekinmaksim/attaint](https://github.com/Zhekinmaksim/attaint). `attaint.xyz` will be configured
-by the user; its live routing has not been verified.
+Source repository: [Zhekinmaksim/attaint](https://github.com/Zhekinmaksim/attaint).
+Brand downloads: [512 px PNG logo](https://attaint.xyz/logo.png) and
+[SVG logo](https://attaint.xyz/logo.svg).

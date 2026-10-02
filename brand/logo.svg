@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-labelledby="title">
+  <title id="title">Attaint</title>
+  <rect width="64" height="64" fill="#0c0d0c"/>
+  <g fill="#fafaf7">
+    <polygon points="10,52 25,12 39,12 54,52 45,52 32,17 19,52"/>
+    <polygon points="20,35 29,35 29,42 18,42"/>
+    <polygon points="35,35 44,35 46,42 35,42"/>
+  </g>
+</svg>

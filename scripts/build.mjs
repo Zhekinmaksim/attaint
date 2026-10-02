@@ -4,6 +4,9 @@ import { createHash } from 'node:crypto';
 import { copyCorpusEvidence } from './public_evidence.mjs';
 
 await build({ entryPoints: ['web/app.js'], bundle: true, format: 'esm', platform: 'browser', target: 'es2022', minify: true, outfile: 'web/app.bundle.js' });
+for (const name of ['logo.svg', 'logo.png', 'favicon.svg', 'favicon.ico', 'favicon-16x16.png', 'favicon-32x32.png', 'apple-touch-icon.png']) {
+  await copyFile(`brand/${name}`, `web/${name}`);
+}
 await copyFile('corpus/scan-report.json', 'web/mechanical-report.json');
 await copyFile('corpus/recovered-pins.json', 'web/recovered-pins.json');
 await copyFile('corpus/event-stream-3.3.4-3.3.5.json', 'web/event-stream.json');

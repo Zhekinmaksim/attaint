@@ -21,6 +21,7 @@ DIRECTORIES = {
     "scripts": {".py", ".mjs"}, "spec": {".md"},
     "test": {".py", ".json"}, "corpus": {".json", ".md"},
     ".github/workflows": {".yml", ".yaml"},
+    "brand": {".svg", ".png", ".ico", ".md"},
 }
 FILES = (
     "README.md", "FINDINGS.md", "SUBMISSION.md", "package.json", "package-lock.json",
@@ -86,7 +87,8 @@ SECRET_PATTERNS = {
 
 
 def scan_credentials(name: str, payload: bytes) -> None:
-    text = payload.decode("utf-8")
+    # Scan binary brand assets too; latin-1 preserves any embedded ASCII secret.
+    text = payload.decode("latin-1" if name.endswith((".png", ".ico")) else "utf-8")
     texts = [text]
     if name.endswith(".json"):
         try:
