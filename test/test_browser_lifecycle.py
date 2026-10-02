@@ -46,8 +46,10 @@ assert.match(nodes['live-object'].textContent,/^newer /);
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
+import {createHash} from 'node:crypto';
 import {assertFinalizedConsensusReceipt} from './scripts/finalized_receipt.mjs';
 const source=readFileSync('web/app.js','utf8');
+const recoverySource=source.slice(source.indexOf('async function recoverReceiptRequest(receipt) {'),source.indexOf('\nfunction validateGate('));
 const pollSource=source.slice(source.indexOf('async function poll() {'),source.indexOf('\nasync function send() {'));
 const sendSource=source.slice(source.indexOf('async function send() {'),source.indexOf("\n$('live-connect')"));
 const deferred=()=>{let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b});return{promise,resolve,reject}};
@@ -56,7 +58,8 @@ const tx=(n,status='SUBMITTED')=>({hash:hash(n),status,deadline:Date.now()+60000
 const receipt=(n,status='FINALIZED')=>({txId:hash(n),recipient:address,status:status==='FINALIZED'?7:6,statusName:status,result:1,lastRound:{result:1},txExecutionResult:1,txDataDecoded:{callData:{method:'request_attestation'}}});
 function setup() {
   const nodes={}, notices=[], shown=[];
-  const c={pending:tx('1'),pollGeneration:0,pollTimer:null,Date,Number,String,Boolean,Math,
+  const c={pending:tx('1'),pollGeneration:0,pollTimer:null,Date,Number,String,Boolean,Math,Map,JSON,TextEncoder,
+    canonical:JSON.stringify,digest:async text=>createHash('sha256').update(text).digest('hex'),
     deployment:{contract:address,policy_id:0},
     reader:{getTransaction:async()=>receipt('1')},read:async()=>0,
     evmReader:{readContract:async()=>[false,0,0]},testnetBradbury:{consensusDataContract:{}},
@@ -65,7 +68,7 @@ function setup() {
     validateGate:g=>g,assertFinalizedConsensusReceipt,
     clearTimeout:()=>{},setTimeout:()=>{c.timerCount++;return 1},timerCount:0,
   };
-  vm.createContext(c);vm.runInContext(pollSource,c);
+  vm.createContext(c);vm.runInContext(recoverySource,c);vm.runInContext(pollSource,c);
   return{c,nodes,notices,shown};
 }
 // A's late FINALIZED receipt must never make the new B request terminal.
@@ -100,6 +103,20 @@ function setup() {
  const {c,shown}=setup();c.pending.expected={hash:'e'};c.pending.account=address;c.pending.countBefore=0;
  c.read=async method=>method==='attestation_count'?1:{att_id:0,envelope_hash:'e',policy_id:0,requester:address,gate:'CLEAN'};
  await c.poll();assert.equal(shown.length,1);assert.equal(c.pending.attestation_id,0);
+}
+// A hash-only resume recovers the signed envelope, sender and matching gate.
+{
+ const {c,shown}=setup();
+ const body={version:'attaint/1',registry:'npm',package:'chalk',from_version:'1',to_version:'2'};
+ const evidence=JSON.stringify(body),envelopeHash=await c.digest(evidence);
+ const received={...receipt('1'),sender:address,txDataDecoded:{callData:{method:'request_attestation',args:[0,'chalk','1','2',1,envelopeHash,evidence]}}};
+ c.reader.getTransaction=async()=>received;
+ c.read=async method=>method==='attestation_count'?1:{att_id:0,envelope_hash:envelopeHash,policy_id:0,requester:address,gate:'CLEAN'};
+ await c.poll();assert.equal(shown.length,1);assert.equal(c.pending.attestation_id,0);
+ assert.equal(c.pending.expected.body.package,'chalk');assert.equal(c.pending.account,address);
+ // Tampered receipt metadata cannot select a gate or be silently trusted.
+ const bad=setup();bad.c.reader.getTransaction=async()=>({...received,txDataDecoded:{callData:{method:'request_attestation',args:[0,'other','1','2',1,envelopeHash,evidence]}}});
+ await bad.c.poll();assert.equal(bad.shown.length,0);assert.match(bad.nodes['live-result'].textContent,/verification failed/);
 }
 // A wallet disconnect during asynchronous preflight must stop before signing.
 {

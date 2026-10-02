@@ -185,8 +185,11 @@ before credentials or network access. `--args` is not supported.
 
 Bradbury's observed finality window is about 30 minutes after acceptance; this is
 not a completion guarantee. Keep the transaction hash and check that same request
-while it is pending or accepted. A six-hour submission deadline gives a request
-time in the queue; it does not shorten finality or permit automatic resubmission.
+while it is pending or accepted. After reopening the page, enter that same hash
+and click **Check transaction**. Once it is finalized, the app verifies the
+receipt's envelope and sender and finds the matching attestation without a wallet.
+A six-hour submission deadline gives a request time in the queue; it does not
+shorten finality or permit automatic resubmission.
 
 Repeat the exact saved 45-pair control sample only on a dedicated benchmark
 instance. The public application instance must not share the batch's growing

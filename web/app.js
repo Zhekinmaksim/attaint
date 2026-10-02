@@ -63,6 +63,18 @@ async function loadEnvelope(value) {
   notify('Envelope loaded. File excerpts come from the local builder; registry metadata is checked by the contract.');
   controls();
 }
+async function recoverReceiptRequest(receipt) {
+  const call = receipt.txDataDecoded?.callData;
+  const args = call instanceof Map ? call.get('args') : call?.args;
+  if (!Array.isArray(args) || args.length !== 7 || Number(args[0]) !== deployment.policy_id || Number(args[4]) !== 1 ||
+      !/^[0-9a-f]{64}$/.test(args[5]) || typeof args[6] !== 'string' ||
+      !/^0x[0-9a-f]{40}$/i.test(receipt.sender)) throw new Error('Cannot recover this transaction’s request identity.');
+  const evidence = args[6], body = JSON.parse(evidence);
+  if (new TextEncoder().encode(evidence).length > 12288 || canonical(body) !== evidence || await digest(evidence) !== args[5] ||
+      body?.version !== 'attaint/1' || body.registry !== 'npm' || body.package !== args[1] ||
+      body.from_version !== args[2] || body.to_version !== args[3]) throw new Error('Finalized receipt evidence does not match its request.');
+  return {expected:{body,evidence,hash:args[5]},account:receipt.sender};
+}
 function validateGate(gate, expected) {
   if (Number(gate.policy_id) !== deployment.policy_id || gate.policy_hash !== deployment.policy_hash) throw new Error('Gate does not match the published immutable policy.');
   if (expected && (gate.envelope_hash !== expected.hash || gate.package !== expected.body.package || gate.from_version !== expected.body.from_version || gate.to_version !== expected.body.to_version)) throw new Error('Gate belongs to another update.');
@@ -194,7 +206,11 @@ async function poll() {
     }
     if (request.status === 'FINALIZED') {
       assertFinalizedConsensusReceipt(receipt, {hash: request.hash, recipient: deployment.contract, method: 'request_attestation'});
-      if (!request.expected) { notify('Consensus transaction finalized successfully. Enter its attestation ID and use Read chain gate to inspect the update.'); return; }
+      if (!request.expected) {
+        const recovered = await recoverReceiptRequest(receipt);
+        if (!current()) return;
+        Object.assign(request, recovered);
+      }
       // Match the update and sender, rather than guessing the ID from a global counter.
       const count = Number(await read('attestation_count'));
       if (!current()) return;
