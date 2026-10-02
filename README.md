@@ -314,6 +314,13 @@ earlier transaction blocks the read even when the newest one is finalized.
 A wallet send without an acknowledged hash remains unresolved; inspect wallet
 activity and resume that hash before another request.
 
+
+The [2 October live CI run](https://github.com/Zhekinmaksim/attaint/actions/runs/36974756604)
+verified the public-instance gate and exited 1 for `RISK / MAINTAINER_SHIFT`.
+Its live-gate job is red because it correctly blocks this update; the offline
+job passed. This is the intended CI outcome, not an RPC error. The result and
+job identities are recorded in `runs/ci-verification.json`.
+
 ### Historical benchmark instance
 
 On 1 October 2026 at 13:59 UTC, the benchmark contract, policy registration and

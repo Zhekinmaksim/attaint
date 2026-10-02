@@ -1,10 +1,28 @@
 {
   "source": "github-actions-live-gate",
-  "status": "pending-new-release-workflow",
+  "status": "verified-risk-block",
   "contract": "0xbC94Fc0015574e85226DAaAdD2fC2CB8b2FbF42A",
   "chain_id": 4221,
   "attestation_input": "0",
   "expected_gate": "RISK",
   "expected_exit_code": 1,
-  "historical_run": "benchmark-release/ci-verification.json"
+  "historical_run": "benchmark-release/ci-verification.json",
+  "repository": "https://github.com/Zhekinmaksim/attaint",
+  "commit": "d92fdfd8bb2764290844e1afb28fe8e14cafeb23",
+  "run_id": 36974756604,
+  "run_url": "https://github.com/Zhekinmaksim/attaint/actions/runs/36974756604",
+  "event": "workflow_dispatch",
+  "offline_job": {
+    "id": 110736057888,
+    "conclusion": "success"
+  },
+  "live_gate_job": {
+    "id": 110736057706,
+    "conclusion": "failure",
+    "gate": "RISK",
+    "verdict": "MAINTAINER_SHIFT",
+    "process_exit_code": 1,
+    "expected_block": true
+  },
+  "observed_at": "2026-10-02T06:41:39Z"
 }
