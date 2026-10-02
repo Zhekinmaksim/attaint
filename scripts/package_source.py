@@ -36,6 +36,7 @@ RELEASE_FILES = (
     "runs/smoke-recovery.json",
     "runs/attempt-history.json",
     "runs/ci-verification.json",
+    "runs/browser-verification.json", "runs/browser-attestation.json", "runs/browser-envelope.json",
     "runs/diagnostics/express-finalized-no-commit.json",
     "runs/diagnostics/yargs-finalized-no-commit.json",
     "runs/diagnostics/failed-rows-23-24.json",

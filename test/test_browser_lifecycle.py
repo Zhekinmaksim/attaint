@@ -50,6 +50,7 @@ import {createHash} from 'node:crypto';
 import {assertFinalizedConsensusReceipt} from './scripts/finalized_receipt.mjs';
 const source=readFileSync('web/app.js','utf8');
 const recoverySource=source.slice(source.indexOf('async function recoverReceiptRequest(receipt) {'),source.indexOf('\nfunction validateGate('));
+const inspectSource=source.slice(source.indexOf('async function inspect() {'),source.indexOf('\nasync function connect() {'));
 const pollSource=source.slice(source.indexOf('async function poll() {'),source.indexOf('\nasync function send() {'));
 const sendSource=source.slice(source.indexOf('async function send() {'),source.indexOf("\n$('live-connect')"));
 const deferred=()=>{let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b});return{promise,resolve,reject}};
@@ -103,6 +104,16 @@ function setup() {
  const {c,shown}=setup();c.pending.expected={hash:'e'};c.pending.account=address;c.pending.countBefore=0;
  c.read=async method=>method==='attestation_count'?1:{att_id:0,envelope_hash:'e',policy_id:0,requester:address,gate:'CLEAN'};
  await c.poll();assert.equal(shown.length,1);assert.equal(c.pending.attestation_id,0);
+}
+// Bootstrap's delayed default receipt cannot replace a manually entered hash.
+{
+ const {c}=setup(),policy=deferred();
+ Object.assign(c,{generation:0,deployment:{contract:address,policy_id:0,policy_hash:'p',first_attestation_id:0,first_envelope_hash:'e'}});
+ c.$('live-attestation').value='0';c.$('live-hash').value='';
+ c.read=async method=>method==='get_policy'?policy.promise:{att_id:0,envelope_hash:'e'};
+ vm.runInContext(inspectSource,c);const inspecting=c.inspect();
+ c.$('live-hash').value=hash('2');policy.resolve({policy_hash:'p',blocking:[],min_level:1,min_rounds:6});
+ await inspecting;assert.equal(c.$('live-hash').value,hash('2'));
 }
 // A hash-only resume recovers the signed envelope, sender and matching gate.
 {

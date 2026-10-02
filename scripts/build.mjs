@@ -28,7 +28,7 @@ let html = await readFile('web/index.html', 'utf8');
 const grid = baseline.controls.map(row => ({ name: `${row.package} ${row.from} → ${row.to}`, hits: row.classes }));
 html = html.replace(/\/\* BEGIN REAL GRID \*\/[\s\S]*?\/\* END REAL GRID \*\//, `/* BEGIN REAL GRID */\nvar GRID = ${JSON.stringify(grid)};\n/* END REAL GRID */`);
 await writeFile('web/index.html', html);
-for (const path of ['web/deployment.json', 'web/consensus-report.json', 'web/ci-verification.json', 'web/receipts', 'web/runs', 'web/diagnostics']) {
+for (const path of ['web/deployment.json', 'web/consensus-report.json', 'web/ci-verification.json', 'web/browser-verification.json', 'web/browser-envelope.json', 'web/receipts', 'web/runs', 'web/diagnostics']) {
   await rm(path, {recursive: true, force: true});
 }
 let deployment;
@@ -59,6 +59,21 @@ html = html.replace(/(<span class="status" id="receipt-status">)[^<]*(<\/span>)/
 await writeFile('web/index.html', html);
 try { await copyFile('runs/attempt-history.json', 'web/attempt-history.json'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 try { await copyFile('runs/ci-verification.json', 'web/ci-verification.json'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
+let browserProof;
+try { browserProof = JSON.parse(await readFile('runs/browser-verification.json', 'utf8')); } catch (error) { if (error.code !== 'ENOENT') throw error; }
+if (browserProof) {
+  const journal = JSON.parse(await readFile('runs/browser-attestation.json', 'utf8'));
+  const evidence = JSON.parse(await readFile('runs/browser-envelope.json', 'utf8'));
+  if (!deployment || browserProof.status !== 'verified-finalized' || browserProof.contract !== deployment.contract ||
+      browserProof.code_sha256 !== deployment.code_sha256 || browserProof.policy_hash !== deployment.policy_hash ||
+      journal.hash !== browserProof.transaction_hash || journal.receipt?.statusName !== 'FINALIZED' ||
+      Number(journal.receipt.status) !== 7 || Number(journal.receipt.result) !== 1 ||
+      Number(journal.receipt.lastRound?.result) !== 1 || Number(journal.receipt.txExecutionResult) !== 1 ||
+      journal.receipt.recipient?.toLowerCase() !== deployment.contract.toLowerCase() ||
+      browserProof.gate?.envelope_hash !== evidence.envelope_hash || browserProof.gate?.policy_hash !== deployment.policy_hash ||
+      browserProof.gate?.requester?.toLowerCase() !== journal.receipt.sender?.toLowerCase()) throw Error('Browser verification does not match the finalized public release.');
+  for (const name of ['browser-verification', 'browser-envelope']) await copyFile(`runs/${name}.json`, `web/${name}.json`);
+}
 for (const name of ['express-finalized-no-commit', 'yargs-finalized-no-commit', 'failed-rows-23-24', 'expired-queue-no-commit', 'expired-cleanup-summary', 'post-cleanup-unfinished-no-commit', 'canceled-retry-manifest', 'expired-cleanup-43-summary', 'canceled-retry-42-43-manifest', 'finalized-retries-no-commit', 'finalized-retry-21-23-44-manifest', 'finalized-42-43-readback-audit', 'public-instance-recovery']) {
   try { await mkdir('web/diagnostics', {recursive:true}); await copyFile(`runs/diagnostics/${name}.json`, `web/diagnostics/${name}.json`); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 }
@@ -72,7 +87,7 @@ for (const name of ['deployment.json','deploy.json','policy.json','first-attesta
 }
 try { await copyFile('runs/consensus-report.json', 'web/consensus-report.json'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 await mkdir('web/receipts', { recursive: true });
-for (const name of ['deploy', 'policy', 'first-attestation', 'smoke-recovery']) {
+for (const name of ['deploy', 'policy', 'first-attestation', 'smoke-recovery', 'browser-attestation']) {
   try { await copyFile(`runs/${name}.json`, `web/receipts/${name}.json`); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 }
 try {

@@ -291,12 +291,12 @@
         <h3>Read the chain gate</h3>
         <label for="live-attestation">Attestation ID</label>
         <input type="number" min="0" step="1" id="live-attestation" value="0">
-        <button type="button" id="live-refresh">Read chain gate</button>
+        <button type="button" id="live-refresh" disabled>Read chain gate</button>
         <div class="live-result" id="live-result">No chain result loaded</div>
         <details open><summary>Gate record</summary><pre id="live-gate"></pre></details>
         <label for="live-hash">Resume a consensus transaction by hash</label>
         <input type="text" id="live-hash" placeholder="0x…" autocomplete="off">
-        <button type="button" id="live-check">Check transaction</button>
+        <button type="button" id="live-check" disabled>Check transaction</button>
         <button type="button" id="live-finalize" hidden>Finalize accepted transaction</button>
         <div id="live-transaction" class="live-meta"></div>
         <button type="button" id="live-download" hidden>Download transaction record</button>

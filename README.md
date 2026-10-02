@@ -327,6 +327,17 @@ Its live-gate job is red because it correctly blocks this update; the offline
 job passed. This is the intended CI outcome, not an RPC error. The result and
 job identities are recorded in `runs/ci-verification.json`.
 
+The production browser workflow was also completed for `chalk 5.6.0 → 5.6.2`: a
+new wallet request was finalized as attestation 1, then resumed after a page
+reload by its exact hash without reconnecting a wallet. The verified browser and
+CLI gate both returned `CLEAN`, exit 0. The public
+[browser verification](https://attaint.vercel.app/browser-verification.json),
+[receipt](https://attaint.vercel.app/receipts/browser-attestation.json) and
+[envelope](https://attaint.vercel.app/browser-envelope.json) preserve the run.
+Its request hash is
+`0x5814d9a9c59c608829d2a0aeb105c1c06ae92c15421aacccbfcdf4478fb25b7a`.
+This is separate from the incomplete 45-pair benchmark.
+
 ### Historical benchmark instance
 
 On 1 October 2026 at 13:59 UTC, the benchmark contract, policy registration and

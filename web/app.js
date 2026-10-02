@@ -107,7 +107,7 @@ async function inspect() {
       assertFinalizedConsensusReceipt(receipt, {hash, recipient:deployment.contract, method:'request_attestation'});
       if (epoch !== generation) return;
       $('live-receipt').textContent = json(receipt);
-      $('live-hash').value = hash;
+      if (!$('live-hash').value.trim()) $('live-hash').value = hash;
     }
     if (epoch !== generation) return;
     showGate(gate);
@@ -200,7 +200,8 @@ async function poll() {
     if (['ACCEPTED', 'READY_TO_FINALIZE'].includes(request.status)) {
       const [eligible, , eligibleAt] = await evmReader.readContract({ address: testnetBradbury.consensusDataContract.address, abi: testnetBradbury.consensusDataContract.abi, functionName: 'canFinalize', args: [request.hash, BigInt(Math.floor(Date.now() / 1000))] });
       if (!current()) return;
-      request.finalization_eligible_at = String(eligibleAt);
+      request.finalization_eligible = Boolean(eligible);
+      if (!eligible) request.finalization_eligible_at = String(eligibleAt);
       $('live-finalize').hidden = !eligible || Boolean(request.finalize_hash);
       controls();
     }
@@ -228,8 +229,8 @@ async function poll() {
       throw new Error('Execution succeeded, but the matching attestation could not be read. Inspect the receipt before retrying.');
     }
     if (['CANCELED', 'EVM_REVERTED'].includes(request.status)) throw new Error(`Transaction ended with ${request.status}; no successful attestation is claimed.`);
-    const finalityTime = request.finalization_eligible_at ? ` Finalization opens at ${new Date(Number(request.finalization_eligible_at) * 1000).toLocaleTimeString()}.` : '';
-    notify(`${request.status}: waiting for finalized consensus.${finalityTime} An accepted decision is provisional; keep this transaction hash.`);
+    const finalityTime = request.finalization_eligible ? ' Finalization is available.' : request.finalization_eligible_at ? ` Finalization opens at ${new Date(Number(request.finalization_eligible_at) * 1000).toLocaleTimeString()}.` : '';
+    notify(walletOperation === 'finalize' && !request.finalize_hash ? 'Confirm finalization in your wallet. Keep the original attestation hash.' : `${request.status}: waiting for finalized consensus.${finalityTime} An accepted decision is provisional; keep this transaction hash.`);
   } catch (error) {
     if (!current()) return;
     notify(error.shortMessage || error.message);
@@ -320,10 +321,13 @@ $('live-load-json').onclick = async () => {
   } catch (error) { envelope = null; controls(); notify(error.message); }
 };
 $('live-check').onclick = async () => {
-  if (!deployment) { notify('Wait for the verified deployment manifest before checking a transaction.'); return; }
+  if (!deploymentVerified) { notify('Wait for the verified deployment manifest before checking a transaction.'); return; }
   const hash = $('live-hash').value.trim();
   if (!/^0x[0-9a-f]{64}$/i.test(hash)) { notify('Enter the GenLayer consensus transaction hash.'); return; }
-  if (!pending || pending.hash !== hash) { pending = { hash, status: 'SUBMITTED', deadline: Date.now() + FOLLOW_WINDOW_MS }; awaitRequestGate(); }
+  if (!pending || pending.hash !== hash) {
+    pending = { hash, status: 'SUBMITTED', deadline: Date.now() + FOLLOW_WINDOW_MS };
+    awaitRequestGate(); $('live-receipt').textContent = ''; renderTransaction();
+  }
   clearTimeout(pollTimer); pending.deadline = Date.now() + FOLLOW_WINDOW_MS; await poll();
 };
 $('live-download').onclick = () => {
@@ -338,6 +342,7 @@ $('live-finalize').onclick = async () => {
     if (!eligible) throw new Error('The chain has not opened finalization for this transaction.');
     await evmReader.simulateContract({ address: testnetBradbury.consensusMainContract.address, abi: testnetBradbury.consensusMainContract.abi, functionName: 'finalizeTransaction', args: [pending.hash], account, blockTag: 'pending' });
     walletOperation = 'finalize';
+    notify('Confirm finalization in your wallet. Keep the original attestation hash.');
     pending.finalize_hash = await writer.finalizeTransaction({ txId: pending.hash });
     $('live-finalize').hidden = true;
     notify(`Finalization submitted: ${pending.finalize_hash}. Waiting for the chain record.`);
@@ -361,5 +366,5 @@ try {
     const value = await sample.json();
     if (envelopeGeneration === 0) await loadEnvelope(value);
   }
-  controls(); await inspect();
+  controls(); if (!pending) await inspect();
 } catch (error) { deploymentVerified = false; controls(); $('live-result').textContent = 'INCONCLUSIVE · deployment could not be verified · exit 2'; $('live-result').className = 'live-result INCONCLUSIVE'; notify(error.shortMessage || error.message); }

@@ -19,6 +19,9 @@ runs/*
 !runs/smoke-recovery.json
 !runs/attempt-history.json
 !runs/ci-verification.json
+!runs/browser-verification.json
+!runs/browser-attestation.json
+!runs/browser-envelope.json
 # CLI traversal checks directory paths without a trailing slash.
 !runs/diagnostics
 runs/diagnostics/*

@@ -1,0 +1,108 @@
+{
+  "author_note": "",
+  "dedup_key": "8eaea79e8173e9f86ce2ca5c74a6163c17dabea1b8ec60d23adc8b4fcb0bae06",
+  "envelope_hash": "3613c4d978711bf215c038c7a6d184e435f13fdb063507b133c3264ed97f1855",
+  "facts": {
+    "dependencies": {
+      "added": {},
+      "changed": {},
+      "removed": []
+    },
+    "egress": {
+      "candidate_count": 0,
+      "candidates": [],
+      "complete": true,
+      "scope": "static changed-source network patterns; not a whole-program proof",
+      "skipped_files": []
+    },
+    "files": {
+      "added": [],
+      "changed_source_count": 1,
+      "changed_sources": [
+        "package.json"
+      ],
+      "count_from": 12,
+      "count_to": 12,
+      "removed": []
+    },
+    "install_hooks": {
+      "from": {},
+      "to": {}
+    },
+    "license": {
+      "from": "MIT",
+      "to": "MIT"
+    },
+    "maintainers": {
+      "from": [
+        "qix",
+        "sindresorhus"
+      ],
+      "to": [
+        "sindresorhus"
+      ]
+    },
+    "opaque_candidates": [],
+    "opaque_coverage": {
+      "candidate_count": 0,
+      "complete": true
+    },
+    "publisher": {
+      "from": "sindresorhus",
+      "to": "sindresorhus"
+    },
+    "purpose": {
+      "description": "Terminal string styling done right",
+      "keywords": [
+        "color",
+        "colour",
+        "colors",
+        "terminal",
+        "console",
+        "cli",
+        "string",
+        "ansi",
+        "style",
+        "styles",
+        "tty",
+        "formatting",
+        "rgb",
+        "256",
+        "shell",
+        "xterm",
+        "log",
+        "logging",
+        "command-line",
+        "text"
+      ]
+    }
+  },
+  "fetched_from": [
+    "https://registry.npmjs.org/chalk",
+    "https://registry.npmjs.org/chalk/-/chalk-5.6.0.tgz",
+    "https://registry.npmjs.org/chalk/-/chalk-5.6.2.tgz"
+  ],
+  "from_version": "5.6.0",
+  "package": "chalk",
+  "pin": {
+    "from": {
+      "integrity": "sha512-46QrSQFyVSEyYAgQ22hQ+zDa60YHA4fBstHmtSApj1Y5vKtG27fWowW03jCk5KcbXEWPZUIR894aARCA/G1kfQ==",
+      "published_at": "2025-08-17T07:27:47.572Z",
+      "registry_integrity": "sha512-46QrSQFyVSEyYAgQ22hQ+zDa60YHA4fBstHmtSApj1Y5vKtG27fWowW03jCk5KcbXEWPZUIR894aARCA/G1kfQ==",
+      "registry_shasum": "a1a8d294ea3526dbb77660f12649a08490e33ab8",
+      "tarball_bytes": 13831,
+      "tarball_sha256": "dc4aa72b21e787c0fb948f4321c07ab411fad35bc3625bd72ea43e313a9eef6f"
+    },
+    "to": {
+      "integrity": "sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA==",
+      "published_at": "2025-09-08T14:47:54.486Z",
+      "registry_integrity": "sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA==",
+      "registry_shasum": "b1238b6e23ea337af71c7f8a295db5af0c158aea",
+      "tarball_bytes": 13831,
+      "tarball_sha256": "94957715a483aa3b9db60c8f22d5498227d8025c407f982eef81e34f37574ffd"
+    }
+  },
+  "registry": "npm",
+  "to_version": "5.6.2",
+  "version": "attaint/1"
+}
