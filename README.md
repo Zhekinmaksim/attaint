@@ -80,8 +80,11 @@ do not measure accuracy or a reduction in false positives.
 ## Verify the published example
 
 Open [the live gate](https://attaint.vercel.app/#live) without a wallet. The page
-reads attestation 0 from Bradbury and verifies its consensus receipt. To check
-the same record from a terminal:
+reads attestation 0 from Bradbury and verifies its consensus receipt. For a new
+update, upload the builder's envelope or expand **Or paste an envelope**, paste
+the JSON and click **Load pasted envelope**. Inspect the selected package,
+versions and evidence before requesting a wallet signature. To check
+the published record from a terminal:
 
 ```sh
 git clone https://github.com/Zhekinmaksim/attaint.git

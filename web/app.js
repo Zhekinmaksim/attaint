@@ -15,7 +15,7 @@ const $ = id => document.getElementById(id);
 const json = value => JSON.stringify(value, (_, v) => typeof v === 'bigint' ? v.toString() : v instanceof Map ? Object.fromEntries(v) : v, 2);
 const link = (label, path) => { const a = document.createElement('a'); a.textContent = label; a.href = `${EXPLORER}/${path}`; a.target = '_blank'; a.rel = 'noopener'; return a; };
 let deployment, account, writer, envelope, pending, busy = false, pollTimer, generation = 0, walletOperation = '', deploymentVerified = false;
-let walletEstimate, submissionGasGuard, submissionTTL, pollGeneration = 0;
+let walletEstimate, submissionGasGuard, submissionTTL, pollGeneration = 0, envelopeGeneration = 0;
 const FOLLOW_WINDOW_MS = 6 * 60 * 60 * 1000;
 const read = (method, args = []) => readFinalizedContract({ client: reader, publicClient: evmReader, address: deployment.contract, functionName: method, args });
 const notify = message => { $('live-notice').textContent = message; };
@@ -29,6 +29,8 @@ function controls() {
   $('live-send').disabled = busy || !account || !envelope || !deploymentVerified;
   $('live-connect').disabled = busy || !deploymentVerified;
   $('live-envelope').disabled = busy;
+  $('live-envelope-json').disabled = busy;
+  $('live-load-json').disabled = busy;
   $('live-example').disabled = busy;
   $('live-connect').textContent = account ? `${account.slice(0, 6)}…${account.slice(-4)} · Bradbury` : 'Connect wallet';
   $('live-finalize').disabled = busy || !writer;
@@ -45,6 +47,7 @@ async function digest(text) {
   return [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)))].map(x => x.toString(16).padStart(2, '0')).join('');
 }
 async function loadEnvelope(value) {
+  const ticket = ++envelopeGeneration;
   const keys = ['version', 'registry', 'package', 'from_version', 'to_version', 'pin', 'facts', 'fetched_from', 'author_note'];
   const body = {};
   for (const k of keys) if (value[k] !== undefined && value[k] !== null && value[k] !== '' && (!Array.isArray(value[k]) || value[k].length)) body[k] = value[k];
@@ -53,6 +56,7 @@ async function loadEnvelope(value) {
   if (new TextEncoder().encode(evidence).length > 12288) throw new Error('Envelope exceeds the 12,288-byte contract limit.');
   const hash = await digest(evidence);
   if (value.envelope_hash && value.envelope_hash !== hash) throw new Error('Envelope hash does not match its contents.');
+  if (ticket !== envelopeGeneration) return;
   envelope = { body, evidence, hash };
   $('live-object').textContent = `${body.package} ${body.from_version} → ${body.to_version} · level 1 · ${new TextEncoder().encode(evidence).length} bytes`;
   $('live-evidence').textContent = json(body);
@@ -292,6 +296,13 @@ $('live-send').onclick = send;
 $('live-refresh').onclick = inspect;
 $('live-example').onclick = async () => { try { const r = await fetch('/event-stream.json'); if (!r.ok) throw new Error('Example is unavailable.'); await loadEnvelope(await r.json()); } catch (error) { notify(error.message); } };
 $('live-envelope').onchange = async event => { try { const file = event.target.files[0]; if (!file) return; if (file.size > 100000) throw new Error('Envelope file is too large.'); await loadEnvelope(JSON.parse(await file.text())); } catch (error) { envelope = null; controls(); notify(error.message); } };
+$('live-load-json').onclick = async () => {
+  try {
+    const text = $('live-envelope-json').value;
+    if (new TextEncoder().encode(text).length > 100000) throw new Error('Envelope JSON is too large.');
+    await loadEnvelope(JSON.parse(text));
+  } catch (error) { envelope = null; controls(); notify(error.message); }
+};
 $('live-check').onclick = async () => {
   if (!deployment) { notify('Wait for the verified deployment manifest before checking a transaction.'); return; }
   const hash = $('live-hash').value.trim();
@@ -330,6 +341,9 @@ try {
   deploymentVerified = true;
   $('live-attestation').value = deployment.first_attestation_id ?? 0;
   const sample = await fetch('/event-stream.json');
-  if (sample.ok) await loadEnvelope(await sample.json());
+  if (sample.ok) {
+    const value = await sample.json();
+    if (envelopeGeneration === 0) await loadEnvelope(value);
+  }
   controls(); await inspect();
 } catch (error) { deploymentVerified = false; controls(); $('live-result').textContent = 'INCONCLUSIVE · deployment could not be verified · exit 2'; $('live-result').className = 'live-result INCONCLUSIVE'; notify(error.shortMessage || error.message); }

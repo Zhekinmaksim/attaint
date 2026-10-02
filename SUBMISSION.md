@@ -35,6 +35,8 @@ baseline supports a separate receipt-backed consensus comparison.
    immutable policy and evidence hash match the published release.
 2. For a new transaction, select the pinned `event-stream 3.3.4 → 3.3.5` envelope, or build and inspect an
    envelope with `python3 cli/envelope.py PACKAGE FROM TO --out envelope.json`.
+   Upload the JSON or use **Or paste an envelope** and **Load pasted envelope**.
+   Confirm the selected package and versions before signing.
 3. Connect a Bradbury wallet and submit the attestation after the live checks pass.
    Follow the actual pending, accepted and finalized states using the saved hash.
    Acceptance usually precedes finality by about 30 minutes; keep checking that

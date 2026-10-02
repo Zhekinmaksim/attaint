@@ -188,7 +188,8 @@
   .live-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:28px;margin-top:24px}
   .live-box{border:1px solid var(--rule);padding:20px;background:#fff;min-width:0}
   .live-box label{display:block;font:11px var(--mono);text-transform:uppercase;margin:16px 0 7px;color:var(--dim)}
-  .live-box input{width:100%;padding:10px;border:1px solid var(--rule);font:13px var(--mono);background:var(--paper)}
+  .live-box input,.live-box textarea{width:100%;padding:10px;border:1px solid var(--rule);font:13px var(--mono);background:var(--paper)}
+  .live-box textarea{resize:vertical}
   .live-box button{cursor:pointer;font:11px var(--mono);padding:11px 14px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);margin:8px 6px 0 0}
   .live-box button:disabled{opacity:.45;cursor:default}
   .live-box pre{max-height:280px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font:11px/1.7 var(--mono);margin-top:12px}
@@ -275,6 +276,11 @@
         <button type="button" id="live-example">Load event-stream 3.3.4 → 3.3.5</button>
         <label for="live-envelope">Or upload an attaint/1 envelope</label>
         <input type="file" accept="application/json,.json" id="live-envelope">
+        <details class="live-paste"><summary>Or paste an envelope</summary>
+          <label for="live-envelope-json">Envelope JSON</label>
+          <textarea id="live-envelope-json" rows="6" spellcheck="false" autocomplete="off" placeholder="Paste the JSON produced by cli/envelope.py"></textarea>
+          <button type="button" id="live-load-json">Load pasted envelope</button>
+        </details>
         <p class="live-meta" id="live-object">No envelope selected.</p>
         <button type="button" id="live-connect" disabled>Connect wallet</button>
         <button type="button" id="live-send" disabled>Request attestation</button>

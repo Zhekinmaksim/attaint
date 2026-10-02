@@ -7,6 +7,40 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 
 class BrowserLifecycleTests(unittest.TestCase):
+    def test_envelope_selection_survives_delayed_bootstrap_and_hashing(self):
+        code = r"""
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import vm from 'node:vm';
+const source=readFileSync('web/app.js','utf8');
+const loadSource=source.slice(source.indexOf('async function loadEnvelope(value) {'),source.indexOf('\nfunction validateGate('));
+const bootstrapSource=source.slice(source.lastIndexOf("try {\n  const response = await fetch('/deployment.json'"));
+const deferred=()=>{let resolve;const promise=new Promise(r=>resolve=r);return{promise,resolve}};
+const update=name=>({version:'attaint/1',registry:'npm',package:name,from_version:'1',to_version:'2',pin:{},facts:{}});
+const sample=deferred(), nodes={};
+const c={envelopeGeneration:0,envelope:null,TextEncoder,Number,JSON,
+  $:id=>nodes[id]??={textContent:'',value:''},json:JSON.stringify,controls:()=>{},notify:()=>{},
+  canonical:JSON.stringify,digest:async text=>text==='code'?'a'.repeat(64):text,
+  link:()=>'',reader:{getContractCode:async()=>'code'},inspect:async()=>{},
+  fetch:async path=>path==='/deployment.json'?{ok:true,json:async()=>({chain_id:4221,contract:'0x'+'b'.repeat(40),policy_id:0,policy_hash:'c'.repeat(64),code_sha256:'a'.repeat(64)})}:sample.promise};
+c.$=id=>nodes[id]??={textContent:'',value:'',replaceChildren:()=>{}};
+vm.createContext(c);vm.runInContext(loadSource,c);
+const boot=vm.runInContext('(async()=>{'+bootstrapSource+'})()',c);
+await c.loadEnvelope(update('manual'));
+sample.resolve({ok:true,json:async()=>update('automatic-example')});await boot;
+assert.equal(c.envelope.body.package,'manual');
+assert.match(nodes['live-object'].textContent,/^manual /);
+// A late digest for the first selection cannot replace a newer selection.
+const first=deferred();c.digest=text=>text.includes('slow')?first.promise:Promise.resolve(text);
+const loading=c.loadEnvelope(update('slow'));await c.loadEnvelope(update('newer'));
+first.resolve('late-hash');await loading;
+assert.equal(c.envelope.body.package,'newer');
+assert.match(nodes['live-object'].textContent,/^newer /);
+"""
+        result = subprocess.run(['node', '--input-type=module', '-'], input=code, text=True,
+                                capture_output=True, cwd=ROOT, timeout=30)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_stale_receipts_gates_and_wallet_disconnect(self):
         code = r"""
 import assert from 'node:assert/strict';
